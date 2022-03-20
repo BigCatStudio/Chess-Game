@@ -31,10 +31,12 @@ ApplicationWindow {
         rows: 8
 
         Repeater {
+            id: tileRepeater
             model: 64
 
-            ChessBoardTile {
-                color: chessBoardUtilities.color
+            TileFront {
+//                xCord: ((index / 8) + 7) % 8
+//                yCord: (index % 8) + 1
             }
         }
     }

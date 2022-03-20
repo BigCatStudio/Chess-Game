@@ -1,13 +1,13 @@
 #include "chessboardutilities.h"
 
 ChessBoardUtilities::ChessBoardUtilities(QObject *parent)
-    : QObject{parent}, colorValue{"white"}, counter {0} {}
+    : QObject{parent}, colorValue{"white"}, counterColor {0}, xCounter{0}, yCounter{63} {}
 
 QColor ChessBoardUtilities::color(){
-    counter++;
+    counterColor++;
     QColor additionalColor = colorValue;
 
-    if(counter % 8) {
+    if(counterColor % 8) {
         colorValue = (colorValue == "white") ? "black" : "white";
     }
 
@@ -19,4 +19,14 @@ void ChessBoardUtilities::setColor(const QColor &colorGiven) {
         colorValue = colorGiven;
         emit colorChanged();
     }
+}
+
+short ChessBoardUtilities::xCordCalculated() {
+    //emit xCordCalculatedChanged();
+    return (xCounter++ % 8) + 1;
+}
+
+short ChessBoardUtilities::yCordCalculated() {
+    //emit yCordCalculatedChanged();
+    return (yCounter-- / 8) + 1;
 }

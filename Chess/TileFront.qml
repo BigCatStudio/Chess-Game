@@ -2,13 +2,22 @@ import QtQuick
 import QtQuick.Layouts
 import QtQuick.Window
 
+import Cpp.Classes
+
 Item {
     id: rootChessBoardTile
 
-    property int minimalScreenSide: (Screen.desktopAvailableWidth > Screen.desktopAvailableHeight) ? Screen.desktopAvailableHeight : Screen.desktopAvailableWidth
-    property color tileColor: rootChessBoardTile.color
+    // Color of the tile is defined by chessBoardUtilities color getter
+    property color color: chessBoardUtilities.color
 
-    // Specifying width & height
+    // Getting which side of the display device is smaller, to scale board
+    property int minimalScreenSide: (Screen.desktopAvailableWidth > Screen.desktopAvailableHeight) ? Screen.desktopAvailableHeight : Screen.desktopAvailableWidth
+
+    // Defining tile cords
+    property int xCord: chessBoardUtilities.xCordCalculated
+    property int yCord: chessBoardUtilities.yCordCalculated
+
+    // Specifying width & height behaviour
     Layout.fillWidth: true
     Layout.minimumWidth: minimalScreenSide / 13
     Layout.maximumWidth: minimalScreenSide / 9
@@ -18,15 +27,13 @@ Item {
     Layout.maximumHeight: minimalScreenSide / 9
     Layout.preferredHeight: minimalScreenSide / 11
 
-    // Helpful properties
-    property color color: "red"
     width: minimalScreenSide / 9
     height: minimalScreenSide / 9
 
     Rectangle {
         id: tile
         anchors.fill: parent
-        color: tileColor
+        color: rootChessBoardTile.color
         border {
             color: "black"
             width: 1
@@ -37,6 +44,19 @@ Item {
             anchors.fill: parent
             color: "blue"
             opacity: 0.0
+        }
+
+        Text {
+            id: tileCords
+            anchors.centerIn: parent
+            text: rootChessBoardTile.xCord + " - " + rootChessBoardTile.yCord
+            color: "green"
+        }
+
+        TileBack {
+            id: tileBackend
+            xCord: rootChessBoardTile.xCord
+            yCord: rootChessBoardTile.yCord
         }
 
         MouseArea {

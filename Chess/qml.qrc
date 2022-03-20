@@ -1,7 +1,7 @@
 <RCC>
     <qresource prefix="/">
         <file>main.qml</file>
-        <file>ChessBoardTile.qml</file>
+        <file>TileFront.qml</file>
     </qresource>
     <qresource prefix="/JavaScriptFiles">
         <file>Utilities.js</file>
