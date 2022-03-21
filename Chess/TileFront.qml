@@ -1,6 +1,5 @@
 import QtQuick
 import QtQuick.Layouts
-import QtQuick.Window
 
 import Cpp.Classes
 
@@ -19,25 +18,18 @@ Item {
 
     // Specifying width & height behaviour
     Layout.fillWidth: true
-    Layout.minimumWidth: minimalScreenSide / 13
-    Layout.maximumWidth: minimalScreenSide / 9
-    Layout.preferredWidth: minimalScreenSide / 11
+    Layout.minimumWidth: minimalScreenSide / 14
+    Layout.maximumWidth: minimalScreenSide / 10
+    Layout.preferredWidth: minimalScreenSide / 12
     Layout.fillHeight: true
-    Layout.minimumHeight: minimalScreenSide / 13
-    Layout.maximumHeight: minimalScreenSide / 9
-    Layout.preferredHeight: minimalScreenSide / 11
-
-    width: minimalScreenSide / 9
-    height: minimalScreenSide / 9
+    Layout.minimumHeight: minimalScreenSide / 14
+    Layout.maximumHeight: minimalScreenSide / 10
+    Layout.preferredHeight: minimalScreenSide / 12
 
     Rectangle {
         id: tile
         anchors.fill: parent
         color: rootChessBoardTile.color
-        border {
-            color: "black"
-            width: 1
-        }
 
         Rectangle {
             id: tileHovered

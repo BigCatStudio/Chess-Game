@@ -5,38 +5,46 @@ import QtQuick.Controls
 
 import "qrc:/JavaScriptFiles/Utilities.js" as DynamicUtilities
 
+//Think about Window or ApplicationWindow
 ApplicationWindow {
     id: root
     visible: true
     title: qsTr("Chess Board")
 
     // First option using Repeater and custom type of ChessBoardTile
-    minimumWidth: chessBoard.Layout.minimumWidth
-    maximumWidth: chessBoard.Layout.maximumWidth //Screen.desktopAvailableWidth
-    minimumHeight: chessBoard.Layout.minimumHeight
-    maximumHeight: chessBoard.Layout.maximumHeight //Screen.desktopAvailableHeight
+    minimumWidth: chessBoardFrameArea.Layout.minimumWidth
+    maximumWidth: chessBoardFrameArea.Layout.maximumWidth //Screen.desktopAvailableWidth
+    minimumHeight: chessBoardFrameArea.Layout.minimumHeight
+    maximumHeight: chessBoardFrameArea.Layout.maximumHeight //Screen.desktopAvailableHeight
 
-    width: chessBoard.implicitWidth
-    height: chessBoard.implicitHeight
-
-    onWidthChanged: height = width
-    onHeightChanged: height = width
+    width: chessBoardFrameArea.implicitWidth
+    height: chessBoardFrameArea.implicitHeight
 
     GridLayout {
-        id: chessBoard
+        id: chessBoardFrameArea
         anchors.fill: parent
         columnSpacing: 0
         rowSpacing: 0
-        columns: 8
-        rows: 8
+        columns: 1
+        rows: 1
 
-        Repeater {
-            id: tileRepeater
-            model: 64
+        FrameFront {
+            id: frame
+            GridLayout {
+                id: chessBoardTilesArea
+                anchors.fill: parent
+                anchors.margins: frame.minimalScreenSide / 20
+                columnSpacing: 0
+                rowSpacing: 0
+                columns: 8
+                rows: 8
 
-            TileFront {
-//                xCord: ((index / 8) + 7) % 8
-//                yCord: (index % 8) + 1
+                Repeater {
+                    id: tileRepeater
+                    model: 64
+
+                    TileFront {}
+                }
             }
         }
     }
