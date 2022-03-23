@@ -46,5 +46,11 @@ ApplicationWindow {
         }
     }
 
-    FigureFront {}
+    RowLayout {
+        Repeater {
+            model: 5
+
+            FigureFront {}
+        }
+    }
 }

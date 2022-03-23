@@ -16,6 +16,9 @@ Item {
     property int xCord: chessBoardUtilities.xCordCalculated
     property int yCord: chessBoardUtilities.yCordCalculated
 
+    // Deciding if tile contains any figure
+    property bool containsFigure: false
+
     // Specifying width & height behaviour
     Layout.fillWidth: true
     Layout.minimumWidth: minimalScreenSide / 14
@@ -26,10 +29,14 @@ Item {
     Layout.maximumHeight: minimalScreenSide / 10
     Layout.preferredHeight: minimalScreenSide / 12
 
+
+
     Rectangle {
         id: tile
         anchors.fill: parent
         color: dropArea.containsDrag ? "grey" : rootChessBoardTile.color
+
+
 
         Rectangle {
             id: tileHovered
@@ -41,7 +48,7 @@ Item {
         Text {
             id: tileCords
             anchors.centerIn: parent
-            text: rootChessBoardTile.xCord + " - " + rootChessBoardTile.yCord
+            text: rootChessBoardTile.xCord + " - " + rootChessBoardTile.yCord + "\n" + tileBackend.containsFigure
             color: "green"
         }
 
@@ -49,6 +56,7 @@ Item {
             id: tileBackend
             xCord: rootChessBoardTile.xCord
             yCord: rootChessBoardTile.yCord
+            containsFigure: rootChessBoardTile.containsFigure
         }
 
         MouseArea {
@@ -70,5 +78,16 @@ Item {
     DropArea {
         id: dropArea
         anchors.fill: parent
+
+        // If the figure is dropped on tile the length of children<Item> changes
+        // it helps to track if we can drop new figure on tile or if the figure can be taken
+        onChildrenChanged: {
+            console.log("Tile has figure")
+            if(rootChessBoardTile.containsFigure) {
+                rootChessBoardTile.containsFigure = false
+            } else {
+                rootChessBoardTile.containsFigure = true
+            }
+        }
     }
 }

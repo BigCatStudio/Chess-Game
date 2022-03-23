@@ -13,6 +13,10 @@ Item {
 
         onReleased: { parent = tile.Drag.target !== null ? tile.Drag.target : mouseArea.parent }
 
+        onParentChanged: {
+            console.log("figure is on tile")
+        }
+
         Rectangle {
             id: tile
             width: 64; height: 64
