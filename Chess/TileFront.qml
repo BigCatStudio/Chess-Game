@@ -29,7 +29,7 @@ Item {
     Rectangle {
         id: tile
         anchors.fill: parent
-        color: rootChessBoardTile.color
+        color: dropArea.containsDrag ? "grey" : rootChessBoardTile.color
 
         Rectangle {
             id: tileHovered
@@ -56,12 +56,19 @@ Item {
             hoverEnabled: true
 
             onEntered: {
-                tileHovered.opacity = 0.5
+                if(!dropArea.containsDrag) {
+                    tileHovered.opacity = 0.5
+                }
             }
 
             onExited: {
                 tileHovered.opacity = 0.0
             }
         }
+    }
+
+    DropArea {
+        id: dropArea
+        anchors.fill: parent
     }
 }

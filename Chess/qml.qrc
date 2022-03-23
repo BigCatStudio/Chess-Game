@@ -3,8 +3,14 @@
         <file>main.qml</file>
         <file>TileFront.qml</file>
         <file>FrameFront.qml</file>
+        <file>FigureFront.qml</file>
     </qresource>
     <qresource prefix="/JavaScriptFiles">
         <file>Utilities.js</file>
+    </qresource>
+    <qresource prefix="/Images">
+        <file>Images/figure.png</file>
+        <file>Images/figure2.png</file>
+        <file>Images/nike.png</file>
     </qresource>
 </RCC>

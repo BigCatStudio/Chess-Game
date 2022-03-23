@@ -5,7 +5,7 @@ import QtQuick.Controls
 
 import "qrc:/JavaScriptFiles/Utilities.js" as DynamicUtilities
 
-//Think about Window or ApplicationWindow
+// Think about Window or ApplicationWindow
 ApplicationWindow {
     id: root
     visible: true
@@ -23,13 +23,10 @@ ApplicationWindow {
     GridLayout {
         id: chessBoardFrameArea
         anchors.fill: parent
-        columnSpacing: 0
-        rowSpacing: 0
-        columns: 1
-        rows: 1
 
         FrameFront {
             id: frame
+
             GridLayout {
                 id: chessBoardTilesArea
                 anchors.fill: parent
@@ -43,7 +40,45 @@ ApplicationWindow {
                     id: tileRepeater
                     model: 64
 
-                    TileFront {}
+                    TileFront {
+//                        FigureFront {
+//                            anchors.fill: parent
+//                        }
+                    }
+                }
+            }
+        }
+    }
+
+    Item {
+        id: item
+
+        property string colorKey: "yellow"
+
+        width: 64; height: 64
+
+        MouseArea {
+            id: mouseArea
+            width: 50; height: 50
+            anchors.centerIn: parent
+
+            drag.target: tile
+
+            onReleased: { parent = tile.Drag.target !== null ? tile.Drag.target : item }
+
+            Rectangle {
+                id: tile
+                width: 64; height: 64
+                anchors.verticalCenter: parent.verticalCenter
+                anchors.horizontalCenter: parent.horizontalCenter
+                color: item.colorKey
+
+                Drag.active: mouseArea.drag.active
+
+                states: State {
+                    when: mouseArea.drag.active
+                    AnchorChanges { target: tile; anchors.verticalCenter: undefined; anchors.horizontalCenter: undefined }
+                    PropertyChanges { target: tile; parent: item }
                 }
             }
         }
