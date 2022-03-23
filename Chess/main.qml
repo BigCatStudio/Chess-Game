@@ -40,47 +40,11 @@ ApplicationWindow {
                     id: tileRepeater
                     model: 64
 
-                    TileFront {
-//                        FigureFront {
-//                            anchors.fill: parent
-//                        }
-                    }
+                    TileFront {}
                 }
             }
         }
     }
 
-    Item {
-        id: item
-
-        property string colorKey: "yellow"
-
-        width: 64; height: 64
-
-        MouseArea {
-            id: mouseArea
-            width: 50; height: 50
-            anchors.centerIn: parent
-
-            drag.target: tile
-
-            onReleased: { parent = tile.Drag.target !== null ? tile.Drag.target : item }
-
-            Rectangle {
-                id: tile
-                width: 64; height: 64
-                anchors.verticalCenter: parent.verticalCenter
-                anchors.horizontalCenter: parent.horizontalCenter
-                color: item.colorKey
-
-                Drag.active: mouseArea.drag.active
-
-                states: State {
-                    when: mouseArea.drag.active
-                    AnchorChanges { target: tile; anchors.verticalCenter: undefined; anchors.horizontalCenter: undefined }
-                    PropertyChanges { target: tile; parent: item }
-                }
-            }
-        }
-    }
+    FigureFront {}
 }
