@@ -32,6 +32,7 @@ set(PROJECT_SOURCES
     tileback.h              tileback.cpp
     figureback.h            figureback.cpp
     tilesfigureshandler.h   tilesfigureshandler.cpp
+    king.h                  king.cpp
     main.cpp
     qml.qrc
 )

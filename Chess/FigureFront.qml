@@ -14,6 +14,8 @@ Item {
         drag.target: tile
 
         onReleased: {
+
+            // Fix the Error that occurs when the figure is dropped outside the board!!!!
             if(!tile.Drag.target.children.length) {
                 mouseArea.parent = tile.Drag.target
                 tilesFiguresHandler.addFigure(mouseArea.parent.figure, figureBackend)
@@ -40,21 +42,23 @@ Item {
 
             Image {
                 id: figureImage
-                source: "qrc:/Images/Images/figure2.png"
+                source: figureBackend.imageSource
                 anchors.fill: parent
                 fillMode: Image.PreserveAspectFit
             }
 
             Text {
                 id: cords
-                anchors.fill: parent
-                text: figureBackend.xCord + " - " + figureBackend.yCord
+                anchors.centerIn: parent
+                text: figureBackend.xCord + " - " + figureBackend.yCord + "\n" + figureBackend.type
             }
 
             FigureBack {
                 id: figureBackend
                 xCord: 0
                 yCord: 0
+                imageSource: "qrc:/Images/Images/figure2.png"
+                type: FigureBack.Queen
             }
         }
     }

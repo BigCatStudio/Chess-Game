@@ -8,6 +8,12 @@
 #include "tileback.h"
 #include "figureback.h"
 
+// This class contains hashed map with pairs: key [TileBack*] - value [FigureBack*]
+// It provides possibility to:
+//      -update very fast current location of figure on chess board
+//      -check which tiles can be accessed by selected figure
+//      -overcome nasty code in UI section by implementing desired functionality with clear code in C++
+
 class TilesFiguresHandler : public QObject
 {
     Q_OBJECT
