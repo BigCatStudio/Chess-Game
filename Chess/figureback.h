@@ -12,7 +12,7 @@ class FigureBack : public QObject
     Q_PROPERTY(int xCord READ xCord WRITE setXCord NOTIFY xCordChanged)
     Q_PROPERTY(int yCord READ yCord WRITE setYCord NOTIFY yCordChanged)
     Q_PROPERTY(QUrl imageSource READ imageSource WRITE setImageSource NOTIFY imageSourceChanged)
-    Q_PROPERTY(int type READ type WRITE setType NOTIFY typeChanged)
+    Q_PROPERTY(int type READ type WRITE setType NOTIFY typeChanged)     // type enum is accessed as int from qml
     QML_ELEMENT
 
 private:
