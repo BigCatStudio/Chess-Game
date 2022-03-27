@@ -21,12 +21,12 @@ void ChessBoardUtilities::setColor(const QColor &colorGiven) {
     }
 }
 
-short ChessBoardUtilities::xCordCalculated() {
+int ChessBoardUtilities::xCordCalculated() {
     //emit xCordCalculatedChanged();
     return (xCounter++ % 8) + 1;
 }
 
-short ChessBoardUtilities::yCordCalculated() {
+int ChessBoardUtilities::yCordCalculated() {
     //emit yCordCalculatedChanged();
     return (yCounter-- / 8) + 1;
 }

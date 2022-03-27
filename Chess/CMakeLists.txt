@@ -28,10 +28,12 @@ find_package(QT NAMES Qt6 Qt5 COMPONENTS Core Quick REQUIRED)
 find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Core Quick REQUIRED)
 
 set(PROJECT_SOURCES
-        main.cpp
-        chessboardutilities.h   chessboardutilities.cpp
-        tileback.h  tileback.cpp
-        qml.qrc
+    chessboardutilities.h   chessboardutilities.cpp
+    tileback.h              tileback.cpp
+    figureback.h            figureback.cpp
+    tilesfigureshandler.h   tilesfigureshandler.cpp
+    main.cpp
+    qml.qrc
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)

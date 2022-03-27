@@ -13,8 +13,8 @@ Item {
     property int minimalScreenSide: (Screen.desktopAvailableWidth > Screen.desktopAvailableHeight) ? Screen.desktopAvailableHeight : Screen.desktopAvailableWidth
 
     // Defining tile cords
-    property int xCord: chessBoardUtilities.xCordCalculated
-    property int yCord: chessBoardUtilities.yCordCalculated
+    property alias xCord: tileBackend.xCord
+    property alias yCord: tileBackend.yCord
 
     // Deciding if tile contains any figure
     property bool containsFigure: false
@@ -45,15 +45,19 @@ Item {
         Text {
             id: tileCords
             anchors.centerIn: parent
-            text: rootChessBoardTile.xCord + " - " + rootChessBoardTile.yCord + "\n" + tileBackend.containsFigure
+            text: tileBackend.xCord + " - " + tileBackend.yCord + "\n" + tileBackend.containsFigure + "\n" + dropArea.children.length
             color: "green"
         }
 
         TileBack {
             id: tileBackend
-            xCord: rootChessBoardTile.xCord
-            yCord: rootChessBoardTile.yCord
+            xCord: chessBoardUtilities.xCordCalculated
+            yCord: chessBoardUtilities.yCordCalculated
             containsFigure: rootChessBoardTile.containsFigure
+
+            Component.onCompleted: {
+                tilesFiguresHandler.addTile(tileBackend);
+            }
         }
 
         MouseArea {
@@ -74,6 +78,9 @@ Item {
         DropArea {
             id: dropArea
             anchors.fill: parent
+
+            // This alias is used, when the new figure is on tile, to send TileBackend addres to TilesFiguresHandler
+            property alias figure: tileBackend
 
             // If the figure is dropped on tile the length of children<Item> changes
             // it helps to track if we can drop new figure on tile or if the figure can be taken

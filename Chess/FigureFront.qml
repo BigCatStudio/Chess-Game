@@ -1,10 +1,10 @@
 import QtQuick
 
+import Cpp.Classes
+
 Item {
     id: root
-    width: 500; height: 500
-
-
+    width: 64; height: 64
 
     MouseArea {
         id: mouseArea
@@ -13,7 +13,12 @@ Item {
 
         drag.target: tile
 
-        onReleased: { parent = tile.Drag.target !== null ? tile.Drag.target : mouseArea.parent }
+        onReleased: {
+            if(!tile.Drag.target.children.length) {
+                mouseArea.parent = tile.Drag.target
+                tilesFiguresHandler.addFigure(mouseArea.parent.figure, figureBackend)
+            }
+        }
 
         onParentChanged: {
             console.log("figure is on tile")
@@ -27,6 +32,12 @@ Item {
 
             Drag.active: mouseArea.drag.active
 
+            states: State {
+                when: mouseArea.drag.active
+                AnchorChanges { target: tile; anchors.verticalCenter: undefined; anchors.horizontalCenter: undefined }
+                PropertyChanges { target: tile; parent: root }
+            }
+
             Image {
                 id: figureImage
                 source: "qrc:/Images/Images/figure2.png"
@@ -34,10 +45,16 @@ Item {
                 fillMode: Image.PreserveAspectFit
             }
 
-            states: State {
-                when: mouseArea.drag.active
-                AnchorChanges { target: tile; anchors.verticalCenter: undefined; anchors.horizontalCenter: undefined }
-                PropertyChanges { target: tile; parent: root }
+            Text {
+                id: cords
+                anchors.fill: parent
+                text: figureBackend.xCord + " - " + figureBackend.yCord
+            }
+
+            FigureBack {
+                id: figureBackend
+                xCord: 0
+                yCord: 0
             }
         }
     }
