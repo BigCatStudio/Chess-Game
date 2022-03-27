@@ -29,15 +29,12 @@ Item {
     Layout.maximumHeight: minimalScreenSide / 10
     Layout.preferredHeight: minimalScreenSide / 12
 
-
-
     Rectangle {
         id: tile
         anchors.fill: parent
         color: dropArea.containsDrag ? "grey" : rootChessBoardTile.color
 
-
-
+        // Think about it if its is needed!!!
         Rectangle {
             id: tileHovered
             anchors.fill: parent
@@ -73,20 +70,16 @@ Item {
                 tileHovered.opacity = 0.0
             }
         }
-    }
 
-    DropArea {
-        id: dropArea
-        anchors.fill: parent
+        DropArea {
+            id: dropArea
+            anchors.fill: parent
 
-        // If the figure is dropped on tile the length of children<Item> changes
-        // it helps to track if we can drop new figure on tile or if the figure can be taken
-        onChildrenChanged: {
-            console.log("Tile has figure")
-            if(rootChessBoardTile.containsFigure) {
-                rootChessBoardTile.containsFigure = false
-            } else {
-                rootChessBoardTile.containsFigure = true
+            // If the figure is dropped on tile the length of children<Item> changes
+            // it helps to track if we can drop new figure on tile or if the figure can be taken
+            onChildrenChanged: {
+                console.log("Tile has figure")
+                rootChessBoardTile.containsFigure = rootChessBoardTile.containsFigure ? false : true
             }
         }
     }

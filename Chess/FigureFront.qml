@@ -1,8 +1,10 @@
 import QtQuick
 
 Item {
-    id: item
-    width: 64; height: 64
+    id: root
+    width: 500; height: 500
+
+
 
     MouseArea {
         id: mouseArea
@@ -35,7 +37,7 @@ Item {
             states: State {
                 when: mouseArea.drag.active
                 AnchorChanges { target: tile; anchors.verticalCenter: undefined; anchors.horizontalCenter: undefined }
-                PropertyChanges { target: tile; parent: item }
+                PropertyChanges { target: tile; parent: root }
             }
         }
     }

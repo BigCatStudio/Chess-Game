@@ -12,23 +12,24 @@ ApplicationWindow {
     title: qsTr("Chess Board")
 
     // First option using Repeater and custom type of ChessBoardTile
-    minimumWidth: chessBoardFrameArea.Layout.minimumWidth
-    maximumWidth: chessBoardFrameArea.Layout.maximumWidth //Screen.desktopAvailableWidth
-    minimumHeight: chessBoardFrameArea.Layout.minimumHeight
-    maximumHeight: chessBoardFrameArea.Layout.maximumHeight //Screen.desktopAvailableHeight
+    minimumWidth: frameLayout.Layout.minimumWidth
+    maximumWidth: frameLayout.Layout.maximumWidth //Screen.desktopAvailableWidth
+    minimumHeight: frameLayout.Layout.minimumHeight
+    maximumHeight: frameLayout.Layout.maximumHeight //Screen.desktopAvailableHeight
 
-    width: chessBoardFrameArea.implicitWidth
-    height: chessBoardFrameArea.implicitHeight
+    width: frameLayout.implicitWidth
+    height: frameLayout.implicitHeight
 
+    // frame instance must be in layout so it can be resizeable along with the content inside
     GridLayout {
-        id: chessBoardFrameArea
+        id: frameLayout
         anchors.fill: parent
 
         FrameFront {
             id: frame
 
             GridLayout {
-                id: chessBoardTilesArea
+                id: tilesLayout
                 anchors.fill: parent
                 anchors.margins: frame.minimalScreenSide / 20
                 columnSpacing: 0
@@ -37,7 +38,7 @@ ApplicationWindow {
                 rows: 8
 
                 Repeater {
-                    id: tileRepeater
+                    id: tilesRepeater
                     model: 64
 
                     TileFront {}
@@ -47,7 +48,10 @@ ApplicationWindow {
     }
 
     RowLayout {
+        id: figuresLayout
+
         Repeater {
+            id: figuresRepeater
             model: 5
 
             FigureFront {}
