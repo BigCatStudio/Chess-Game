@@ -7,6 +7,8 @@ Item {
     width: 64; height: 64
 
     property string figureSource: "qrc:/Images/Images/pawn.png"
+    property color figureColor: "transparent"
+    property int figureType: FigureBack.Pawn
 
     MouseArea {
         id: mouseArea
@@ -16,12 +18,15 @@ Item {
         drag.target: tile
 
         onReleased: {
-
             // Fix the Error that occurs when the figure is dropped outside the board!!!!
             if(!tile.Drag.target.children.length) {
                 mouseArea.parent = tile.Drag.target
                 tilesFiguresHandler.addFigure(mouseArea.parent.figure, figureBackend)
             }
+        }
+
+        onClicked: {
+            tilesFiguresHandler.findValidTiles(figureBackend)
         }
 
         onParentChanged: {
@@ -60,8 +65,9 @@ Item {
                 id: figureBackend
                 xCord: 0
                 yCord: 0
-                imageSource: figureSource
-                type: FigureBack.Queen
+                imageSource: root.figureSource
+                color: root.figureColor
+                type: root.figureType
             }
         }
     }

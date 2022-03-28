@@ -36,10 +36,10 @@ Item {
 
         // Think about it if its is needed!!!
         Rectangle {
-            id: tileHovered
+            id: tilePossible
             anchors.fill: parent
             color: "blue"
-            opacity: 0.0
+            opacity: tileBackend.possible ? 0.5 : 0.0
         }
 
         Text {
@@ -60,20 +60,20 @@ Item {
             }
         }
 
-        MouseArea {
-            anchors.fill: parent
-            hoverEnabled: true
+//        MouseArea {
+//            anchors.fill: parent
+//            hoverEnabled: true
 
-            onEntered: {
-                if(!dropArea.containsDrag) {
-                    tileHovered.opacity = 0.5
-                }
-            }
+//            onEntered: {
+//                if(!dropArea.containsDrag) {
+//                    tilePossible.opacity = 0.5
+//                }
+//            }
 
-            onExited: {
-                tileHovered.opacity = 0.0
-            }
-        }
+//            onExited: {
+//                tilePossible.opacity = 0.0
+//            }
+//        }
 
         DropArea {
             id: dropArea

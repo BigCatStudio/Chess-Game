@@ -12,10 +12,10 @@
         <file>Images/figure.png</file>
         <file>Images/figure2.png</file>
         <file>Images/bishop.png</file>
-        <file>Images/horse.png</file>
         <file>Images/king.png</file>
         <file>Images/pawn.png</file>
-        <file>Images/quenn.png</file>
         <file>Images/rook.png</file>
+        <file>Images/knight.png</file>
+        <file>Images/queen.png</file>
     </qresource>
 </RCC>

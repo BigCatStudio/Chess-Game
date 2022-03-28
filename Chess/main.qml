@@ -3,6 +3,8 @@ import QtQuick.Window
 import QtQuick.Layouts
 import QtQuick.Controls
 
+import Cpp.Classes
+
 import "qrc:/JavaScriptFiles/Utilities.js" as DynamicUtilities
 
 // Think about Window or ApplicationWindow
@@ -50,11 +52,24 @@ ApplicationWindow {
     RowLayout {
         id: figuresLayout
 
-        Repeater {
-            id: figuresRepeater
-            model: 10
+        FigureFront { figureSource: "qrc:/Images/Images/pawn.png"; figureType: FigureBack.Pawn; figureColor: "white" }
+        FigureFront { figureSource: "qrc:/Images/Images/bishop.png"; figureType: FigureBack.Bishop; figureColor: "white" }
+        FigureFront { figureSource: "qrc:/Images/Images/knight.png"; figureType: FigureBack.Knight; figureColor: "white" }
+        FigureFront { figureSource: "qrc:/Images/Images/rook.png"; figureType: FigureBack.Rook; figureColor: "white" }
+        FigureFront { figureSource: "qrc:/Images/Images/queen.png"; figureType: FigureBack.Queen; figureColor: "white" }
+        FigureFront { figureSource: "qrc:/Images/Images/king.png"; figureType: FigureBack.King; figureColor: "white" }
 
-            FigureFront {}
-        }
+        FigureFront { figureSource: "qrc:/Images/Images/pawn.png"; figureType: FigureBack.Pawn; figureColor: "black" }
+        FigureFront { figureSource: "qrc:/Images/Images/bishop.png"; figureType: FigureBack.Bishop; figureColor: "black" }
+        FigureFront { figureSource: "qrc:/Images/Images/knight.png"; figureType: FigureBack.Knight; figureColor: "black" }
+        FigureFront { figureSource: "qrc:/Images/Images/rook.png"; figureType: FigureBack.Rook; figureColor: "black" }
+        FigureFront { figureSource: "qrc:/Images/Images/queen.png"; figureType: FigureBack.Queen; figureColor: "black" }
+        FigureFront { figureSource: "qrc:/Images/Images/king.png"; figureType: FigureBack.King; figureColor: "black" }
+//        Repeater {
+//            id: figuresRepeater
+//            model: 10
+
+//            FigureFront {}
+//        }
     }
 }

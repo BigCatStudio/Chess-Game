@@ -22,3 +22,17 @@ void TilesFiguresHandler::addFigure(TileBack *SourceTile, FigureBack *SourceFigu
         qInfo() << key << "    " << value;
     }
 }
+
+void TilesFiguresHandler::findValidTiles(FigureBack *SourceFigure) {
+    int xCord = SourceFigure->xCord();
+    int yCord = SourceFigure->yCord();
+    int type = SourceFigure->type();
+
+    // Tiles calculated for black
+    for(auto& [key, value] : tileFigurePairs) {
+        // Fix when figure is on last line
+        if(key->xCord() == xCord && key->yCord() == (yCord - 1)) {
+            key->setPossible(true);
+        }
+    }
+}

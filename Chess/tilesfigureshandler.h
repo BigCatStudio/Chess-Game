@@ -25,6 +25,7 @@ public:
 
     Q_INVOKABLE void addTile(TileBack* SourceTile);
     Q_INVOKABLE void addFigure(TileBack* SourceTile, FigureBack* SourceFigure);
+    Q_INVOKABLE void findValidTiles(FigureBack* SourceFigure);
 
 signals:
 

@@ -1,7 +1,7 @@
 #include "tileback.h"
 
 TileBack::TileBack(QObject *parent)
-    : QObject(parent), xCordValue{0}, yCordValue{0}, containsFigureValue{false} {}
+    : QObject(parent), xCordValue{0}, yCordValue{0}, containsFigureValue{false}, possibleValue{false} {}
 
 void TileBack::setXCord(const int &xCordGiven) {
     if(xCordGiven != xCordValue) {
@@ -29,6 +29,13 @@ void TileBack::setContainsFigure(const bool &containsFigureGiven) {
     }
 }
 
+void TileBack::setPossible(const bool &possibleGiven) {
+    if(possibleGiven != possibleValue) {
+        possibleValue = possibleGiven;
+        emit possibleChanged();
+    }
+}
+
 int TileBack::xCord() const {
     return xCordValue;
 }
@@ -39,4 +46,8 @@ int TileBack::yCord() const {
 
 bool TileBack::containsFigure() const {
     return containsFigureValue;
+}
+
+bool TileBack::possible() const {
+    return possibleValue;
 }

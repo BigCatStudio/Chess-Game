@@ -30,6 +30,13 @@ void FigureBack::setType(const int &typeGiven) {
     }
 }
 
+void FigureBack::setColor(const QColor &colorGiven) {
+    if(colorGiven != colorValue) {
+        colorValue = colorGiven;
+        emit colorChanged();
+    }
+}
+
 int FigureBack::xCord() const {
     return xCordValue;
 }
@@ -44,4 +51,8 @@ QUrl FigureBack::imageSource() const {
 
 int FigureBack::type() const {
     return typeValue;
+}
+
+QColor FigureBack::color() const {
+    return colorValue;
 }
