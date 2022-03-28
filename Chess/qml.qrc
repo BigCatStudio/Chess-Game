@@ -11,8 +11,11 @@
     <qresource prefix="/Images">
         <file>Images/figure.png</file>
         <file>Images/figure2.png</file>
-        <file>Images/nike.png</file>
-        <file>Images/logo.png</file>
-        <file>Images/QtLogo.jpg</file>
+        <file>Images/bishop.png</file>
+        <file>Images/horse.png</file>
+        <file>Images/king.png</file>
+        <file>Images/pawn.png</file>
+        <file>Images/quenn.png</file>
+        <file>Images/rook.png</file>
     </qresource>
 </RCC>

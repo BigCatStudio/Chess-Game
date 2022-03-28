@@ -52,7 +52,7 @@ ApplicationWindow {
 
         Repeater {
             id: figuresRepeater
-            model: 5
+            model: 10
 
             FigureFront {}
         }

@@ -6,6 +6,8 @@ Item {
     id: root
     width: 64; height: 64
 
+    property string figureSource: "qrc:/Images/Images/pawn.png"
+
     MouseArea {
         id: mouseArea
         width:64; height: 64
@@ -58,7 +60,7 @@ Item {
                 id: figureBackend
                 xCord: 0
                 yCord: 0
-                imageSource: "qrc:/Images/Images/QtLogo.jpg"
+                imageSource: figureSource
                 type: FigureBack.Queen
             }
         }
