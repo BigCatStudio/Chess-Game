@@ -12,5 +12,7 @@
         <file>Images/figure.png</file>
         <file>Images/figure2.png</file>
         <file>Images/nike.png</file>
+        <file>Images/logo.png</file>
+        <file>Images/QtLogo.jpg</file>
     </qresource>
 </RCC>

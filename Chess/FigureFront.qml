@@ -31,6 +31,7 @@ Item {
             width: 64; height: 64
             anchors.verticalCenter: parent.verticalCenter
             anchors.horizontalCenter: parent.horizontalCenter
+            color: "transparent"
 
             Drag.active: mouseArea.drag.active
 
@@ -57,7 +58,7 @@ Item {
                 id: figureBackend
                 xCord: 0
                 yCord: 0
-                imageSource: "qrc:/Images/Images/figure2.png"
+                imageSource: "qrc:/Images/Images/QtLogo.jpg"
                 type: FigureBack.Queen
             }
         }
