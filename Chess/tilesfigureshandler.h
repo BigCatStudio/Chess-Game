@@ -20,12 +20,15 @@ class TilesFiguresHandler : public QObject
 
 private:
     std::unordered_map<TileBack*, FigureBack*> tileFigurePairs;
+
+
 public:
     explicit TilesFiguresHandler(QObject *parent = nullptr);
 
     Q_INVOKABLE void addTile(TileBack* SourceTile);
     Q_INVOKABLE void addFigure(TileBack* SourceTile, FigureBack* SourceFigure);
     Q_INVOKABLE void findValidTiles(FigureBack* SourceFigure);
+    Q_INVOKABLE TileBack* getTile(const FigureBack* Source) const;
 
 signals:
 

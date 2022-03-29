@@ -19,7 +19,7 @@ void TilesFiguresHandler::addFigure(TileBack *SourceTile, FigureBack *SourceFigu
         if(!key->containsFigure() && value != nullptr) {
             value = nullptr;
         }
-        qInfo() << key << "    " << value;
+        // qInfo() << key << "    " << value;
     }
 }
 
@@ -35,4 +35,14 @@ void TilesFiguresHandler::findValidTiles(FigureBack *SourceFigure) {
             key->setPossible(true);
         }
     }
+}
+
+TileBack *TilesFiguresHandler::getTile(const FigureBack *Source) const {
+    for(auto& [key, value] : tileFigurePairs) {
+        if(value == Source) {
+            return key;
+        }
+    }
+    // It never happens but added to remove warning
+    return nullptr;
 }

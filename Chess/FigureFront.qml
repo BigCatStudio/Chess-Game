@@ -19,13 +19,15 @@ Item {
 
         onReleased: {
             // Fix the Error that occurs when the figure is dropped outside the board!!!!
-            if(!tile.Drag.target.children.length) {
-                mouseArea.parent = tile.Drag.target
-                tilesFiguresHandler.addFigure(mouseArea.parent.figure, figureBackend)
+            if(tile.Drag.target !== null) {
+                if(!tile.Drag.target.children.length) {
+                    mouseArea.parent = tile.Drag.target
+                    tilesFiguresHandler.addFigure(mouseArea.parent.figure, figureBackend)
+                }
             }
         }
 
-        onClicked: {
+        onPressed: {
             tilesFiguresHandler.findValidTiles(figureBackend)
         }
 
