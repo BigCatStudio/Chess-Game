@@ -34,7 +34,7 @@ Item {
         anchors.fill: parent
         color: dropArea.containsDrag ? "grey" : rootChessBoardTile.color
 
-        // Think about it if its is needed!!!
+        // it depends on possibleValue in tileBackend object of TileBack class
         Rectangle {
             id: tilePossible
             anchors.fill: parent
@@ -51,6 +51,7 @@ Item {
 
         TileBack {
             id: tileBackend
+            // maybe the xCord and yCord should be initialized in C++ class constructor - rethink it
             xCord: chessBoardUtilities.xCordCalculated
             yCord: chessBoardUtilities.yCordCalculated
             containsFigure: rootChessBoardTile.containsFigure
@@ -60,27 +61,12 @@ Item {
             }
         }
 
-//        MouseArea {
-//            anchors.fill: parent
-//            hoverEnabled: true
-
-//            onEntered: {
-//                if(!dropArea.containsDrag) {
-//                    tilePossible.opacity = 0.5
-//                }
-//            }
-
-//            onExited: {
-//                tilePossible.opacity = 0.0
-//            }
-//        }
-
         DropArea {
             id: dropArea
             anchors.fill: parent
 
             // This alias is used, when the new figure is on tile, to send TileBackend addres to TilesFiguresHandler
-            property alias figure: tileBackend
+            property alias tile: tileBackend
 
             // If the figure is dropped on tile the length of children<Item> changes
             // it helps to track if we can drop new figure on tile or if the figure can be taken

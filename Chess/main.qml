@@ -52,24 +52,29 @@ ApplicationWindow {
     RowLayout {
         id: figuresLayout
 
-        FigureFront { figureSource: "qrc:/Images/Images/pawn.png"; figureType: FigureBack.Pawn; figureColor: "white" }
-        FigureFront { figureSource: "qrc:/Images/Images/bishop.png"; figureType: FigureBack.Bishop; figureColor: "white" }
-        FigureFront { figureSource: "qrc:/Images/Images/knight.png"; figureType: FigureBack.Knight; figureColor: "white" }
-        FigureFront { figureSource: "qrc:/Images/Images/rook.png"; figureType: FigureBack.Rook; figureColor: "white" }
-        FigureFront { figureSource: "qrc:/Images/Images/queen.png"; figureType: FigureBack.Queen; figureColor: "white" }
-        FigureFront { figureSource: "qrc:/Images/Images/king.png"; figureType: FigureBack.King; figureColor: "white" }
 
-        FigureFront { figureSource: "qrc:/Images/Images/pawn.png"; figureType: FigureBack.Pawn; figureColor: "black" }
-        FigureFront { figureSource: "qrc:/Images/Images/bishop.png"; figureType: FigureBack.Bishop; figureColor: "black" }
-        FigureFront { figureSource: "qrc:/Images/Images/knight.png"; figureType: FigureBack.Knight; figureColor: "black" }
-        FigureFront { figureSource: "qrc:/Images/Images/rook.png"; figureType: FigureBack.Rook; figureColor: "black" }
-        FigureFront { figureSource: "qrc:/Images/Images/queen.png"; figureType: FigureBack.Queen; figureColor: "black" }
-        FigureFront { figureSource: "qrc:/Images/Images/king.png"; figureType: FigureBack.King; figureColor: "black" }
-//        Repeater {
-//            id: figuresRepeater
-//            model: 10
+        Component.onCompleted: {
+            var component1 = Qt.createComponent("FigureFront.qml");
+            var object1 = component1.createObject(figuresLayout, { "figureSource": "qrc:/Images/Images/test_white_pawn.jpg", "figureType": FigureBack.Pawn, "figureColor": "white" })
 
-//            FigureFront {}
-//        }
+            var component2 = Qt.createComponent("FigureFront.qml");
+            var object2 = component2.createObject(figuresLayout, { "figureSource": "qrc:/Images/Images/test_black_pawn.png", "figureType": FigureBack.Pawn, "figureColor": "black" })
+        }
+
+
+
+//        FigureFront { figureSource: "qrc:/Images/Images/test_white_pawn.jpg"; figureType: FigureBack.Pawn; figureColor: "white" }
+//        FigureFront { figureSource: "qrc:/Images/Images/bishop.png"; figureType: FigureBack.Bishop; figureColor: "white" }
+//        FigureFront { figureSource: "qrc:/Images/Images/knight.png"; figureType: FigureBack.Knight; figureColor: "white" }
+//        FigureFront { figureSource: "qrc:/Images/Images/rook.png"; figureType: FigureBack.Rook; figureColor: "white" }
+//        FigureFront { figureSource: "qrc:/Images/Images/queen.png"; figureType: FigureBack.Queen; figureColor: "white" }
+//        FigureFront { figureSource: "qrc:/Images/Images/king.png"; figureType: FigureBack.King; figureColor: "white" }
+
+//        FigureFront { figureSource: "qrc:/Images/Images/test_black_pawn.png"; figureType: FigureBack.Pawn; figureColor: "black" }
+//        FigureFront { figureSource: "qrc:/Images/Images/bishop.png"; figureType: FigureBack.Bishop; figureColor: "black" }
+//        FigureFront { figureSource: "qrc:/Images/Images/knight.png"; figureType: FigureBack.Knight; figureColor: "black" }
+//        FigureFront { figureSource: "qrc:/Images/Images/rook.png"; figureType: FigureBack.Rook; figureColor: "black" }
+//        FigureFront { figureSource: "qrc:/Images/Images/queen.png"; figureType: FigureBack.Queen; figureColor: "black" }
+//        FigureFront { figureSource: "qrc:/Images/Images/king.png"; figureType: FigureBack.King; figureColor: "black" }
     }
 }

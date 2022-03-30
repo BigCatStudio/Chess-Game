@@ -17,6 +17,7 @@ private:
     int xCordValue;
     int yCordValue;
     bool containsFigureValue;
+    // determines whether it is valid tile for currently selected figure in play
     bool possibleValue;
 
 public:
@@ -36,7 +37,6 @@ signals:
     void xCordChanged();
     void yCordChanged();
     void containsFigureChanged();
-    void setFigureCords(int x, int y);
     void possibleChanged();
 };
 

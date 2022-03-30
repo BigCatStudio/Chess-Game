@@ -1,9 +1,12 @@
 #include "tilesfigureshandler.h"
 
-TilesFiguresHandler::TilesFiguresHandler(QObject *parent) : QObject(parent) {}
+TilesFiguresHandler::TilesFiguresHandler(QObject *parent) : QObject(parent), currentFigure{nullptr} {}
 
-void TilesFiguresHandler::addTile(TileBack *SourceTile) {
+// If tile has one of staring point figures it can contain also figure address
+// if not set to nullptr
+void TilesFiguresHandler::addTile(TileBack *SourceTile, FigureBack* SourceFigure) {
     tileFigurePairs[SourceTile] = nullptr;
+    // tileFigurePairs[SourceTile] = SourceFigure;  Add when ready to implement starting point
 }
 
 void TilesFiguresHandler::addFigure(TileBack *SourceTile, FigureBack *SourceFigure) {
@@ -28,7 +31,7 @@ void TilesFiguresHandler::findValidTiles(FigureBack *SourceFigure) {
     int yCord = SourceFigure->yCord();
     int type = SourceFigure->type();
 
-    // Tiles calculated for black
+    // Tiles calculated for black pawn
     for(auto& [key, value] : tileFigurePairs) {
         // Fix when figure is on last line
         if(key->xCord() == xCord && key->yCord() == (yCord - 1)) {
@@ -37,12 +40,38 @@ void TilesFiguresHandler::findValidTiles(FigureBack *SourceFigure) {
     }
 }
 
-TileBack *TilesFiguresHandler::getTile(const FigureBack *Source) const {
+TileBack *TilesFiguresHandler::getTile(const FigureBack* SourceFigure) const {
     for(auto& [key, value] : tileFigurePairs) {
-        if(value == Source) {
+        if(value == SourceFigure) {
             return key;
         }
     }
-    // It never happens but added to remove warning
     return nullptr;
+}
+
+FigureBack *TilesFiguresHandler::getFigure(const TileBack* SourceTile) const{
+    for(auto& [key, value] : tileFigurePairs) {
+        if(key == SourceTile) {
+            return value;
+        }
+    }
+    return nullptr;
+}
+
+void TilesFiguresHandler::clearPossibleTiles() {
+    for(auto& [key, value] : tileFigurePairs) {
+        if(key->possible()) {
+            key->setPossible(false);
+        }
+    }
+}
+
+void TilesFiguresHandler::setCurrentFigure(FigureBack *SourceFigure) {
+    if(SourceFigure != currentFigure) {
+        currentFigure = SourceFigure;
+    }
+}
+
+FigureBack *TilesFiguresHandler::getCurrentFigure() const {
+    return currentFigure;
 }

@@ -17,19 +17,21 @@
 class TilesFiguresHandler : public QObject
 {
     Q_OBJECT
-
 private:
     std::unordered_map<TileBack*, FigureBack*> tileFigurePairs;
-
+    FigureBack* currentFigure;
 
 public:
     explicit TilesFiguresHandler(QObject *parent = nullptr);
 
-    Q_INVOKABLE void addTile(TileBack* SourceTile);
+    Q_INVOKABLE void addTile(TileBack* SourceTile, FigureBack* SourceFigure = nullptr);
     Q_INVOKABLE void addFigure(TileBack* SourceTile, FigureBack* SourceFigure);
     Q_INVOKABLE void findValidTiles(FigureBack* SourceFigure);
-    Q_INVOKABLE TileBack* getTile(const FigureBack* Source) const;
-
+    Q_INVOKABLE TileBack* getTile(const FigureBack* SourceFigure) const;
+    Q_INVOKABLE FigureBack* getFigure(const TileBack* SourceTile) const;
+    Q_INVOKABLE void clearPossibleTiles();
+    Q_INVOKABLE void setCurrentFigure(FigureBack* SourceFigure);
+    Q_INVOKABLE FigureBack* getCurrentFigure() const;
 signals:
 
 };

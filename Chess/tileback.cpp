@@ -21,11 +21,6 @@ void TileBack::setContainsFigure(const bool &containsFigureGiven) {
     if(containsFigureGiven != containsFigureValue) {
         containsFigureValue = containsFigureGiven;
         emit containsFigureChanged();
-
-        // Emits signal to the figure with tile's cords
-        if(containsFigureValue) {
-            emit setFigureCords(xCordValue, yCordValue);
-        }
     }
 }
 

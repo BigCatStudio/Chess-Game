@@ -17,5 +17,7 @@
         <file>Images/rook.png</file>
         <file>Images/knight.png</file>
         <file>Images/queen.png</file>
+        <file>Images/test_black_pawn.png</file>
+        <file>Images/test_white_pawn.jpg</file>
     </qresource>
 </RCC>

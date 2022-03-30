@@ -17,8 +17,8 @@ Item {
     Layout.maximumHeight: (minimalScreenSide / 10) * 8 + (minimalScreenSide / 20) * 2
     Layout.preferredHeight: (minimalScreenSide / 12) * 8 + (minimalScreenSide / 20) * 2
 
-    width: (minimalScreenSide / 12) * 8 + (minimalScreenSide / 20)
-    height: (minimalScreenSide / 12) * 8 + (minimalScreenSide / 20)
+    width: (minimalScreenSide / 12) * 8 + (minimalScreenSide / 20) * 2
+    height: (minimalScreenSide / 12) * 8 + (minimalScreenSide / 20) * 2
 
     Rectangle {
         id: frame
