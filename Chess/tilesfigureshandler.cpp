@@ -113,38 +113,118 @@ void TilesFiguresHandler::findPawnTiles(int xCord, int yCord, QColor color) {
         // maybe lambda can be used
         for(auto& [key, value] : tileFigurePairs) {
             // Fix when figure is on last line
-            if(key->xCord() == xCord && key->yCord() == (yCord - 1)) {
+            if(key->xCord() == xCord && key->yCord() == yCord - 1) {
                 key->setPossible(true);
+            } else if((key->xCord() == xCord - 1 || key->xCord() == xCord + 1) && key->yCord() == yCord - 1) {
+                if(value != nullptr) {
+                    if(value->color() == "white") {
+                        key->setPossible(true);
+                    }
+                }
             }
         }
     } else {
         for(auto& [key, value] : tileFigurePairs) {
             // Fix when figure is on last line
-            if(key->xCord() == xCord && key->yCord() == (yCord + 1)) {
+            if(key->xCord() == xCord && key->yCord() == yCord + 1) {
                 key->setPossible(true);
+            } else if((key->xCord() == xCord - 1 || key->xCord() == xCord + 1) && key->yCord() == yCord + 1) {
+                if(value != nullptr) {
+                    if(value->color() == "black") {
+                        key->setPossible(true);
+                    }
+                }
             }
         }
     }
 }
 
 void TilesFiguresHandler::findBishopTiles(int xCord, int yCord, QColor color) {
-    if(color == "black") {
+    bool exitLoop {false};
+    for(int x {xCord}, y {yCord};x < 9 && y < 9;x++, y++) {
         for(auto& [key, value] : tileFigurePairs) {
-            if(key->xCord() == xCord && key->yCord() == (yCord - 1)) {
-                key->setPossible(true);
+            if(key->xCord() == x + 1 && key->yCord() == y + 1) {
+                if(value == nullptr) {
+                    key->setPossible(true);
+                } else if(value->color() != color) {
+                    key->setPossible(true);
+                    exitLoop = true;
+                } else {
+                    exitLoop = true;
+                }
+                break;
             }
         }
-    } else {
+        if(exitLoop) {
+            break;
+        }
+    }
+
+    exitLoop = false;
+    for(int x {xCord}, y {yCord};x > 0 && y > 0;x--, y--) {
         for(auto& [key, value] : tileFigurePairs) {
-            if(key->xCord() == xCord && key->yCord() == (yCord + 1)) {
-                key->setPossible(true);
+            if(key->xCord() == x - 1 && key->yCord() == y - 1) {
+                if(value == nullptr) {
+                    key->setPossible(true);
+                } else if(value->color() != color) {
+                    key->setPossible(true);
+                    exitLoop = true;
+                } else {
+                    exitLoop = true;
+                }
+                break;
             }
+        }
+        if(exitLoop) {
+            break;
+        }
+    }
+
+    exitLoop = false;
+    for(int x {xCord}, y {yCord};x < 9 && y > 0;x++, y--) {
+        for(auto& [key, value] : tileFigurePairs) {
+            if(key->xCord() == x + 1 && key->yCord() == y - 1) {
+                if(value == nullptr) {
+                    key->setPossible(true);
+                } else if(value->color() != color) {
+                    key->setPossible(true);
+                    exitLoop = true;
+                } else {
+                    exitLoop = true;
+                }
+                break;
+            }
+        }
+        if(exitLoop) {
+            break;
+        }
+    }
+
+    exitLoop = false;
+    for(int x {xCord}, y {yCord};x > 0 && y < 9;x--, y++) {
+        for(auto& [key, value] : tileFigurePairs) {
+            if(key->xCord() == x - 1 && key->yCord() == y + 1) {
+                if(value == nullptr) {
+                    key->setPossible(true);
+                } else if(value->color() != color) {
+                    key->setPossible(true);
+                    exitLoop = true;
+                } else {
+                    exitLoop = true;
+                }
+                break;
+            }
+        }
+        if(exitLoop) {
+            break;
         }
     }
 }
 
 void TilesFiguresHandler::findKnightiles(int xCord, int yCord, QColor color) {
     std::vector<std::pair<int, int>> possibleCords;
+
+    // Improve searching and delete pairs that are not available before searching
 
     possibleCords.push_back(std::pair<int,int> {xCord - 2, yCord + 1});
     possibleCords.push_back(std::pair<int,int> {xCord - 2, yCord - 1});
@@ -170,17 +250,102 @@ void TilesFiguresHandler::findKnightiles(int xCord, int yCord, QColor color) {
 }
 
 void TilesFiguresHandler::findRookTiles(int xCord, int yCord, QColor color) {
-    for(auto& [key, value] : tileFigurePairs) {
-        if(key->xCord() == xCord || key->yCord() == yCord) {
-            key->setPossible(true);
+
+    // Whole rook functionality can be for sure improved much more - think about it !!!
+
+    bool exitLoop {false};
+    for(int i {yCord};i < 9;i++) {
+        for(auto& [key, value] : tileFigurePairs) {
+            if(key->xCord() == xCord && key->yCord() == i + 1) {
+                if(value == nullptr) {
+                    key->setPossible(true);
+                } else if(value->color() != color) {
+                    key->setPossible(true);
+                    exitLoop = true;
+                } else {
+                    exitLoop = true;
+                }
+                break;
+            }
+        }
+        if(exitLoop) {
+            break;
+        }
+    }
+
+    exitLoop = false;
+    for(int i {yCord};i > 0;i--) {
+        for(auto& [key, value] : tileFigurePairs) {
+            if(key->xCord() == xCord && key->yCord() == i - 1) {
+                if(value == nullptr) {
+                    key->setPossible(true);
+                } else if(value->color() != color) {
+                    key->setPossible(true);
+                    exitLoop = true;
+                } else {
+                    exitLoop = true;
+                }
+                break;
+            }
+        }
+        if(exitLoop) {
+            break;
+        }
+    }
+
+    exitLoop = false;
+    for(int i {xCord};i < 9;i++) {
+        for(auto& [key, value] : tileFigurePairs) {
+            if(key->xCord() == i + 1 && key->yCord() == yCord) {
+                if(value == nullptr) {
+                    key->setPossible(true);
+                } else if(value->color() != color) {
+                    key->setPossible(true);
+                    exitLoop = true;
+                } else {
+                    exitLoop = true;
+                }
+                break;
+            }
+        }
+        if(exitLoop) {
+            break;
+        }
+    }
+
+    exitLoop = false;
+    for(int i {xCord};i > 0;i--) {
+        for(auto& [key, value] : tileFigurePairs) {
+            if(key->xCord() == i - 1 && key->yCord() == yCord) {
+                if(value == nullptr) {
+                    key->setPossible(true);
+                } else if(value->color() != color) {
+                    key->setPossible(true);
+                    exitLoop = true;
+                } else {
+                    exitLoop = true;
+                }
+                break;
+            }
+        }
+        if(exitLoop) {
+            break;
         }
     }
 }
 
 void TilesFiguresHandler::findQueenTiles(int xCord, int yCord, QColor color) {
-
+    findKingTiles(xCord, yCord, color);
+    findRookTiles(xCord, yCord, color);
+    findBishopTiles(xCord, yCord, color);
 }
 
 void TilesFiguresHandler::findKingTiles(int xCord, int yCord, QColor color) {
-
+    for(auto& [key, value] : tileFigurePairs) {
+        if((key->xCord() == xCord || key->xCord() == xCord + 1 || key->xCord() == xCord - 1) && (key->yCord() == yCord || key->yCord() == yCord + 1 || key->yCord() == yCord - 1)) {
+            if(value == nullptr || value->color() != color) {
+                key->setPossible(true);
+            }
+        }
+    }
 }

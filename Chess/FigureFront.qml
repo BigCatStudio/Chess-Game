@@ -96,11 +96,11 @@ Item {
                 fillMode: Image.PreserveAspectFit
             }
 
-            Text {
-                id: cords
-                anchors.centerIn: parent
-                text: figureBackend.xCord + " - " + figureBackend.yCord + "\n" + figureBackend.type
-            }
+//            Text {
+//                id: cords
+//                anchors.centerIn: parent
+//                text: figureBackend.xCord + " - " + figureBackend.yCord + "\n" + figureBackend.type
+//            }
 
             FigureBack {
                 id: figureBackend

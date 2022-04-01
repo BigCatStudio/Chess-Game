@@ -42,12 +42,12 @@ Item {
             opacity: tileBackend.possible ? 0.5 : 0.0
         }
 
-        Text {
-            id: tileCords
-            anchors.centerIn: parent
-            text: tileBackend.xCord + " - " + tileBackend.yCord + "\n" + "\nDostepny\n" + tileBackend.possible
-            color: "green"
-        }
+//        Text {
+//            id: tileCords
+//            anchors.centerIn: parent
+//            text: tileBackend.xCord + " - " + tileBackend.yCord + "\n" + "\nDostepny\n" + tileBackend.possible
+//            color: "green"
+//        }
 
         TileBack {
             id: tileBackend

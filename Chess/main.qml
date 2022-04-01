@@ -17,8 +17,8 @@ ApplicationWindow {
     minimumHeight: frameLayout.Layout.minimumHeight
     maximumHeight: frameLayout.Layout.maximumHeight //Screen.desktopAvailableHeight
 
-    width: frameLayout.implicitWidth
-    height: frameLayout.implicitHeight
+    width: frameLayout.maximumWidth
+    height: frameLayout.maximumHeight
 
     // frame instance must be in layout so it can be resizeable along with the content inside
     GridLayout {
@@ -99,9 +99,39 @@ ApplicationWindow {
                                                                                 "figureType": FigureBack.Rook, "figureColor": "black",
                                                                                 "xCordStart": 8, "yCordStart": 8})
 
+            var blackBishopObject1 = figureComponent.createObject(figuresLayout, { "figureSource": "qrc:/Images/Images/test_black_bishop.jpg",
+                                                                                "figureType": FigureBack.Bishop, "figureColor": "black",
+                                                                                "xCordStart": 3, "yCordStart": 8})
+
+            var blackBishopObject2 = figureComponent.createObject(figuresLayout, { "figureSource": "qrc:/Images/Images/test_black_bishop.jpg",
+                                                                                "figureType": FigureBack.Bishop, "figureColor": "black",
+                                                                                "xCordStart": 6, "yCordStart": 8})
+
+            var whiteBishopObject1 = figureComponent.createObject(figuresLayout, { "figureSource": "qrc:/Images/Images/test_white_bishop.jpeg",
+                                                                                "figureType": FigureBack.Bishop, "figureColor": "white",
+                                                                                "xCordStart": 3, "yCordStart": 1})
+
+            var whiteBishopObject2 = figureComponent.createObject(figuresLayout, { "figureSource": "qrc:/Images/Images/test_white_bishop.jpeg",
+                                                                                "figureType": FigureBack.Bishop, "figureColor": "white",
+                                                                                "xCordStart": 6, "yCordStart": 1})
+
+            var blackKingObject1 = figureComponent.createObject(figuresLayout, { "figureSource": "qrc:/Images/Images/test_black_king.jpeg",
+                                                                                "figureType": FigureBack.King, "figureColor": "black",
+                                                                                "xCordStart": 5, "yCordStart": 8})
+
+            var whiteKingObject1 = figureComponent.createObject(figuresLayout, { "figureSource": "qrc:/Images/Images/test_white_king.jpeg",
+                                                                                "figureType": FigureBack.King, "figureColor": "white",
+                                                                                "xCordStart": 5, "yCordStart": 1})
+
+            var blackQueenObject1 = figureComponent.createObject(figuresLayout, { "figureSource": "qrc:/Images/Images/test_black_queen.jpeg",
+                                                                                "figureType": FigureBack.Queen, "figureColor": "black",
+                                                                                "xCordStart": 4, "yCordStart": 8})
+
+            var whiteQueenObject1 = figureComponent.createObject(figuresLayout, { "figureSource": "qrc:/Images/Images/test_white_queen.jpeg",
+                                                                                "figureType": FigureBack.Queen, "figureColor": "white",
+                                                                                "xCordStart": 4, "yCordStart": 1})
+
         }
-
-
 
 //        FigureFront { figureSource: "qrc:/Images/Images/test_white_pawn.jpg"; figureType: FigureBack.Pawn; figureColor: "white" }
 //        FigureFront { figureSource: "qrc:/Images/Images/bishop.png"; figureType: FigureBack.Bishop; figureColor: "white" }
