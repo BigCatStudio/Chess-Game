@@ -50,6 +50,11 @@ Item {
             }
         }
 
+        Component.onCompleted: {
+            // This line is performed to add figure on tile to backend std::unordered_map<TileBack*, FigureBack*> tileFigurePairs
+            tilesFiguresHandler.addFigure(mouseArea.parent.tile, figureBackend)
+        }
+
         onPressed: {
             // Rethink if it can be done better but for now it is working
             if(tilesFiguresHandler.getCurrentFigure() !== figureBackend) {
