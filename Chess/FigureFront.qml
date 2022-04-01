@@ -23,29 +23,31 @@ Item {
         anchors.centerIn: parent
         drag.target: tile
 
+        // I can make some research in the future if more often are figures taken down
+        // or figures moved on empty tiles - probability
         onReleased: {
             if(tile.Drag.target !== null) {
                 console.log("Action done on figure !!!")
-                if(mouseArea.parent.tile !== tile.Drag.target.tile) {
-                    tilesFiguresHandler.clearPossibleTiles()
-                }
 
-                // This condition will be changed, it needs to check if tile has 0 children
-                // or if it contains figure of different color
+                console.log("Tile's possible " + tile.Drag.target.tile + ":  " + tilesFiguresHandler.getPossible(tile.Drag.target.tile))
 
-                // I can make some research in the future if more often are figures taken down
-                // or figures moved on empty tiles - probability
+                if(tile.Drag.target.tile.possible === true) {
+                    // Think it the if condition is necessary here
+                    if(mouseArea.parent.tile !== tile.Drag.target.tile) {
+                        tilesFiguresHandler.clearPossibleTiles()
+                    }
 
-                if(!tile.Drag.target.children.length) {
-                    // Think if changing parent from Item to tiles is not source of problem with
-                    // DropAreas not being compatible with graphical versions
-                    mouseArea.parent = tile.Drag.target
-                    tilesFiguresHandler.addFigure(mouseArea.parent.tile, figureBackend)
+                    if(!tile.Drag.target.children.length) {
+                        // Think if changing parent from Item to tiles is not source of problem with
+                        // DropAreas not being compatible with graphical versions
+                        mouseArea.parent = tile.Drag.target
+                        tilesFiguresHandler.addFigure(mouseArea.parent.tile, figureBackend)
 
-                } else if(tilesFiguresHandler.getFigure(tile.Drag.target.tile).color !== figureBackend.color) {
-                    // Add functionality of deleting dynamically created figures !!!
-                    mouseArea.parent = tile.Drag.target
-                    tilesFiguresHandler.addFigure(mouseArea.parent.tile, figureBackend)
+                    } else if(tilesFiguresHandler.getFigure(tile.Drag.target.tile).color/* !== figureBackend.color*/) {
+                        // Add functionality of deleting dynamically created figures !!!
+                        mouseArea.parent = tile.Drag.target
+                        tilesFiguresHandler.addFigure(mouseArea.parent.tile, figureBackend)
+                    }
                 }
             }
         }

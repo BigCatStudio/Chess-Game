@@ -6,6 +6,9 @@ TilesFiguresHandler::TilesFiguresHandler(QObject *parent) : QObject(parent), cur
 // if not set to nullptr
 void TilesFiguresHandler::addTile(TileBack *SourceTile, FigureBack* SourceFigure) {
     tileFigurePairs[SourceTile] = nullptr;
+
+    qInfo() << SourceTile << ": " << SourceTile->xCord() << "x" << SourceTile->yCord();
+
     // tileFigurePairs[SourceTile] = SourceFigure;  Add when ready to implement starting point
 }
 
@@ -23,20 +26,6 @@ void TilesFiguresHandler::addFigure(TileBack *SourceTile, FigureBack *SourceFigu
             value = nullptr;
         }
         // qInfo() << key << "    " << value;
-    }
-}
-
-void TilesFiguresHandler::findValidTiles(FigureBack *SourceFigure) {
-    int xCord = SourceFigure->xCord();
-    int yCord = SourceFigure->yCord();
-    int type = SourceFigure->type();
-
-    // Tiles calculated for black pawn
-    for(auto& [key, value] : tileFigurePairs) {
-        // Fix when figure is on last line
-        if(key->xCord() == xCord && key->yCord() == (yCord - 1)) {
-            key->setPossible(true);
-        }
     }
 }
 
@@ -84,4 +73,114 @@ void TilesFiguresHandler::setCurrentFigure(FigureBack *SourceFigure) {
 
 FigureBack *TilesFiguresHandler::getCurrentFigure() const {
     return currentFigure;
+}
+
+bool TilesFiguresHandler::getPossible(TileBack *SourceTile) {
+    return SourceTile->possible();
+}
+
+void TilesFiguresHandler::findValidTiles(FigureBack *SourceFigure) {
+    switch(SourceFigure->type()) {
+        case FigureBack::Pawn: {
+            findPawnTiles(SourceFigure->xCord(), SourceFigure->yCord(), SourceFigure->color());
+            break;
+        }
+        case FigureBack::Bishop: {
+            findBishopTiles(SourceFigure->xCord(), SourceFigure->yCord(), SourceFigure->color());
+            break;
+        }
+        case FigureBack::Knight: {
+            findKnightiles(SourceFigure->xCord(), SourceFigure->yCord(), SourceFigure->color());
+            break;
+        }
+        case FigureBack::Rook: {
+            findRookTiles(SourceFigure->xCord(), SourceFigure->yCord(), SourceFigure->color());
+            break;
+        }
+        case FigureBack::Queen: {
+            findQueenTiles(SourceFigure->xCord(), SourceFigure->yCord(), SourceFigure->color());
+            break;
+        }
+        case FigureBack::King: {
+            findKingTiles(SourceFigure->xCord(), SourceFigure->yCord(), SourceFigure->color());
+            break;
+        }
+    }
+}
+
+void TilesFiguresHandler::findPawnTiles(int xCord, int yCord, QColor color) {
+    if(color == "black") {
+        // maybe lambda can be used
+        for(auto& [key, value] : tileFigurePairs) {
+            // Fix when figure is on last line
+            if(key->xCord() == xCord && key->yCord() == (yCord - 1)) {
+                key->setPossible(true);
+            }
+        }
+    } else {
+        for(auto& [key, value] : tileFigurePairs) {
+            // Fix when figure is on last line
+            if(key->xCord() == xCord && key->yCord() == (yCord + 1)) {
+                key->setPossible(true);
+            }
+        }
+    }
+}
+
+void TilesFiguresHandler::findBishopTiles(int xCord, int yCord, QColor color) {
+    if(color == "black") {
+        for(auto& [key, value] : tileFigurePairs) {
+            if(key->xCord() == xCord && key->yCord() == (yCord - 1)) {
+                key->setPossible(true);
+            }
+        }
+    } else {
+        for(auto& [key, value] : tileFigurePairs) {
+            if(key->xCord() == xCord && key->yCord() == (yCord + 1)) {
+                key->setPossible(true);
+            }
+        }
+    }
+}
+
+void TilesFiguresHandler::findKnightiles(int xCord, int yCord, QColor color) {
+    std::vector<std::pair<int, int>> possibleCords;
+
+    possibleCords.push_back(std::pair<int,int> {xCord - 2, yCord + 1});
+    possibleCords.push_back(std::pair<int,int> {xCord - 2, yCord - 1});
+    possibleCords.push_back(std::pair<int,int> {xCord - 1, yCord + 2});
+    possibleCords.push_back(std::pair<int,int> {xCord - 1, yCord - 2});
+    possibleCords.push_back(std::pair<int,int> {xCord + 1, yCord + 2});
+    possibleCords.push_back(std::pair<int,int> {xCord + 1, yCord - 2});
+    possibleCords.push_back(std::pair<int,int> {xCord + 2, yCord + 1});
+    possibleCords.push_back(std::pair<int,int> {xCord + 2, yCord - 1});
+
+    // Error when placing horse on horse more than one time does not get place during real game
+
+    for(auto& [key, value] : tileFigurePairs) {
+        for(auto &pair : possibleCords) {
+            if(key->xCord() == pair.first && key->yCord() == pair.second) {
+                if(value == nullptr || value->color() != color) {
+                    key->setPossible(true);
+                }
+                break;
+            }
+        }
+    }
+}
+
+void TilesFiguresHandler::findRookTiles(int xCord, int yCord, QColor color) {
+    for(auto& [key, value] : tileFigurePairs) {
+        if(key->xCord() == xCord || key->yCord() == yCord) {
+            key->setPossible(true);
+        }
+    }
+}
+
+void TilesFiguresHandler::findQueenTiles(int xCord, int yCord, QColor color) {
+
+}
+
+void TilesFiguresHandler::findKingTiles(int xCord, int yCord, QColor color) {
+
 }

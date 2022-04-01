@@ -66,6 +66,39 @@ ApplicationWindow {
                                                                                     "figureType": FigureBack.Pawn, "figureColor": "black",
                                                                                     "xCordStart": i, "yCordStart": 7})
             }
+
+            var blackKnightObject1 = figureComponent.createObject(figuresLayout, { "figureSource": "qrc:/Images/Images/test_black_knight.jpg",
+                                                                                "figureType": FigureBack.Knight, "figureColor": "black",
+                                                                                "xCordStart": 2, "yCordStart": 8})
+
+            var blackKnightObject2 = figureComponent.createObject(figuresLayout, { "figureSource": "qrc:/Images/Images/test_black_knight.jpg",
+                                                                                "figureType": FigureBack.Knight, "figureColor": "black",
+                                                                                "xCordStart": 7, "yCordStart": 8})
+
+            var whiteKnightObject1 = figureComponent.createObject(figuresLayout, { "figureSource": "qrc:/Images/Images/test_white_knight.jpg",
+                                                                                "figureType": FigureBack.Knight, "figureColor": "white",
+                                                                                "xCordStart": 2, "yCordStart": 1})
+
+            var whiteKnightObject2 = figureComponent.createObject(figuresLayout, { "figureSource": "qrc:/Images/Images/test_white_knight.jpg",
+                                                                                "figureType": FigureBack.Knight, "figureColor": "white",
+                                                                                "xCordStart": 7, "yCordStart": 1})
+
+            var whiteRookObject1 = figureComponent.createObject(figuresLayout, { "figureSource": "qrc:/Images/Images/test_white_rook.jpeg",
+                                                                                "figureType": FigureBack.Rook, "figureColor": "white",
+                                                                                "xCordStart": 1, "yCordStart": 1})
+
+            var whiteRookObject2 = figureComponent.createObject(figuresLayout, { "figureSource": "qrc:/Images/Images/test_white_rook.jpeg",
+                                                                                "figureType": FigureBack.Rook, "figureColor": "white",
+                                                                                "xCordStart": 8, "yCordStart": 1})
+
+            var blackRookObject1 = figureComponent.createObject(figuresLayout, { "figureSource": "qrc:/Images/Images/test_black_rook.jpeg",
+                                                                                "figureType": FigureBack.Rook, "figureColor": "black",
+                                                                                "xCordStart": 1, "yCordStart": 8})
+
+            var blackRookObject2 = figureComponent.createObject(figuresLayout, { "figureSource": "qrc:/Images/Images/test_black_rook.jpeg",
+                                                                                "figureType": FigureBack.Rook, "figureColor": "black",
+                                                                                "xCordStart": 8, "yCordStart": 8})
+
         }
 
 

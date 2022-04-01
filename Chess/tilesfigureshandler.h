@@ -26,13 +26,21 @@ public:
 
     Q_INVOKABLE void addTile(TileBack* SourceTile, FigureBack* SourceFigure = nullptr);
     Q_INVOKABLE void addFigure(TileBack* SourceTile, FigureBack* SourceFigure);
-    Q_INVOKABLE void findValidTiles(FigureBack* SourceFigure);
     Q_INVOKABLE TileBack* getTile(const FigureBack* SourceFigure) const;
     Q_INVOKABLE TileBack* getTile(int xCord, int yCord, FigureBack* SourceFigure) const;
     Q_INVOKABLE FigureBack* getFigure(const TileBack* SourceTile) const;
     Q_INVOKABLE void clearPossibleTiles();
     Q_INVOKABLE void setCurrentFigure(FigureBack* SourceFigure);
     Q_INVOKABLE FigureBack* getCurrentFigure() const;
+    Q_INVOKABLE bool getPossible(TileBack* SourceTile);
+    Q_INVOKABLE void findValidTiles(FigureBack* SourceFigure);
+
+    void findPawnTiles(int xCord, int yCord, QColor color);
+    void findBishopTiles(int xCord, int yCord, QColor color);
+    void findKnightiles(int xCord, int yCord, QColor color);
+    void findRookTiles(int xCord, int yCord, QColor color);
+    void findQueenTiles(int xCord, int yCord, QColor color);
+    void findKingTiles(int xCord, int yCord, QColor color);
 
 signals:
 

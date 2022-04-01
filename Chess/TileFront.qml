@@ -45,7 +45,7 @@ Item {
         Text {
             id: tileCords
             anchors.centerIn: parent
-            text: tileBackend.xCord + " - " + tileBackend.yCord + "\n" + tileBackend.containsFigure + "\n" + dropArea.children.length
+            text: tileBackend.xCord + " - " + tileBackend.yCord + "\n" + "\nDostepny\n" + tileBackend.possible
             color: "green"
         }
 

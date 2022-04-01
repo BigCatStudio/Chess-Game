@@ -16,5 +16,15 @@
         <file>Images/queen.png</file>
         <file>Images/test_black_pawn.png</file>
         <file>Images/test_white_pawn.jpg</file>
+        <file>Images/test_black_bishop.jpg</file>
+        <file>Images/test_black_king.jpeg</file>
+        <file>Images/test_black_knight.jpg</file>
+        <file>Images/test_black_queen.jpeg</file>
+        <file>Images/test_black_rook.jpeg</file>
+        <file>Images/test_white_bishop.jpeg</file>
+        <file>Images/test_white_king.jpeg</file>
+        <file>Images/test_white_knight.jpg</file>
+        <file>Images/test_white_queen.jpeg</file>
+        <file>Images/test_white_rook.jpeg</file>
     </qresource>
 </RCC>
