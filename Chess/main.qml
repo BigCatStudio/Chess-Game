@@ -17,8 +17,8 @@ ApplicationWindow {
     minimumHeight: frameLayout.Layout.minimumHeight
     maximumHeight: frameLayout.Layout.maximumHeight //Screen.desktopAvailableHeight
 
-    width: frameLayout.maximumWidth
-    height: frameLayout.maximumHeight
+    width: frameLayout.Layout.maximumWidth
+    height: frameLayout.Layout.maximumHeight
 
     // frame instance must be in layout so it can be resizeable along with the content inside
     GridLayout {
