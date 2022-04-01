@@ -56,6 +56,8 @@ Item {
             yCord: chessBoardUtilities.yCordCalculated
             containsFigure: rootChessBoardTile.containsFigure
 
+            property alias dropAreaPointer: dropArea
+
             Component.onCompleted: {
                 tilesFiguresHandler.addTile(tileBackend);
             }

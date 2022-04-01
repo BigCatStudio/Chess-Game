@@ -49,6 +49,16 @@ TileBack *TilesFiguresHandler::getTile(const FigureBack* SourceFigure) const {
     return nullptr;
 }
 
+TileBack *TilesFiguresHandler::getTile(int xCord, int yCord, FigureBack *SourceFigure) const {
+    for(auto& [key, value] : tileFigurePairs) {
+        if(key->xCord() == xCord && key->yCord() == yCord) {
+            // value = SourceFigure;
+            return key;
+        }
+    }
+    return nullptr;
+}
+
 FigureBack *TilesFiguresHandler::getFigure(const TileBack* SourceTile) const{
     for(auto& [key, value] : tileFigurePairs) {
         if(key == SourceTile) {

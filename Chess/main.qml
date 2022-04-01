@@ -5,8 +5,6 @@ import QtQuick.Controls
 
 import Cpp.Classes
 
-import "qrc:/JavaScriptFiles/Utilities.js" as DynamicUtilities
-
 // Think about Window or ApplicationWindow
 ApplicationWindow {
     id: root
@@ -54,11 +52,20 @@ ApplicationWindow {
 
 
         Component.onCompleted: {
-            var component1 = Qt.createComponent("FigureFront.qml");
-            var object1 = component1.createObject(figuresLayout, { "figureSource": "qrc:/Images/Images/test_white_pawn.jpg", "figureType": FigureBack.Pawn, "figureColor": "white" })
+            // No need to dynamically create figures when pawns reach last row because the pawns can just
+            // change its imageSource and figureType
+            // When pawn reaches last row display small reactangle with possible figures to choose (maybe popup)
 
-            var component2 = Qt.createComponent("FigureFront.qml");
-            var object2 = component2.createObject(figuresLayout, { "figureSource": "qrc:/Images/Images/test_black_pawn.png", "figureType": FigureBack.Pawn, "figureColor": "black" })
+            var figureComponent = Qt.createComponent("FigureFront.qml");
+
+            for(var i = 1;i < 9;i++) {
+                var whitePawnObject = figureComponent.createObject(figuresLayout, { "figureSource": "qrc:/Images/Images/test_white_pawn.jpg",
+                                                                                    "figureType": FigureBack.Pawn, "figureColor": "white",
+                                                                                    "xCordStart": i, "yCordStart": 2})
+                var blackPawnObject = figureComponent.createObject(figuresLayout, { "figureSource": "qrc:/Images/Images/test_black_pawn.png",
+                                                                                    "figureType": FigureBack.Pawn, "figureColor": "black",
+                                                                                    "xCordStart": i, "yCordStart": 7})
+            }
         }
 
 

@@ -9,12 +9,18 @@ Item {
     property string figureSource: "qrc:/Images/Images/pawn.png"
     property color figureColor: "transparent"
     property int figureType: FigureBack.Pawn
+    property var parentId: null     // Thisproperty holds styarting point parent when chessboard is created
+
+    // Cords of the tile that is first parent for figure
+    property int xCordStart: 0
+    property int yCordStart: 0
 
     MouseArea {
         id: mouseArea
-        width:64; height: 64
+        width:64;
+        height: 64
+        parent: tilesFiguresHandler.getTile(root.xCordStart, root.yCordStart, figureBackend).dropAreaPointer
         anchors.centerIn: parent
-
         drag.target: tile
 
         onReleased: {
@@ -35,10 +41,9 @@ Item {
                     // DropAreas not being compatible with graphical versions
                     mouseArea.parent = tile.Drag.target
                     tilesFiguresHandler.addFigure(mouseArea.parent.tile, figureBackend)
+
                 } else if(tilesFiguresHandler.getFigure(tile.Drag.target.tile).color !== figureBackend.color) {
-
                     // Add functionality of deleting dynamically created figures !!!
-
                     mouseArea.parent = tile.Drag.target
                     tilesFiguresHandler.addFigure(mouseArea.parent.tile, figureBackend)
                 }
@@ -54,6 +59,7 @@ Item {
 
             console.log("Figure moved or clicked")
             tilesFiguresHandler.setCurrentFigure(figureBackend)
+            console.log(figureBackend)
             tilesFiguresHandler.findValidTiles(figureBackend)
         }
 

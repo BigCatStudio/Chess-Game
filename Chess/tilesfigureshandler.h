@@ -28,10 +28,12 @@ public:
     Q_INVOKABLE void addFigure(TileBack* SourceTile, FigureBack* SourceFigure);
     Q_INVOKABLE void findValidTiles(FigureBack* SourceFigure);
     Q_INVOKABLE TileBack* getTile(const FigureBack* SourceFigure) const;
+    Q_INVOKABLE TileBack* getTile(int xCord, int yCord, FigureBack* SourceFigure) const;
     Q_INVOKABLE FigureBack* getFigure(const TileBack* SourceTile) const;
     Q_INVOKABLE void clearPossibleTiles();
     Q_INVOKABLE void setCurrentFigure(FigureBack* SourceFigure);
     Q_INVOKABLE FigureBack* getCurrentFigure() const;
+
 signals:
 
 };

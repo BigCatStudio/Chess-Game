@@ -5,9 +5,6 @@
         <file>FrameFront.qml</file>
         <file>FigureFront.qml</file>
     </qresource>
-    <qresource prefix="/JavaScriptFiles">
-        <file>Utilities.js</file>
-    </qresource>
     <qresource prefix="/Images">
         <file>Images/figure.png</file>
         <file>Images/figure2.png</file>
