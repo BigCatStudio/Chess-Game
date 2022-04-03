@@ -6,6 +6,8 @@ Item {
     id: root
     width: 64; height: 64
 
+    property int minimalScreenSide: (Screen.desktopAvailableWidth > Screen.desktopAvailableHeight) ? Screen.desktopAvailableHeight : Screen.desktopAvailableWidth
+
     property string figureSource: "qrc:/Images/Images/pawn.png"
     property color figureColor: "transparent"
     property int figureType: FigureBack.Pawn
@@ -17,11 +19,15 @@ Item {
 
     MouseArea {
         id: mouseArea
-        width:64;
-        height: 64
+        width: parent.width
+        height: parent.height
         parent: tilesFiguresHandler.getTile(root.xCordStart, root.yCordStart, figureBackend).dropAreaPointer
         anchors.centerIn: parent
-        drag.target: tile
+        drag.target: tilesFiguresHandler.getCurrentColorMove() === figureBackend.color ? tile : null// tile
+
+        onEntered: {
+            mouseArea.drag.target = tilesFiguresHandler.getCurrentColorMove() === figureBackend.color ? tile : null
+        }
 
         // I can make some research in the future if more often are figures taken down
         // or figures moved on empty tiles - probability
@@ -42,11 +48,16 @@ Item {
                         // DropAreas not being compatible with graphical versions
                         mouseArea.parent = tile.Drag.target
                         tilesFiguresHandler.addFigure(mouseArea.parent.tile, figureBackend)
+                        tilesFiguresHandler.setCurrentColorMove();
 
-                    } else if(tilesFiguresHandler.getFigure(tile.Drag.target.tile).color/* !== figureBackend.color*/) {
+                    }else if(tilesFiguresHandler.getFigure(tile.Drag.target.tile).color !== figureBackend.color) {
                         // Add functionality of deleting dynamically created figures !!!
+
+                        //There will be error with anchors because object is destroyed in wrong order and anchors alias becomes undefined
+                        tile.Drag.target.children[0].destroy()
                         mouseArea.parent = tile.Drag.target
                         tilesFiguresHandler.addFigure(mouseArea.parent.tile, figureBackend)
+                        tilesFiguresHandler.setCurrentColorMove();
                     }
                 }
             }
@@ -76,7 +87,8 @@ Item {
 
         Rectangle {
             id: tile
-            width: 64; height: 64
+            width: parent.width
+            height: parent.height
             anchors.verticalCenter: parent.verticalCenter
             anchors.horizontalCenter: parent.horizontalCenter
             color: "transparent"
@@ -95,12 +107,6 @@ Item {
                 anchors.fill: parent
                 fillMode: Image.PreserveAspectFit
             }
-
-//            Text {
-//                id: cords
-//                anchors.centerIn: parent
-//                text: figureBackend.xCord + " - " + figureBackend.yCord + "\n" + figureBackend.type
-//            }
 
             FigureBack {
                 id: figureBackend

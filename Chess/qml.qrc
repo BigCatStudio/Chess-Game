@@ -6,25 +6,17 @@
         <file>FigureFront.qml</file>
     </qresource>
     <qresource prefix="/Images">
-        <file>Images/figure.png</file>
-        <file>Images/figure2.png</file>
-        <file>Images/bishop.png</file>
-        <file>Images/king.png</file>
-        <file>Images/pawn.png</file>
-        <file>Images/rook.png</file>
-        <file>Images/knight.png</file>
-        <file>Images/queen.png</file>
-        <file>Images/test_black_pawn.png</file>
-        <file>Images/test_white_pawn.jpg</file>
-        <file>Images/test_black_bishop.jpg</file>
-        <file>Images/test_black_king.jpeg</file>
-        <file>Images/test_black_knight.jpg</file>
-        <file>Images/test_black_queen.jpeg</file>
-        <file>Images/test_black_rook.jpeg</file>
-        <file>Images/test_white_bishop.jpeg</file>
-        <file>Images/test_white_king.jpeg</file>
-        <file>Images/test_white_knight.jpg</file>
-        <file>Images/test_white_queen.jpeg</file>
-        <file>Images/test_white_rook.jpeg</file>
+        <file>Images/kingBlack.png</file>
+        <file>Images/kingWhite.png</file>
+        <file>Images/bishopBlack.png</file>
+        <file>Images/bishopWhite.png</file>
+        <file>Images/knightBlack.png</file>
+        <file>Images/knightWhite.png</file>
+        <file>Images/pawnBlack.png</file>
+        <file>Images/pawnWhite.png</file>
+        <file>Images/queenBlack.png</file>
+        <file>Images/queenWhite.png</file>
+        <file>Images/rookBlack.png</file>
+        <file>Images/rookWhite.png</file>
     </qresource>
 </RCC>

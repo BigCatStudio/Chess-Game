@@ -1,10 +1,11 @@
 #include "tilesfigureshandler.h"
 
-TilesFiguresHandler::TilesFiguresHandler(QObject *parent) : QObject(parent), currentFigure{nullptr} {}
+TilesFiguresHandler::TilesFiguresHandler(QObject *parent)
+    : QObject(parent), currentFigure{nullptr}, currentColorMove{"white"} {}
 
 // If tile has one of staring point figures it can contain also figure address
 // if not set to nullptr
-void TilesFiguresHandler::addTile(TileBack *SourceTile, FigureBack* SourceFigure) {
+void TilesFiguresHandler::addTile(TileBack *SourceTile) {
     tileFigurePairs[SourceTile] = nullptr;
 
     qInfo() << SourceTile << ": " << SourceTile->xCord() << "x" << SourceTile->yCord();
@@ -106,6 +107,14 @@ void TilesFiguresHandler::findValidTiles(FigureBack *SourceFigure) {
             break;
         }
     }
+}
+
+QColor TilesFiguresHandler::getCurrentColorMove() {
+    return currentColorMove;
+}
+
+void TilesFiguresHandler::setCurrentColorMove() {
+    currentColorMove = currentColorMove == "white" ? "black" : "white";
 }
 
 void TilesFiguresHandler::findPawnTiles(int xCord, int yCord, QColor color) {

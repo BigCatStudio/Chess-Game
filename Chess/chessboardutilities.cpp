@@ -1,14 +1,14 @@
 #include "chessboardutilities.h"
 
 ChessBoardUtilities::ChessBoardUtilities(QObject *parent)
-    : QObject{parent}, colorValue{"white"}, counterColor {0}, xCounter{0}, yCounter{63} {}
+    : QObject{parent}, colorValue{"#ffcc99"}, counterColor {0}, xCounter{0}, yCounter{63} {}
 
 QColor ChessBoardUtilities::color(){
     counterColor++;
     QColor additionalColor = colorValue;
 
     if(counterColor % 8) {
-        colorValue = (colorValue == "white") ? "black" : "white";
+        colorValue = (colorValue == "#ffcc99") ? "#b35900" : "#ffcc99";
     }
 
     return additionalColor;
