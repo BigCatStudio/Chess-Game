@@ -58,6 +58,8 @@ ApplicationWindow {
 
             var figureComponent = Qt.createComponent("FigureFront.qml");
 
+            // Może dodać liste przechowującą utworzone objekty i usuwającą kiedy trzeba
+
             for(var i = 1;i < 9;i++) {
                 var whitePawnObject = figureComponent.createObject(figuresLayout, { "figureSource": "qrc:/Images/Images/pawnWhite.png",
                                                                                     "figureType": FigureBack.Pawn, "figureColor": "white",

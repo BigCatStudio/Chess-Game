@@ -24,6 +24,13 @@ void TileBack::setContainsFigure(const bool &containsFigureGiven) {
     }
 }
 
+void TileBack::setColor(const QColor &colorGiven) {
+    if(colorGiven != colorValue) {
+        colorValue = colorGiven;
+        emit colorChanged();
+    }
+}
+
 void TileBack::setPossible(const bool &possibleGiven) {
     if(possibleGiven != possibleValue) {
         possibleValue = possibleGiven;
@@ -41,6 +48,10 @@ int TileBack::yCord() const {
 
 bool TileBack::containsFigure() const {
     return containsFigureValue;
+}
+
+QColor TileBack::color() const {
+    return colorValue;
 }
 
 bool TileBack::possible() const {

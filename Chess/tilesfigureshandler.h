@@ -21,6 +21,7 @@ private:
     std::unordered_map<TileBack*, FigureBack*> tileFigurePairs;
     FigureBack* currentFigure;
     QColor currentColorMove;
+    //std::vector<T> figureObjects;
 
 public:
     explicit TilesFiguresHandler(QObject *parent = nullptr);
@@ -37,6 +38,7 @@ public:
     Q_INVOKABLE void findValidTiles(FigureBack* SourceFigure);
     Q_INVOKABLE QColor getCurrentColorMove();
     Q_INVOKABLE void setCurrentColorMove();
+
 
     void findPawnTiles(int xCord, int yCord, QColor color);
     void findBishopTiles(int xCord, int yCord, QColor color);

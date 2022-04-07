@@ -9,8 +9,6 @@ void TilesFiguresHandler::addTile(TileBack *SourceTile) {
     tileFigurePairs[SourceTile] = nullptr;
 
     qInfo() << SourceTile << ": " << SourceTile->xCord() << "x" << SourceTile->yCord();
-
-    // tileFigurePairs[SourceTile] = SourceFigure;  Add when ready to implement starting point
 }
 
 void TilesFiguresHandler::addFigure(TileBack *SourceTile, FigureBack *SourceFigure) {
@@ -42,7 +40,6 @@ TileBack *TilesFiguresHandler::getTile(const FigureBack* SourceFigure) const {
 TileBack *TilesFiguresHandler::getTile(int xCord, int yCord, FigureBack *SourceFigure) const {
     for(auto& [key, value] : tileFigurePairs) {
         if(key->xCord() == xCord && key->yCord() == yCord) {
-            // value = SourceFigure;
             return key;
         }
     }
@@ -115,7 +112,7 @@ QColor TilesFiguresHandler::getCurrentColorMove() {
 
 void TilesFiguresHandler::setCurrentColorMove() {
     currentColorMove = currentColorMove == "white" ? "black" : "white";
-}
+} 
 
 void TilesFiguresHandler::findPawnTiles(int xCord, int yCord, QColor color) {
     if(color == "black") {

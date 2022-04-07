@@ -7,7 +7,7 @@ Item {
     id: rootChessBoardTile
 
     // Color of the tile is defined by chessBoardUtilities color getter
-    property color color: chessBoardUtilities.color
+    property color color: tileBackend.color
 
     // Getting which side of the display device is smaller, to scale board
     property int minimalScreenSide: (Screen.desktopAvailableWidth > Screen.desktopAvailableHeight) ? Screen.desktopAvailableHeight : Screen.desktopAvailableWidth
@@ -51,7 +51,9 @@ Item {
             xCord: chessBoardUtilities.xCordCalculated
             yCord: chessBoardUtilities.yCordCalculated
             containsFigure: rootChessBoardTile.containsFigure
+            color: chessBoardUtilities.color
 
+            //used for setting parent of figure MouseArea
             property alias dropAreaPointer: dropArea
 
             Component.onCompleted: {
