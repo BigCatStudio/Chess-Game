@@ -19,9 +19,7 @@ Item {
             Rectangle {
                 width: root.width
                 height: root.height / 8
-
-                color: "#e69900"
-
+                color: "#663300"
                 border {
                     color: "black"
                     width: 1

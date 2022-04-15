@@ -12,16 +12,18 @@ Item {
     RowLayout {
         spacing: 0
 
+        // rectangle to fill left corner between coordinates bars
         Rectangle {
             width: root.width / 18
             height: root.height
-            color: "#e69900"
+            color: "#663300"
             border {
                 color: "black"
                 width: 1
             }
         }
 
+        // Horizontal coordinates
         Repeater {
             id: coordinatesRepeater
             model: 8
@@ -29,9 +31,7 @@ Item {
             Rectangle {
                 width: root.width / 9
                 height: root.height
-
-                color: "#e69900"
-
+                color: "#663300"
                 border {
                     color: "black"
                     width: 1
@@ -40,17 +40,18 @@ Item {
                 Text {
                     id: coordinateText
                     anchors.centerIn: parent
-                    text: String.fromCharCode(65 + index)
+                    text: String.fromCharCode(65 + index)   // changing index to appropriate letter on chess board
                     color: "white"
                     font.pointSize: 15
                 }
             }
         }
 
+        // rectangle to fill right corner between coordinates bars
         Rectangle {
             width: root.width / 18
             height: root.height
-            color: "#e69900"
+            color: "#663300"
             border {
                 color: "black"
                 width: 1

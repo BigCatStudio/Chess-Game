@@ -5,15 +5,23 @@ import QtQuick.Controls
 
 import Cpp.Classes
 
-Window {
+ApplicationWindow {
     id: root
 
     property int minimalScreenSide: (Screen.desktopAvailableWidth > Screen.desktopAvailableHeight) ? Screen.desktopAvailableHeight : Screen.desktopAvailableWidth
-    width: minimalScreenSide - 100
-    height: minimalScreenSide - 100
+    width: Math.floor((minimalScreenSide - 100) / 9) * 9
+    height: Math.floor((minimalScreenSide - 100) / 9) * 9
+
+    // Sizes must be set that way because of divided sizes of tiles etc. (Otherwise there would be some small white pixels at the edges)
+    minimumHeight: Math.floor((minimalScreenSide - 100) / 9) * 8
+    maximumHeight: Math.floor((minimalScreenSide - 100) / 9) * 9
+    minimumWidth: Math.floor((minimalScreenSide - 100) / 9) * 8
+    maximumWidth: Math.floor((minimalScreenSide - 100) / 9) * 9
+
     visible: true
     title: "Chess Game"
 
+    //Functions and array for managing dynamically created figures
     property var objects: []
 
     function addObject(object) {
