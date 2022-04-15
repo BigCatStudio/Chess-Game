@@ -15,8 +15,18 @@ void TilesFiguresHandler::addFigure(FigureBack *SourceFigure) {
     for(auto& [key, value] : tileFigurePairs) {
         if(key->xCord() == SourceFigure->xCord() && key->yCord() == SourceFigure->yCord()) {
             value = SourceFigure;
+            key->setContainsFigure(true);
         }
     }
+}
+
+void TilesFiguresHandler::changeFigureCoords(TileBack *SourceTile, FigureBack *SourceFigure) {
+    getTile(SourceFigure)->setContainsFigure(false);
+
+    tileFigurePairs[SourceTile] = SourceFigure;
+    SourceFigure->setXCord(SourceTile->xCord());
+    SourceFigure->setYCord(SourceTile->yCord());
+    SourceTile->setContainsFigure(true);
 
     // Iterates over map and checks if tile without figure has its value set to nullptr
     // It must be checked atfer figure is moved from one tile to another so that instance of that figure will not be

@@ -17,10 +17,9 @@ Rectangle {
     }
 
     Text {
-        id: coordinatesTile
+        id: text
         anchors.centerIn: parent
-        text: tileBackend.xCord + "x" + tileBackend.yCord
-        color: "black"
+        text: tileBackend.containsFigure
     }
 
     TileBack {
@@ -40,6 +39,9 @@ Rectangle {
     DropArea {
         id: dropArea
         anchors.fill: parent
+
+        property alias tileBackPointer: tileBackend
+
         //keys: ["yellow"]
     }
 }

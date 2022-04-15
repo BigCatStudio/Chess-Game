@@ -18,30 +18,24 @@ Item {
     width: Math.floor((minimalScreenSide - 100) / 9)
     height: Math.floor((minimalScreenSide - 100) / 9)
 
-    FigureBack {
-        id: figureBackend
-        imageSource: root.figureSource
-        type: root.figureType
-        color: root.figureColor
-        xCord: root.xCordStart
-        yCord: root.yCordStart
-
-        Component.onCompleted: {
-            tilesFiguresHandler.addFigure(figureBackend)
-            mouseArea.parent = tilesFiguresHandler.getTile(xCord, yCord).dropAreaPointer
-        }
-    }
-
     MouseArea {
         id: mouseArea
         width: root.width
         height: root.height
         anchors.centerIn: parent
 
-        drag.target: tile
+        drag.target: figure
 
         onReleased: {
-            parent = tile.Drag.target !== null ? tile.Drag.target : mouseArea.parent
+            if(figure.Drag.target !== null) {
+                tilesFiguresHandler.changeFigureCoords(figure.Drag.target.tileBackPointer, figureBackend)
+                parent = figure.Drag.target
+            }
+        }
+
+        onParentChanged: {
+            //tilesFiguresHandler.changeFigureCoords(mouseArea.parent.tileBackPointer, figureBackend)
+            console.log("Figure changed position " + figureBackend + ":" + figureBackend.xCord + "x" + figureBackend.yCord)
         }
 
         // remember to delete this signal handler
@@ -51,8 +45,22 @@ Item {
             root.destroy()
         }
 
+        FigureBack {
+            id: figureBackend
+            imageSource: root.figureSource
+            type: root.figureType
+            color: root.figureColor
+            xCord: root.xCordStart
+            yCord: root.yCordStart
+
+            Component.onCompleted: {
+                tilesFiguresHandler.addFigure(figureBackend)
+                mouseArea.parent = tilesFiguresHandler.getTile(xCord, yCord).dropAreaPointer
+            }
+        }
+
         Rectangle {
-            id: tile
+            id: figure
             width: root.width
             height: root.height
             anchors.verticalCenter: parent.verticalCenter
@@ -69,8 +77,8 @@ Item {
 
             states: State {
                 when: mouseArea.drag.active
-                AnchorChanges { target: tile; anchors.verticalCenter: undefined; anchors.horizontalCenter: undefined }
-                PropertyChanges { target: tile; parent: root }
+                AnchorChanges { target: figure; anchors.verticalCenter: undefined; anchors.horizontalCenter: undefined }
+                PropertyChanges { target: figure; parent: root }
             }
 
             Image {

@@ -26,10 +26,11 @@ private:
 public:
     explicit TilesFiguresHandler(QObject *parent = nullptr);
 
-    Q_INVOKABLE void addTile(TileBack* SourceTile);
-    Q_INVOKABLE void addFigure(FigureBack* SourceFigure);
+    Q_INVOKABLE void addTile(TileBack* SourceTile);                         //used
+    Q_INVOKABLE void addFigure(FigureBack* SourceFigure);                   //used
+    Q_INVOKABLE void changeFigureCoords(TileBack* SourceTile, FigureBack* SourceFigure);    //used
     Q_INVOKABLE TileBack* getTile(const FigureBack* SourceFigure) const;
-    Q_INVOKABLE TileBack* getTile(int xCord, int yCord) const;
+    Q_INVOKABLE TileBack* getTile(int xCord, int yCord) const;              //used
     Q_INVOKABLE FigureBack* getFigure(const TileBack* SourceTile) const;
     Q_INVOKABLE void clearPossibleTiles();
     Q_INVOKABLE void setCurrentFigure(FigureBack* SourceFigure);

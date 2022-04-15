@@ -83,13 +83,9 @@ ApplicationWindow {
         anchors.horizontalCenter: gridTiles.horizontalCenter
     }
 
-    GridLayout {
+    Item {
         id: figuresLayout
         anchors.centerIn: parent
-        rows: 8
-        columns: 4
-        columnSpacing: 0
-        rowSpacing: 0
 
         Component.onCompleted: {
             var figureComponent = Qt.createComponent("FigureFront.qml");
