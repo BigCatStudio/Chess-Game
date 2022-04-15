@@ -51,6 +51,30 @@ Window {
         }
     }
 
+    VerticalCoordinates {
+        id: leftVerticalCoordinates
+        anchors.right: gridTiles.left
+        anchors.verticalCenter: gridTiles.verticalCenter
+    }
+
+    VerticalCoordinates {
+        id: rightVerticalCoordinates
+        anchors.left: gridTiles.right
+        anchors.verticalCenter: gridTiles.verticalCenter
+    }
+
+    HorizontalCoordinates {
+        id: topHorizontalCoordinates
+        anchors.bottom: gridTiles.top
+        anchors.horizontalCenter: gridTiles.horizontalCenter
+    }
+
+    HorizontalCoordinates {
+        id: bottomHorizontalCoordinates
+        anchors.top: gridTiles.bottom
+        anchors.horizontalCenter: gridTiles.horizontalCenter
+    }
+
     GridLayout {
         id: gridFigures
         anchors.centerIn: parent

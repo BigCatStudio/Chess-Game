@@ -3,6 +3,8 @@
         <file>main.qml</file>
         <file>TileFront.qml</file>
         <file>FigureFront.qml</file>
+        <file>VerticalCoordinates.qml</file>
+        <file>HorizontalCoordinates.qml</file>
     </qresource>
     <qresource prefix="/Images">
         <file>Images/kingBlack.png</file>
