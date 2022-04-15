@@ -11,11 +11,12 @@ void TilesFiguresHandler::addTile(TileBack *SourceTile) {
     qInfo() << SourceTile << ": " << SourceTile->xCord() << "x" << SourceTile->yCord();
 }
 
-void TilesFiguresHandler::addFigure(TileBack *SourceTile, FigureBack *SourceFigure) {
-    tileFigurePairs[SourceTile] = SourceFigure;
-
-    SourceFigure->setXCord(SourceTile->xCord());
-    SourceFigure->setYCord(SourceTile->yCord());
+void TilesFiguresHandler::addFigure(FigureBack *SourceFigure) {
+    for(auto& [key, value] : tileFigurePairs) {
+        if(key->xCord() == SourceFigure->xCord() && key->yCord() == SourceFigure->yCord()) {
+            value = SourceFigure;
+        }
+    }
 
     // Iterates over map and checks if tile without figure has its value set to nullptr
     // It must be checked atfer figure is moved from one tile to another so that instance of that figure will not be
@@ -24,7 +25,6 @@ void TilesFiguresHandler::addFigure(TileBack *SourceTile, FigureBack *SourceFigu
         if(!key->containsFigure() && value != nullptr) {
             value = nullptr;
         }
-        // qInfo() << key << "    " << value;
     }
 }
 
@@ -37,7 +37,7 @@ TileBack *TilesFiguresHandler::getTile(const FigureBack* SourceFigure) const {
     return nullptr;
 }
 
-TileBack *TilesFiguresHandler::getTile(int xCord, int yCord, FigureBack *SourceFigure) const {
+TileBack *TilesFiguresHandler::getTile(int xCord, int yCord) const {
     for(auto& [key, value] : tileFigurePairs) {
         if(key->xCord() == xCord && key->yCord() == yCord) {
             return key;

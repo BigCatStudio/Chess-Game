@@ -20,8 +20,7 @@ private:
     int yCordValue;
     bool containsFigureValue;
     QColor colorValue;
-    // determines whether it is valid tile for currently selected figure in play
-    bool possibleValue;
+    bool possibleValue;// determines whether it is valid tile for currently selected figure in play
 
 public:
     explicit TileBack(QObject *parent = nullptr);

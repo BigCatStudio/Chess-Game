@@ -10,11 +10,7 @@ Rectangle {
     width: Math.floor((minimalScreenSide - 100) / 9)
     height: Math.floor((minimalScreenSide - 100) / 9)
 
-    property color normalColor: chessBoardUtilities.color
-    property int xCord: chessBoardUtilities.xCordCalculated
-    property int yCord: chessBoardUtilities.yCordCalculated
-
-    color: dropArea.containsDrag ? "grey" : normalColor
+    color: dropArea.containsDrag ? "grey" : tileBackend.color
     border {
         width: 1
         color: "black"
@@ -23,12 +19,27 @@ Rectangle {
     Text {
         id: coordinatesTile
         anchors.centerIn: parent
-        text: root.xCord + "x" + root.yCord
+        text: tileBackend.xCord + "x" + tileBackend.yCord
         color: "black"
+    }
+
+    TileBack {
+        id: tileBackend
+        xCord: chessBoardUtilities.xCordCalculated
+        yCord: chessBoardUtilities.yCordCalculated
+        color: chessBoardUtilities.color
+
+        property alias dropAreaPointer: dropArea
+
+        // Adds tile to the container of pairs tile-figure in TilesFiguresHandler class
+        Component.onCompleted: {
+            tilesFiguresHandler.addTile(tileBackend)
+        }
     }
 
     DropArea {
         id: dropArea
         anchors.fill: parent
+        //keys: ["yellow"]
     }
 }

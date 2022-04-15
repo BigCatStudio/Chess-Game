@@ -192,19 +192,6 @@ ApplicationWindow {
 
             console.log("Array reference")
             displayObjects()
-
-//            console.log("deleting object4")
-//            deleteObject(figureObject4)
-
-//            console.log("Array reference")
-//            displayObjects()
-
-//            console.log("4-th object")
-//            console.log(figureObject4)
-
-//            console.log("4-th object")
-//            figureObject4.destroy()
-//            console.log(figureObject4)
         }
     }
 }

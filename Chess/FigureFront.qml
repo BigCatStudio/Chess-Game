@@ -18,6 +18,20 @@ Item {
     width: Math.floor((minimalScreenSide - 100) / 9)
     height: Math.floor((minimalScreenSide - 100) / 9)
 
+    FigureBack {
+        id: figureBackend
+        imageSource: root.figureSource
+        type: root.figureType
+        color: root.figureColor
+        xCord: root.xCordStart
+        yCord: root.yCordStart
+
+        Component.onCompleted: {
+            tilesFiguresHandler.addFigure(figureBackend)
+            mouseArea.parent = tilesFiguresHandler.getTile(xCord, yCord).dropAreaPointer
+        }
+    }
+
     MouseArea {
         id: mouseArea
         width: root.width
@@ -46,21 +60,24 @@ Item {
 
             color: "transparent"
 
-            Image {
-                id: figureImage
-                source: figureSource
-                anchors.fill: parent
-                fillMode: Image.PreserveAspectFit
-            }
-
-            Drag.keys: [ "blue" ]
+            //Drag.keys: [ "blue" ]
             Drag.active: mouseArea.drag.active
-            Drag.hotSpot.x: 32
-            Drag.hotSpot.y: 32
+
+            // This sets dragging to the center of figure so the feeling of where figure will be dropped is more accurate
+            Drag.hotSpot.x: width / 2
+            Drag.hotSpot.y: height / 2
+
             states: State {
                 when: mouseArea.drag.active
                 AnchorChanges { target: tile; anchors.verticalCenter: undefined; anchors.horizontalCenter: undefined }
                 PropertyChanges { target: tile; parent: root }
+            }
+
+            Image {
+                id: figureImage
+                source: figureBackend.imageSource
+                anchors.fill: parent
+                fillMode: Image.PreserveAspectFit
             }
         }
     }
