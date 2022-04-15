@@ -2,7 +2,6 @@
     <qresource prefix="/">
         <file>main.qml</file>
         <file>TileFront.qml</file>
-        <file>FrameFront.qml</file>
         <file>FigureFront.qml</file>
     </qresource>
     <qresource prefix="/Images">

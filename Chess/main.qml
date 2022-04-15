@@ -5,148 +5,97 @@ import QtQuick.Controls
 
 import Cpp.Classes
 
-// Think about Window or ApplicationWindow
-ApplicationWindow {
+Window {
     id: root
+
+    property int minimalScreenSide: (Screen.desktopAvailableWidth > Screen.desktopAvailableHeight) ? Screen.desktopAvailableHeight : Screen.desktopAvailableWidth
+    width: minimalScreenSide - 100
+    height: minimalScreenSide - 100
     visible: true
-    title: qsTr("Chess Board")
+    title: "Chess Game"
 
-    // First option using Repeater and custom type of ChessBoardTile
-    minimumWidth: frameLayout.Layout.minimumWidth
-    maximumWidth: frameLayout.Layout.maximumWidth //Screen.desktopAvailableWidth
-    minimumHeight: frameLayout.Layout.minimumHeight
-    maximumHeight: frameLayout.Layout.maximumHeight //Screen.desktopAvailableHeight
+    property var objects: []
 
-    width: frameLayout.Layout.maximumWidth
-    height: frameLayout.Layout.maximumHeight
+    function addObject(object) {
+        root.objects.push(object)
+    }
 
-    // frame instance must be in layout so it can be resizeable along with the content inside
-    GridLayout {
-        id: frameLayout
-        anchors.fill: parent
+    function displayObjects() {
+        for(var i = 0;i < root.objects.length;i++) {
+            console.log(root.objects[i])
+        }
+    }
 
-        FrameFront {
-            id: frame
-
-            GridLayout {
-                id: tilesLayout
-                anchors.fill: parent
-                anchors.margins: frame.minimalScreenSide / 20
-                columnSpacing: 0
-                rowSpacing: 0
-                columns: 8
-                rows: 8
-
-                Repeater {
-                    id: tilesRepeater
-                    model: 64
-
-                    TileFront {}
-                }
+    function deleteObject(object) {
+        for(var i = 0;i < root.objects.length;i++) {
+            if(root.objects[i] === object) {
+                root.objects.splice(i, 1)
+                root.objects[i].destroy()
             }
         }
     }
 
-    RowLayout {
-        id: figuresLayout
+    GridLayout {
+        id: gridTiles
+        anchors.centerIn: parent
+        columns: 8
+        rows: 8
+        columnSpacing: 0
+        rowSpacing: 0
 
+        Repeater {
+            id: repeaterTiles
+            model: 64
+
+            TileFront {}
+        }
+    }
+
+    GridLayout {
+        id: gridFigures
+        anchors.centerIn: parent
+        columnSpacing: 10
+        rowSpacing: 10
 
         Component.onCompleted: {
-            // No need to dynamically create figures when pawns reach last row because the pawns can just
-            // change its imageSource and figureType
-            // When pawn reaches last row display small reactangle with possible figures to choose (maybe popup)
-
             var figureComponent = Qt.createComponent("FigureFront.qml");
+            var figureObject1 = figureComponent.createObject(gridFigures, {})
+            var figureObject2 = figureComponent.createObject(gridFigures, {})
+            var figureObject3 = figureComponent.createObject(gridFigures, {})
+            var figureObject4 = figureComponent.createObject(gridFigures, {})
+            var figureObject5 = figureComponent.createObject(gridFigures, {})
+            var figureObject6 = figureComponent.createObject(gridFigures, {})
 
-            // Może dodać liste przechowującą utworzone objekty i usuwającą kiedy trzeba
+            console.log("Direct reference")
+            console.log(figureObject1)
+            console.log(figureObject2)
+            console.log(figureObject3)
+            console.log(figureObject4)
+            console.log(figureObject5)
+            console.log(figureObject6)
 
-            for(var i = 1;i < 9;i++) {
-                var whitePawnObject = figureComponent.createObject(figuresLayout, { "figureSource": "qrc:/Images/Images/pawnWhite.png",
-                                                                                    "figureType": FigureBack.Pawn, "figureColor": "white",
-                                                                                    "xCordStart": i, "yCordStart": 2})
-                var blackPawnObject = figureComponent.createObject(figuresLayout, { "figureSource": "qrc:/Images/Images/pawnBlack.png",
-                                                                                    "figureType": FigureBack.Pawn, "figureColor": "black",
-                                                                                    "xCordStart": i, "yCordStart": 7})
-            }
+            addObject(figureObject1)
+            addObject(figureObject2)
+            addObject(figureObject3)
+            addObject(figureObject4)
+            addObject(figureObject5)
+            addObject(figureObject6)
 
-            var blackKnightObject1 = figureComponent.createObject(figuresLayout, { "figureSource": "qrc:/Images/Images/knightBlack.png",
-                                                                                "figureType": FigureBack.Knight, "figureColor": "black",
-                                                                                "xCordStart": 2, "yCordStart": 8})
+            console.log("Array reference")
+            displayObjects()
 
-            var blackKnightObject2 = figureComponent.createObject(figuresLayout, { "figureSource": "qrc:/Images/Images/knightBlack.png",
-                                                                                "figureType": FigureBack.Knight, "figureColor": "black",
-                                                                                "xCordStart": 7, "yCordStart": 8})
+//            console.log("deleting object4")
+//            deleteObject(figureObject4)
 
-            var whiteKnightObject1 = figureComponent.createObject(figuresLayout, { "figureSource": "qrc:/Images/Images/knightWhite.png",
-                                                                                "figureType": FigureBack.Knight, "figureColor": "white",
-                                                                                "xCordStart": 2, "yCordStart": 1})
+//            console.log("Array reference")
+//            displayObjects()
 
-            var whiteKnightObject2 = figureComponent.createObject(figuresLayout, { "figureSource": "qrc:/Images/Images/knightWhite.png",
-                                                                                "figureType": FigureBack.Knight, "figureColor": "white",
-                                                                                "xCordStart": 7, "yCordStart": 1})
+//            console.log("4-th object")
+//            console.log(figureObject4)
 
-            var whiteRookObject1 = figureComponent.createObject(figuresLayout, { "figureSource": "qrc:/Images/Images/rookWhite.png",
-                                                                                "figureType": FigureBack.Rook, "figureColor": "white",
-                                                                                "xCordStart": 1, "yCordStart": 1})
-
-            var whiteRookObject2 = figureComponent.createObject(figuresLayout, { "figureSource": "qrc:/Images/Images/rookWhite.png",
-                                                                                "figureType": FigureBack.Rook, "figureColor": "white",
-                                                                                "xCordStart": 8, "yCordStart": 1})
-
-            var blackRookObject1 = figureComponent.createObject(figuresLayout, { "figureSource": "qrc:/Images/Images/rookBlack.png",
-                                                                                "figureType": FigureBack.Rook, "figureColor": "black",
-                                                                                "xCordStart": 1, "yCordStart": 8})
-
-            var blackRookObject2 = figureComponent.createObject(figuresLayout, { "figureSource": "qrc:/Images/Images/rookBlack.png",
-                                                                                "figureType": FigureBack.Rook, "figureColor": "black",
-                                                                                "xCordStart": 8, "yCordStart": 8})
-
-            var blackBishopObject1 = figureComponent.createObject(figuresLayout, { "figureSource": "qrc:/Images/Images/bishopBlack.png",
-                                                                                "figureType": FigureBack.Bishop, "figureColor": "black",
-                                                                                "xCordStart": 3, "yCordStart": 8})
-
-            var blackBishopObject2 = figureComponent.createObject(figuresLayout, { "figureSource": "qrc:/Images/Images/bishopBlack.png",
-                                                                                "figureType": FigureBack.Bishop, "figureColor": "black",
-                                                                                "xCordStart": 6, "yCordStart": 8})
-
-            var whiteBishopObject1 = figureComponent.createObject(figuresLayout, { "figureSource": "qrc:/Images/Images/bishopWhite.png",
-                                                                                "figureType": FigureBack.Bishop, "figureColor": "white",
-                                                                                "xCordStart": 3, "yCordStart": 1})
-
-            var whiteBishopObject2 = figureComponent.createObject(figuresLayout, { "figureSource": "qrc:/Images/Images/bishopWhite.png",
-                                                                                "figureType": FigureBack.Bishop, "figureColor": "white",
-                                                                                "xCordStart": 6, "yCordStart": 1})
-
-            var blackKingObject1 = figureComponent.createObject(figuresLayout, { "figureSource": "qrc:/Images/Images/kingBlack.png",
-                                                                                "figureType": FigureBack.King, "figureColor": "black",
-                                                                                "xCordStart": 5, "yCordStart": 8})
-
-            var whiteKingObject1 = figureComponent.createObject(figuresLayout, { "figureSource": "qrc:/Images/Images/kingWhite.png",
-                                                                                "figureType": FigureBack.King, "figureColor": "white",
-                                                                                "xCordStart": 5, "yCordStart": 1})
-
-            var blackQueenObject1 = figureComponent.createObject(figuresLayout, { "figureSource": "qrc:/Images/Images/queenBlack.png",
-                                                                                "figureType": FigureBack.Queen, "figureColor": "black",
-                                                                                "xCordStart": 4, "yCordStart": 8})
-
-            var whiteQueenObject1 = figureComponent.createObject(figuresLayout, { "figureSource": "qrc:/Images/Images/queenWhite.png",
-                                                                                "figureType": FigureBack.Queen, "figureColor": "white",
-                                                                                "xCordStart": 4, "yCordStart": 1})
-
+//            console.log("4-th object")
+//            figureObject4.destroy()
+//            console.log(figureObject4)
         }
-
-//        FigureFront { figureSource: "qrc:/Images/Images/test_white_pawn.jpg"; figureType: FigureBack.Pawn; figureColor: "white" }
-//        FigureFront { figureSource: "qrc:/Images/Images/bishop.png"; figureType: FigureBack.Bishop; figureColor: "white" }
-//        FigureFront { figureSource: "qrc:/Images/Images/knight.png"; figureType: FigureBack.Knight; figureColor: "white" }
-//        FigureFront { figureSource: "qrc:/Images/Images/rook.png"; figureType: FigureBack.Rook; figureColor: "white" }
-//        FigureFront { figureSource: "qrc:/Images/Images/queen.png"; figureType: FigureBack.Queen; figureColor: "white" }
-//        FigureFront { figureSource: "qrc:/Images/Images/king.png"; figureType: FigureBack.King; figureColor: "white" }
-
-//        FigureFront { figureSource: "qrc:/Images/Images/test_black_pawn.png"; figureType: FigureBack.Pawn; figureColor: "black" }
-//        FigureFront { figureSource: "qrc:/Images/Images/bishop.png"; figureType: FigureBack.Bishop; figureColor: "black" }
-//        FigureFront { figureSource: "qrc:/Images/Images/knight.png"; figureType: FigureBack.Knight; figureColor: "black" }
-//        FigureFront { figureSource: "qrc:/Images/Images/rook.png"; figureType: FigureBack.Rook; figureColor: "black" }
-//        FigureFront { figureSource: "qrc:/Images/Images/queen.png"; figureType: FigureBack.Queen; figureColor: "black" }
-//        FigureFront { figureSource: "qrc:/Images/Images/king.png"; figureType: FigureBack.King; figureColor: "black" }
     }
 }
