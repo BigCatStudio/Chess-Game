@@ -5,15 +5,23 @@ import Cpp.Classes
 Item {
     id: root
 
-    property string colorKey: "yellow"
-    property var previousTile: root
+    property int minimalScreenSide: (Screen.desktopAvailableWidth > Screen.desktopAvailableHeight) ? Screen.desktopAvailableHeight : Screen.desktopAvailableWidth
 
-    width: 60
-    height: 60
+    property string figureSource: "qrc:/Images/Images/pawn.png"
+    property color figureColor: "transparent"
+    property int figureType: FigureBack.Pawn
+
+    // Coordinates where figures at at the begining
+    property int xCordStart: 0
+    property int yCordStart: 0
+
+    width: Math.floor((minimalScreenSide - 100) / 9)
+    height: Math.floor((minimalScreenSide - 100) / 9)
 
     MouseArea {
         id: mouseArea
-        width: 64; height: 64
+        width: root.width
+        height: root.height
         anchors.centerIn: parent
 
         drag.target: tile
@@ -22,6 +30,7 @@ Item {
             parent = tile.Drag.target !== null ? tile.Drag.target : mouseArea.parent
         }
 
+        // remember to delete this signal handler
         onDoubleClicked: {
             console.log("Double Clicked:")
             console.log(root)
@@ -30,12 +39,19 @@ Item {
 
         Rectangle {
             id: tile
-
-            width: 64; height: 64
+            width: root.width
+            height: root.height
             anchors.verticalCenter: parent.verticalCenter
             anchors.horizontalCenter: parent.horizontalCenter
 
-            color: root.colorKey
+            color: "transparent"
+
+            Image {
+                id: figureImage
+                source: figureSource
+                anchors.fill: parent
+                fillMode: Image.PreserveAspectFit
+            }
 
             Drag.keys: [ "blue" ]
             Drag.active: mouseArea.drag.active
