@@ -57,6 +57,12 @@ Item {
                 tilesFiguresHandler.addFigure(figureBackend)
                 mouseArea.parent = tilesFiguresHandler.getTile(xCord, yCord).dropAreaPointer
             }
+
+            onDeleteFigureChanged: {
+                if(figureBackend.deleteFigure) {
+                    root.destroy()
+                }
+            }
         }
 
         Rectangle {

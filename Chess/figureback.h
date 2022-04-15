@@ -15,6 +15,7 @@ class FigureBack : public QObject
     Q_PROPERTY(QUrl imageSource READ imageSource WRITE setImageSource NOTIFY imageSourceChanged)
     Q_PROPERTY(int type READ type WRITE setType NOTIFY typeChanged)     // type enum is accessed as int from qml
     Q_PROPERTY(QColor color READ color WRITE setColor NOTIFY colorChanged)
+    Q_PROPERTY(bool deleteFigure READ deleteFigure WRITE setDeleteFigure NOTIFY deleteFigureChanged)
     QML_ELEMENT
 
 private:
@@ -23,6 +24,7 @@ private:
     QUrl imageSourceValue;
     int typeValue;
     QColor colorValue;
+    bool deleteFigureValue;
 
 public:
     enum FigureType {
@@ -44,12 +46,14 @@ public:
     void setImageSource(const QUrl &imageSourceGiven);
     void setType(const int &typeGiven);
     void setColor(const QColor &colorGiven);
+    void setDeleteFigure(const bool &deleteFigureGiven);
 
     int xCord() const;
     int yCord() const;
     QUrl imageSource() const;
     int type() const;
     QColor color() const;
+    bool deleteFigure() const;
 
 signals:
     void xCordChanged();
@@ -57,6 +61,7 @@ signals:
     void imageSourceChanged();
     void typeChanged();
     void colorChanged();
+    void deleteFigureChanged();
 };
 
 #endif // FIGUREBACK_H

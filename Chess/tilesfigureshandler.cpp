@@ -21,21 +21,22 @@ void TilesFiguresHandler::addFigure(FigureBack *SourceFigure) {
 }
 
 void TilesFiguresHandler::changeFigureCoords(TileBack *SourceTile, FigureBack *SourceFigure) {
-    getTile(SourceFigure)->setContainsFigure(false);
+    TileBack* previousTile = getTile(SourceFigure);
+    previousTile->setContainsFigure(false);
+    tileFigurePairs[previousTile] = nullptr;
+
+
+    if(SourceTile->containsFigure()) {
+        // When handler determines possible tiles it should only choose good tiles so this if condition might not be necessary
+        if(tileFigurePairs[SourceTile]->color() != SourceFigure->color()) {
+            tileFigurePairs[SourceTile]->setDeleteFigure(true);
+        }
+    }
 
     tileFigurePairs[SourceTile] = SourceFigure;
     SourceFigure->setXCord(SourceTile->xCord());
     SourceFigure->setYCord(SourceTile->yCord());
     SourceTile->setContainsFigure(true);
-
-    // Iterates over map and checks if tile without figure has its value set to nullptr
-    // It must be checked atfer figure is moved from one tile to another so that instance of that figure will not be
-    // on more than one tile
-    for(auto& [key, value] : tileFigurePairs) {
-        if(!key->containsFigure() && value != nullptr) {
-            value = nullptr;
-        }
-    }
 }
 
 TileBack *TilesFiguresHandler::getTile(const FigureBack* SourceFigure) const {

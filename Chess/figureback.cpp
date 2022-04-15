@@ -1,6 +1,7 @@
 #include "figureback.h"
 
-FigureBack::FigureBack(QObject *parent) : QObject(parent) {}
+FigureBack::FigureBack(QObject *parent)
+    : QObject(parent), deleteFigureValue{false}, xCordValue{0}, yCordValue{0}, colorValue{""}, imageSourceValue{""} {}
 
 void FigureBack::setXCord(const int &xCordGiven) {
     if(xCordGiven != xCordValue) {
@@ -37,6 +38,13 @@ void FigureBack::setColor(const QColor &colorGiven) {
     }
 }
 
+void FigureBack::setDeleteFigure(const bool &deleteFigureGiven) {
+    if(deleteFigureGiven != deleteFigureValue) {
+        deleteFigureValue = deleteFigureGiven;
+        emit deleteFigureChanged();
+    }
+}
+
 int FigureBack::xCord() const {
     return xCordValue;
 }
@@ -55,4 +63,8 @@ int FigureBack::type() const {
 
 QColor FigureBack::color() const {
     return colorValue;
+}
+
+bool FigureBack::deleteFigure() const {
+    return deleteFigureValue;
 }
