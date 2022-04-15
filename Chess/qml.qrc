@@ -19,7 +19,4 @@
         <file>Images/rookBlack.png</file>
         <file>Images/rookWhite.png</file>
     </qresource>
-    <qresource prefix="/JSUtilities">
-        <file>FiguresInstanesHandler.js</file>
-    </qresource>
 </RCC>
