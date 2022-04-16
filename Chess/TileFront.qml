@@ -16,7 +16,7 @@ Rectangle {
         color: "black"
     }
 
-    Text {
+    /*Text {
         id: hasFigure
         anchors.bottom: parent.bottom
         text: tileBackend.containsFigure
@@ -32,7 +32,7 @@ Rectangle {
         id: keyValue
         anchors.right: parent.right
         text: dropArea.keys[0]
-    }
+    }*/
 
     Rectangle {
         id: possibleMark

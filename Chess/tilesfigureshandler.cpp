@@ -87,6 +87,14 @@ bool TilesFiguresHandler::getPossible(TileBack *SourceTile) {
     return SourceTile->possible();
 }
 
+QColor TilesFiguresHandler::getCurrentColorMove() {
+    return currentColorMove;
+}
+
+void TilesFiguresHandler::setCurrentColorMove() {
+    currentColorMove = currentColorMove == "white" ? "black" : "white";
+}
+
 void TilesFiguresHandler::findValidTiles(FigureBack *SourceFigure) {
 
     if(SourceFigure != currentFigure) {
@@ -126,20 +134,72 @@ void TilesFiguresHandler::findValidTiles(FigureBack *SourceFigure) {
     }
 }
 
-QColor TilesFiguresHandler::getCurrentColorMove() {
-    return currentColorMove;
+// Function checks which figures can be moved and there won't be a check
+// Rethink these two functions - maybe it can be written smarter much more smarter
+// for example set two variables i and j and check both directions left and right etc
+void TilesFiguresHandler::findCheckBeforeMove() {
+
+    std::vector<FigureBack*> figuresToBlock;    // here will be stored figures that can't be moved
+
+    if(getCurrentColorMove() == "white") {
+        bool exitLoop {false};
+        bool figureBlocks {false};
+
+        for(int i {whiteKing->yCord()};i < 9;i++) {
+            for(auto& [key, value] : tileFigurePairs) {
+                if(key->xCord() == whiteKing->xCord() && key->yCord() == i + 1) {
+                    if(value != nullptr) {
+                        if(figureBlocks) {
+                            if(value->color() == "black" && value->type() == FigureBack::Queen || value->type() == FigureBack::Rook) {
+
+                            }
+                        } else if(value->color() == "white") {
+                            figureBlocks = true;
+                            figuresToBlock.push_back(value);
+                        } else {
+                            // figureBlocks = true;
+                            if(value->type() == FigureBack::Queen || value->type() == FigureBack::Rook) {
+                                // There is already check - this situation can't happen because findCheckAfterMove() should catch it
+                                // throw UnexpectedCheckException();
+                            }
+                            exitLoop = true;
+                            break;
+                        }
+                    } else if(value->color() != whiteKing->color()) {
+                        key->setPossible(true);
+                        key->setKey(QString::number(whiteKing->xCord()) + QString::number(whiteKing->yCord()));
+                        exitLoop = true;
+                    } else {
+                        exitLoop = true;
+                    }
+                    break;
+                }
+            }
+            if(exitLoop) {
+                break;
+            }
+        }
+    } else {
+
+    }
 }
 
-void TilesFiguresHandler::setCurrentColorMove() {
-    currentColorMove = currentColorMove == "white" ? "black" : "white";
-} 
+//Maybe the function should be executed from qml and have some variable that will unable drag when the function sets check possible
+void TilesFiguresHandler::findCheckAfterMove() {
+    if(getCurrentColorMove() == "white") {
+
+    } else {
+
+    }
+}
+
 
 void TilesFiguresHandler::findPawnTiles(int xCord, int yCord, QColor color) {
     if(color == "black") {
         // maybe lambda can be used
         for(auto& [key, value] : tileFigurePairs) {
             // Fix when figure is on last line
-            if(key->xCord() == xCord && key->yCord() == yCord - 1) {
+            if(key->xCord() == xCord && key->yCord() == yCord - 1 && !key->containsFigure()) {
                 key->setPossible(true);
                 key->setKey(QString::number(xCord) + QString::number(yCord));
             } else if((key->xCord() == xCord - 1 || key->xCord() == xCord + 1) && key->yCord() == yCord - 1) {
@@ -154,7 +214,7 @@ void TilesFiguresHandler::findPawnTiles(int xCord, int yCord, QColor color) {
     } else {
         for(auto& [key, value] : tileFigurePairs) {
             // Fix when figure is on last line
-            if(key->xCord() == xCord && key->yCord() == yCord + 1) {
+            if(key->xCord() == xCord && key->yCord() == yCord + 1 && !key->containsFigure()) {
                 key->setPossible(true);
                 key->setKey(QString::number(xCord) + QString::number(yCord));
             } else if((key->xCord() == xCord - 1 || key->xCord() == xCord + 1) && key->yCord() == yCord + 1) {

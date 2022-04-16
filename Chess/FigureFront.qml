@@ -23,10 +23,12 @@ Item {
         width: root.width
         height: root.height
         anchors.centerIn: parent
+        hoverEnabled: true
 
         drag.target: tilesFiguresHandler.getCurrentColorMove() === figureBackend.color ? figure : null
 
         onEntered: {
+            // Not so good because the parameter changes only when enetered - but there is no need for more computations
             drag.target = tilesFiguresHandler.getCurrentColorMove() === figureBackend.color ? figure : null
         }
 
@@ -34,10 +36,6 @@ Item {
             if(mouseArea.drag.target != null) {
                 tilesFiguresHandler.findValidTiles(figureBackend)
             }
-        }
-
-        onDoubleClicked: {
-            tilesFiguresHandler.clearPossibleTiles()
         }
 
         onReleased: {
@@ -102,12 +100,12 @@ Item {
                 anchors.fill: parent
                 fillMode: Image.PreserveAspectFit
 
-                Text {
+                /*Text {
                     id: dragTargetValue
                     text: mouseArea.drag.target == null ? "null" : "active"
                     anchors.centerIn: parent
                     color: "orange"
-                }
+                }*/
             }
         }
     }

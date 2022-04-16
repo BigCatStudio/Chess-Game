@@ -36,11 +36,12 @@ public:
     Q_INVOKABLE void setCurrentFigure(FigureBack* SourceFigure);    //used
     Q_INVOKABLE FigureBack* getCurrentFigure() const;               //used
     Q_INVOKABLE bool getPossible(TileBack* SourceTile);
-    Q_INVOKABLE void findValidTiles(FigureBack* SourceFigure);      //used
     Q_INVOKABLE QColor getCurrentColorMove();
     Q_INVOKABLE void setCurrentColorMove();
+    Q_INVOKABLE void findValidTiles(FigureBack* SourceFigure);      //used
 
-
+    void findCheckBeforeMove();
+    void findCheckAfterMove();
     void findPawnTiles(int xCord, int yCord, QColor color);
     void findBishopTiles(int xCord, int yCord, QColor color);
     void findKnightiles(int xCord, int yCord, QColor color);

@@ -59,6 +59,13 @@ void FigureBack::setWasMoved(const bool &wasMovedGiven) {
     }
 }
 
+void FigureBack::setCheckBlock(const bool &checkBlockGiven) {
+    if(checkBlockGiven != checkBlockValue) {
+        checkBlockValue = checkBlockGiven;
+        emit checkBlockChanged();
+    }
+}
+
 int FigureBack::xCord() const {
     return xCordValue;
 }
@@ -89,4 +96,8 @@ bool FigureBack::canMove() const {
 
 bool FigureBack::wasMoved() const {
     return wasMovedValue;
+}
+
+bool FigureBack::checkBlock() const {
+    return checkBlockValue;
 }
