@@ -190,4 +190,12 @@ ApplicationWindow {
             displayObjects()
         }
     }
+
+    Text {
+        id: currentMove
+        text: tilesFiguresHandler.getCurrentColorMove()
+        anchors.top: parent.top
+        color: "blue"
+        font.pointSize: 30
+    }
 }

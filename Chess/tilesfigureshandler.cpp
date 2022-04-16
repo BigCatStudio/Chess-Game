@@ -1,7 +1,7 @@
 #include "tilesfigureshandler.h"
 
 TilesFiguresHandler::TilesFiguresHandler(QObject *parent)
-    : QObject(parent), currentFigure{nullptr}, currentColorMove{"white"} {}
+    : QObject(parent), currentFigure{nullptr}, currentColorMove{"white"}, blackKing{nullptr}, whiteKing{nullptr} {}
 
 // If tile has one of staring point figures it can contain also figure address
 // if not set to nullptr
@@ -16,6 +16,13 @@ void TilesFiguresHandler::addFigure(FigureBack *SourceFigure) {
         if(key->xCord() == SourceFigure->xCord() && key->yCord() == SourceFigure->yCord()) {
             value = SourceFigure;
             key->setContainsFigure(true);
+            if(SourceFigure->type() == FigureBack::King) {
+                if(SourceFigure->color() == "white") {
+                    whiteKing = SourceFigure;
+                } else {
+                    blackKing = SourceFigure;
+                }
+            }
         }
     }
 }
@@ -57,19 +64,11 @@ TileBack *TilesFiguresHandler::getTile(int xCord, int yCord) const {
     return nullptr;
 }
 
-FigureBack *TilesFiguresHandler::getFigure(const TileBack* SourceTile) const{
-    for(auto& [key, value] : tileFigurePairs) {
-        if(key == SourceTile) {
-            return value;
-        }
-    }
-    return nullptr;
-}
-
 void TilesFiguresHandler::clearPossibleTiles() {
     for(auto& [key, value] : tileFigurePairs) {
         if(key->possible()) {
             key->setPossible(false);
+            key->setKey("");
         }
     }
 }
@@ -89,6 +88,9 @@ bool TilesFiguresHandler::getPossible(TileBack *SourceTile) {
 }
 
 void TilesFiguresHandler::findValidTiles(FigureBack *SourceFigure) {
+
+    setCurrentFigure(SourceFigure);
+
     switch(SourceFigure->type()) {
         case FigureBack::Pawn: {
             findPawnTiles(SourceFigure->xCord(), SourceFigure->yCord(), SourceFigure->color());
@@ -132,10 +134,12 @@ void TilesFiguresHandler::findPawnTiles(int xCord, int yCord, QColor color) {
             // Fix when figure is on last line
             if(key->xCord() == xCord && key->yCord() == yCord - 1) {
                 key->setPossible(true);
+                key->setKey(QString::number(xCord) + QString::number(yCord));
             } else if((key->xCord() == xCord - 1 || key->xCord() == xCord + 1) && key->yCord() == yCord - 1) {
                 if(value != nullptr) {
                     if(value->color() == "white") {
                         key->setPossible(true);
+                        key->setKey(QString::number(xCord) + QString::number(yCord));
                     }
                 }
             }
@@ -145,10 +149,12 @@ void TilesFiguresHandler::findPawnTiles(int xCord, int yCord, QColor color) {
             // Fix when figure is on last line
             if(key->xCord() == xCord && key->yCord() == yCord + 1) {
                 key->setPossible(true);
+                key->setKey(QString::number(xCord) + QString::number(yCord));
             } else if((key->xCord() == xCord - 1 || key->xCord() == xCord + 1) && key->yCord() == yCord + 1) {
                 if(value != nullptr) {
                     if(value->color() == "black") {
                         key->setPossible(true);
+                        key->setKey(QString::number(xCord) + QString::number(yCord));
                     }
                 }
             }
@@ -163,8 +169,10 @@ void TilesFiguresHandler::findBishopTiles(int xCord, int yCord, QColor color) {
             if(key->xCord() == x + 1 && key->yCord() == y + 1) {
                 if(value == nullptr) {
                     key->setPossible(true);
+                    key->setKey(QString::number(xCord) + QString::number(yCord));
                 } else if(value->color() != color) {
                     key->setPossible(true);
+                    key->setKey(QString::number(xCord) + QString::number(yCord));
                     exitLoop = true;
                 } else {
                     exitLoop = true;
@@ -183,8 +191,10 @@ void TilesFiguresHandler::findBishopTiles(int xCord, int yCord, QColor color) {
             if(key->xCord() == x - 1 && key->yCord() == y - 1) {
                 if(value == nullptr) {
                     key->setPossible(true);
+                    key->setKey(QString::number(xCord) + QString::number(yCord));
                 } else if(value->color() != color) {
                     key->setPossible(true);
+                    key->setKey(QString::number(xCord) + QString::number(yCord));
                     exitLoop = true;
                 } else {
                     exitLoop = true;
@@ -203,8 +213,10 @@ void TilesFiguresHandler::findBishopTiles(int xCord, int yCord, QColor color) {
             if(key->xCord() == x + 1 && key->yCord() == y - 1) {
                 if(value == nullptr) {
                     key->setPossible(true);
+                    key->setKey(QString::number(xCord) + QString::number(yCord));
                 } else if(value->color() != color) {
                     key->setPossible(true);
+                    key->setKey(QString::number(xCord) + QString::number(yCord));
                     exitLoop = true;
                 } else {
                     exitLoop = true;
@@ -223,8 +235,10 @@ void TilesFiguresHandler::findBishopTiles(int xCord, int yCord, QColor color) {
             if(key->xCord() == x - 1 && key->yCord() == y + 1) {
                 if(value == nullptr) {
                     key->setPossible(true);
+                    key->setKey(QString::number(xCord) + QString::number(yCord));
                 } else if(value->color() != color) {
                     key->setPossible(true);
+                    key->setKey(QString::number(xCord) + QString::number(yCord));
                     exitLoop = true;
                 } else {
                     exitLoop = true;
@@ -259,6 +273,7 @@ void TilesFiguresHandler::findKnightiles(int xCord, int yCord, QColor color) {
             if(key->xCord() == pair.first && key->yCord() == pair.second) {
                 if(value == nullptr || value->color() != color) {
                     key->setPossible(true);
+                    key->setKey(QString::number(xCord) + QString::number(yCord));
                 }
                 break;
             }
@@ -276,8 +291,10 @@ void TilesFiguresHandler::findRookTiles(int xCord, int yCord, QColor color) {
             if(key->xCord() == xCord && key->yCord() == i + 1) {
                 if(value == nullptr) {
                     key->setPossible(true);
+                    key->setKey(QString::number(xCord) + QString::number(yCord));
                 } else if(value->color() != color) {
                     key->setPossible(true);
+                    key->setKey(QString::number(xCord) + QString::number(yCord));
                     exitLoop = true;
                 } else {
                     exitLoop = true;
@@ -296,8 +313,10 @@ void TilesFiguresHandler::findRookTiles(int xCord, int yCord, QColor color) {
             if(key->xCord() == xCord && key->yCord() == i - 1) {
                 if(value == nullptr) {
                     key->setPossible(true);
+                    key->setKey(QString::number(xCord) + QString::number(yCord));
                 } else if(value->color() != color) {
                     key->setPossible(true);
+                    key->setKey(QString::number(xCord) + QString::number(yCord));
                     exitLoop = true;
                 } else {
                     exitLoop = true;
@@ -316,8 +335,10 @@ void TilesFiguresHandler::findRookTiles(int xCord, int yCord, QColor color) {
             if(key->xCord() == i + 1 && key->yCord() == yCord) {
                 if(value == nullptr) {
                     key->setPossible(true);
+                    key->setKey(QString::number(xCord) + QString::number(yCord));
                 } else if(value->color() != color) {
                     key->setPossible(true);
+                    key->setKey(QString::number(xCord) + QString::number(yCord));
                     exitLoop = true;
                 } else {
                     exitLoop = true;
@@ -336,8 +357,10 @@ void TilesFiguresHandler::findRookTiles(int xCord, int yCord, QColor color) {
             if(key->xCord() == i - 1 && key->yCord() == yCord) {
                 if(value == nullptr) {
                     key->setPossible(true);
+                    key->setKey(QString::number(xCord) + QString::number(yCord));
                 } else if(value->color() != color) {
                     key->setPossible(true);
+                    key->setKey(QString::number(xCord) + QString::number(yCord));
                     exitLoop = true;
                 } else {
                     exitLoop = true;
@@ -362,6 +385,7 @@ void TilesFiguresHandler::findKingTiles(int xCord, int yCord, QColor color) {
         if((key->xCord() == xCord || key->xCord() == xCord + 1 || key->xCord() == xCord - 1) && (key->yCord() == yCord || key->yCord() == yCord + 1 || key->yCord() == yCord - 1)) {
             if(value == nullptr || value->color() != color) {
                 key->setPossible(true);
+                key->setKey(QString::number(xCord) + QString::number(yCord));
             }
         }
     }

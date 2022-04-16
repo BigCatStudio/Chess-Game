@@ -8,7 +8,7 @@
 #include "tileback.h"
 #include "figureback.h"
 
-// This class contains hashed map with pairs: key [TileBack*] - value [FigureBack*]
+// This class contains hash map with pairs: key [TileBack*] - value [FigureBack*]
 // It provides possibility to:
 //      -update very fast current location of figure on chess board
 //      -check which tiles can be accessed by selected figure
@@ -19,9 +19,10 @@ class TilesFiguresHandler : public QObject
     Q_OBJECT
 private:
     std::unordered_map<TileBack*, FigureBack*> tileFigurePairs;
-    FigureBack* currentFigure;
     QColor currentColorMove;
-    //std::vector<T> figureObjects;
+    FigureBack* currentFigure;
+    FigureBack* blackKing;
+    FigureBack* whiteKing;
 
 public:
     explicit TilesFiguresHandler(QObject *parent = nullptr);
@@ -29,9 +30,8 @@ public:
     Q_INVOKABLE void addTile(TileBack* SourceTile);                         //used
     Q_INVOKABLE void addFigure(FigureBack* SourceFigure);                   //used
     Q_INVOKABLE void changeFigureCoords(TileBack* SourceTile, FigureBack* SourceFigure);    //used
-    Q_INVOKABLE TileBack* getTile(const FigureBack* SourceFigure) const;
+    Q_INVOKABLE TileBack* getTile(const FigureBack* SourceFigure) const;    //used
     Q_INVOKABLE TileBack* getTile(int xCord, int yCord) const;              //used
-    Q_INVOKABLE FigureBack* getFigure(const TileBack* SourceTile) const;
     Q_INVOKABLE void clearPossibleTiles();
     Q_INVOKABLE void setCurrentFigure(FigureBack* SourceFigure);
     Q_INVOKABLE FigureBack* getCurrentFigure() const;

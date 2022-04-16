@@ -1,7 +1,7 @@
 #include "tileback.h"
 
 TileBack::TileBack(QObject *parent)
-    : QObject(parent), xCordValue{0}, yCordValue{0}, containsFigureValue{false}, possibleValue{false} {}
+    : QObject(parent), xCordValue{0}, yCordValue{0}, containsFigureValue{false}, possibleValue{false}, keyValue{""} {}
 
 void TileBack::setXCord(const int &xCordGiven) {
     if(xCordGiven != xCordValue) {
@@ -38,6 +38,13 @@ void TileBack::setPossible(const bool &possibleGiven) {
     }
 }
 
+void TileBack::setKey(QString keyGiven) {
+    if(keyGiven != keyValue) {
+        keyValue = keyGiven;
+        emit keyChanged();
+    }
+}
+
 int TileBack::xCord() const {
     return xCordValue;
 }
@@ -56,4 +63,8 @@ QColor TileBack::color() const {
 
 bool TileBack::possible() const {
     return possibleValue;
+}
+
+QString TileBack::key() const {
+    return keyValue;
 }

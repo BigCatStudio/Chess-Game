@@ -24,11 +24,23 @@ Item {
         height: root.height
         anchors.centerIn: parent
 
-        drag.target: figure
+        drag.target: tilesFiguresHandler.getCurrentColorMove() === figureBackend.color ? figure : null
+
+        onPressed: {
+            //if(mouseArea.drag.target !== null) {
+            tilesFiguresHandler.findValidTiles(figureBackend)
+            //}
+        }
+
+        onDoubleClicked: {
+            tilesFiguresHandler.clearPossibleTiles()
+        }
 
         onReleased: {
             if(figure.Drag.target !== null) {
                 tilesFiguresHandler.changeFigureCoords(figure.Drag.target.tileBackPointer, figureBackend)
+                tilesFiguresHandler.clearPossibleTiles()
+                tilesFiguresHandler.setCurrentColorMove()
                 parent = figure.Drag.target
             }
         }
@@ -36,13 +48,6 @@ Item {
         onParentChanged: {
             //tilesFiguresHandler.changeFigureCoords(mouseArea.parent.tileBackPointer, figureBackend)
             console.log("Figure changed position " + figureBackend + ":" + figureBackend.xCord + "x" + figureBackend.yCord)
-        }
-
-        // remember to delete this signal handler
-        onDoubleClicked: {
-            console.log("Double Clicked:")
-            console.log(root)
-            root.destroy()
         }
 
         FigureBack {
@@ -74,7 +79,7 @@ Item {
 
             color: "transparent"
 
-            //Drag.keys: [ "blue" ]
+            Drag.keys: [ (figureBackend.xCord).toString() + (figureBackend.yCord).toString() ]
             Drag.active: mouseArea.drag.active
 
             // This sets dragging to the center of figure so the feeling of where figure will be dropped is more accurate

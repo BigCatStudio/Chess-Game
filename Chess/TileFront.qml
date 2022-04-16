@@ -17,9 +17,31 @@ Rectangle {
     }
 
     Text {
-        id: text
-        anchors.centerIn: parent
+        id: hasFigure
+        anchors.bottom: parent.bottom
         text: tileBackend.containsFigure
+    }
+
+    Text {
+        id: childrenCount
+        anchors.top: parent.top
+        text: dropArea.children.length
+    }
+
+    Text {
+        id: possible
+        anchors.right: parent.right
+        text: tileBackend.possible
+    }
+
+    Rectangle {
+        id: possibleMark
+        width: parent.width / 3
+        height: parent.height / 3
+        radius: width / 2
+        color: "blue"
+        anchors.centerIn: parent
+        visible: tileBackend.possible
     }
 
     TileBack {
@@ -42,6 +64,6 @@ Rectangle {
 
         property alias tileBackPointer: tileBackend
 
-        //keys: ["yellow"]
+        keys: [tileBackend.key]
     }
 }
