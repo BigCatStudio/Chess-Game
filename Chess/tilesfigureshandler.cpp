@@ -89,6 +89,10 @@ bool TilesFiguresHandler::getPossible(TileBack *SourceTile) {
 
 void TilesFiguresHandler::findValidTiles(FigureBack *SourceFigure) {
 
+    if(SourceFigure != currentFigure) {
+        clearPossibleTiles();
+    }
+
     setCurrentFigure(SourceFigure);
 
     switch(SourceFigure->type()) {
@@ -115,6 +119,9 @@ void TilesFiguresHandler::findValidTiles(FigureBack *SourceFigure) {
         case FigureBack::King: {
             findKingTiles(SourceFigure->xCord(), SourceFigure->yCord(), SourceFigure->color());
             break;
+        }
+        default: {
+            // throw InvalidFigureException();  //// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         }
     }
 }
@@ -164,6 +171,7 @@ void TilesFiguresHandler::findPawnTiles(int xCord, int yCord, QColor color) {
 
 void TilesFiguresHandler::findBishopTiles(int xCord, int yCord, QColor color) {
     bool exitLoop {false};
+
     for(int x {xCord}, y {yCord};x < 9 && y < 9;x++, y++) {
         for(auto& [key, value] : tileFigurePairs) {
             if(key->xCord() == x + 1 && key->yCord() == y + 1) {

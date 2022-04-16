@@ -26,10 +26,14 @@ Item {
 
         drag.target: tilesFiguresHandler.getCurrentColorMove() === figureBackend.color ? figure : null
 
+        onEntered: {
+            drag.target = tilesFiguresHandler.getCurrentColorMove() === figureBackend.color ? figure : null
+        }
+
         onPressed: {
-            //if(mouseArea.drag.target !== null) {
-            tilesFiguresHandler.findValidTiles(figureBackend)
-            //}
+            if(mouseArea.drag.target != null) {
+                tilesFiguresHandler.findValidTiles(figureBackend)
+            }
         }
 
         onDoubleClicked: {
@@ -97,6 +101,13 @@ Item {
                 source: figureBackend.imageSource
                 anchors.fill: parent
                 fillMode: Image.PreserveAspectFit
+
+                Text {
+                    id: dragTargetValue
+                    text: mouseArea.drag.target == null ? "null" : "active"
+                    anchors.centerIn: parent
+                    color: "orange"
+                }
             }
         }
     }

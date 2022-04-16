@@ -32,11 +32,11 @@ public:
     Q_INVOKABLE void changeFigureCoords(TileBack* SourceTile, FigureBack* SourceFigure);    //used
     Q_INVOKABLE TileBack* getTile(const FigureBack* SourceFigure) const;    //used
     Q_INVOKABLE TileBack* getTile(int xCord, int yCord) const;              //used
-    Q_INVOKABLE void clearPossibleTiles();
-    Q_INVOKABLE void setCurrentFigure(FigureBack* SourceFigure);
-    Q_INVOKABLE FigureBack* getCurrentFigure() const;
+    Q_INVOKABLE void clearPossibleTiles();                          //used
+    Q_INVOKABLE void setCurrentFigure(FigureBack* SourceFigure);    //used
+    Q_INVOKABLE FigureBack* getCurrentFigure() const;               //used
     Q_INVOKABLE bool getPossible(TileBack* SourceTile);
-    Q_INVOKABLE void findValidTiles(FigureBack* SourceFigure);
+    Q_INVOKABLE void findValidTiles(FigureBack* SourceFigure);      //used
     Q_INVOKABLE QColor getCurrentColorMove();
     Q_INVOKABLE void setCurrentColorMove();
 

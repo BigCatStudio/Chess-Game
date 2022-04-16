@@ -29,9 +29,9 @@ Rectangle {
     }
 
     Text {
-        id: possible
+        id: keyValue
         anchors.right: parent.right
-        text: tileBackend.possible
+        text: dropArea.keys[0]
     }
 
     Rectangle {
