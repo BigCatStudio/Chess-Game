@@ -19,6 +19,7 @@ class FigureBack : public QObject
     Q_PROPERTY(bool canMove READ canMove WRITE setCanMove NOTIFY canMoveChanged)
     Q_PROPERTY(bool wasMoved READ wasMoved WRITE setWasMoved NOTIFY wasMovedChanged)
     Q_PROPERTY(bool checkBlock READ checkBlock WRITE setCheckBlock NOTIFY checkBlockChanged)
+    Q_PROPERTY(bool isChecked READ isChecked WRITE setIsChecked NOTIFY isCheckedChanged)
     QML_ELEMENT
 
 private:
@@ -31,6 +32,7 @@ private:
     bool canMoveValue;          // This variable determines if piece can be moved - calculating check and other possibilities
     bool wasMovedValue;              // This variable tells if figure was already moved - useful when making castling or long move by pawn
     bool checkBlockValue;
+    bool isCheckedValue;
 
 public:
     enum FigureType {
@@ -56,6 +58,7 @@ public:
     void setCanMove(const bool &canMoveGiven);
     void setWasMoved(const bool &wasMovedGiven);
     void setCheckBlock(const bool &checkBlockGiven);
+    void setIsChecked(const bool &isCheckedGiven);
 
     int xCord() const;
     int yCord() const;
@@ -66,6 +69,7 @@ public:
     bool canMove() const;
     bool wasMoved() const;
     bool checkBlock() const;
+    bool isChecked() const;
 
 signals:
     void xCordChanged();
@@ -77,6 +81,7 @@ signals:
     void canMoveChanged();
     void wasMovedChanged();
     void checkBlockChanged();
+    void isCheckedChanged();
 };
 
 #endif // FIGUREBACK_H

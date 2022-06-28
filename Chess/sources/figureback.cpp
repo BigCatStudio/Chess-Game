@@ -1,7 +1,9 @@
-#include "figureback.h"
+#include "headers/figureback.h"
 
 FigureBack::FigureBack(QObject *parent)
-    : QObject(parent), deleteFigureValue{false}, xCordValue{0}, yCordValue{0}, colorValue{""}, imageSourceValue{""}, wasMovedValue{false}, canMoveValue{false} {}
+    : QObject(parent), deleteFigureValue{false}, xCordValue{0}, yCordValue{0},
+      colorValue{""}, imageSourceValue{""}, wasMovedValue{false}, canMoveValue{false},
+        isCheckedValue{false} {}
 
 void FigureBack::setXCord(const int &xCordGiven) {
     if(xCordGiven != xCordValue) {
@@ -66,6 +68,13 @@ void FigureBack::setCheckBlock(const bool &checkBlockGiven) {
     }
 }
 
+void FigureBack::setIsChecked(const bool &isCheckedGiven) {
+    if(isCheckedGiven != isCheckedValue) {
+        isCheckedValue = isCheckedGiven;
+        emit isCheckedChanged();
+    }
+}
+
 int FigureBack::xCord() const {
     return xCordValue;
 }
@@ -100,4 +109,8 @@ bool FigureBack::wasMoved() const {
 
 bool FigureBack::checkBlock() const {
     return checkBlockValue;
+}
+
+bool FigureBack::isChecked() const {
+    return isCheckedValue;
 }

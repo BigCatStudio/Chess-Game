@@ -3,8 +3,8 @@
 
 #include <QObject>
 #include <QColor>
-#include "tileback.h"
-#include "figureback.h"
+#include "headers/tileback.h"
+#include "headers/figureback.h"
 
 class ChessBoardUtilities : public QObject
 {

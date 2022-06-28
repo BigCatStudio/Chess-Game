@@ -74,5 +74,7 @@ Thumbs.db
 # User defined 
 build-Chess-Desktop_Qt_6_2_3_GCC_64bit-Debug/
 build-Chess-Desktop_Qt_6_2_3_MinGW_64_bit-Debug/
-.git/
+build-Chess-Desktop_Qt_6_3_1_MinGW_64_bit-Debug/
+*.git
+*.user
 

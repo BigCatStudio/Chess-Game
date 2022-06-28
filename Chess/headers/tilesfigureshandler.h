@@ -4,9 +4,11 @@
 #include <QObject>
 #include <QDebug>
 #include <unordered_map>
+#include <vector>
+#include <algorithm>
 
-#include "tileback.h"
-#include "figureback.h"
+#include "headers/tileback.h"
+#include "headers/figureback.h"
 
 // This class contains hash map with pairs: key [TileBack*] - value [FigureBack*]
 // It provides possibility to:
@@ -23,6 +25,7 @@ private:
     FigureBack* currentFigure;
     FigureBack* blackKing;
     FigureBack* whiteKing;
+    std::vector<FigureBack*> figuresChecking;
 
 public:
     explicit TilesFiguresHandler(QObject *parent = nullptr);
@@ -39,10 +42,10 @@ public:
     Q_INVOKABLE QColor getCurrentColorMove();
     Q_INVOKABLE void setCurrentColorMove();
     Q_INVOKABLE void findValidTiles(FigureBack* SourceFigure);      //used
+    Q_INVOKABLE void findCheckBeforeMove(TileBack * SourceTile, FigureBack* SourceFigure);
+    Q_INVOKABLE void findCheckAfterMove();
 
-    void findCheckBeforeMove();
-    void findCheckAfterMove();
-    void findPawnTiles(int xCord, int yCord, QColor color);
+    void findPawnTiles(int xCord, int yCord, QColor color, FigureBack* SourceFigure);
     void findBishopTiles(int xCord, int yCord, QColor color);
     void findKnightiles(int xCord, int yCord, QColor color);
     void findRookTiles(int xCord, int yCord, QColor color);

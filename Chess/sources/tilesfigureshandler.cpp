@@ -1,4 +1,4 @@
-#include "tilesfigureshandler.h"
+#include "headers/tilesfigureshandler.h"
 
 TilesFiguresHandler::TilesFiguresHandler(QObject *parent)
     : QObject(parent), currentFigure{nullptr}, currentColorMove{"white"}, blackKing{nullptr}, whiteKing{nullptr} {}
@@ -43,6 +43,7 @@ void TilesFiguresHandler::changeFigureCoords(TileBack *SourceTile, FigureBack *S
     tileFigurePairs[SourceTile] = SourceFigure;
     SourceFigure->setXCord(SourceTile->xCord());
     SourceFigure->setYCord(SourceTile->yCord());
+    SourceFigure->setWasMoved(true);
     SourceTile->setContainsFigure(true);
 }
 
@@ -105,7 +106,7 @@ void TilesFiguresHandler::findValidTiles(FigureBack *SourceFigure) {
 
     switch(SourceFigure->type()) {
         case FigureBack::Pawn: {
-            findPawnTiles(SourceFigure->xCord(), SourceFigure->yCord(), SourceFigure->color());
+            findPawnTiles(SourceFigure->xCord(), SourceFigure->yCord(), SourceFigure->color(), SourceFigure);
             break;
         }
         case FigureBack::Bishop: {
@@ -137,48 +138,9 @@ void TilesFiguresHandler::findValidTiles(FigureBack *SourceFigure) {
 // Function checks which figures can be moved and there won't be a check
 // Rethink these two functions - maybe it can be written smarter much more smarter
 // for example set two variables i and j and check both directions left and right etc
-void TilesFiguresHandler::findCheckBeforeMove() {
-
-    std::vector<FigureBack*> figuresToBlock;    // here will be stored figures that can't be moved
-
+void TilesFiguresHandler::findCheckBeforeMove(TileBack * SourceTile, FigureBack* SourceFigure) {
     if(getCurrentColorMove() == "white") {
-        bool exitLoop {false};
-        bool figureBlocks {false};
 
-        for(int i {whiteKing->yCord()};i < 9;i++) {
-            for(auto& [key, value] : tileFigurePairs) {
-                if(key->xCord() == whiteKing->xCord() && key->yCord() == i + 1) {
-                    if(value != nullptr) {
-                        if(figureBlocks) {
-                            if(value->color() == "black" && value->type() == FigureBack::Queen || value->type() == FigureBack::Rook) {
-
-                            }
-                        } else if(value->color() == "white") {
-                            figureBlocks = true;
-                            figuresToBlock.push_back(value);
-                        } else {
-                            // figureBlocks = true;
-                            if(value->type() == FigureBack::Queen || value->type() == FigureBack::Rook) {
-                                // There is already check - this situation can't happen because findCheckAfterMove() should catch it
-                                // throw UnexpectedCheckException();
-                            }
-                            exitLoop = true;
-                            break;
-                        }
-                    } else if(value->color() != whiteKing->color()) {
-                        key->setPossible(true);
-                        key->setKey(QString::number(whiteKing->xCord()) + QString::number(whiteKing->yCord()));
-                        exitLoop = true;
-                    } else {
-                        exitLoop = true;
-                    }
-                    break;
-                }
-            }
-            if(exitLoop) {
-                break;
-            }
-        }
     } else {
 
     }
@@ -186,20 +148,221 @@ void TilesFiguresHandler::findCheckBeforeMove() {
 
 //Maybe the function should be executed from qml and have some variable that will unable drag when the function sets check possible
 void TilesFiguresHandler::findCheckAfterMove() {
+    FigureBack* kingFigure = getCurrentColorMove() == "white" ? blackKing : whiteKing;
+    QColor kingColor = getCurrentColorMove();
+
+    qInfo() << "Looking for check for " << kingColor;
+
+    // Rook/Queen movement checking
+    bool exitLoop {false};
+    for(int i {kingFigure->yCord()};i < 9;i++) {
+        for(auto& [key, value] : tileFigurePairs) {
+            if(key->xCord() == kingFigure->xCord() && key->yCord() == i + 1) {
+                if(value == nullptr) {
+                } else if((value->type() == FigureBack::Queen || value->type() == FigureBack::Rook) && value->color() == kingColor) {
+                    figuresChecking.push_back(value);
+                    exitLoop = true;
+                } else {
+                    exitLoop = true;
+                }
+                break;
+            }
+        }
+        if(exitLoop) {
+            break;
+        }
+    }
+
+    exitLoop = false;
+    for(int i {kingFigure->yCord()};i > 0;i--) {
+        for(auto& [key, value] : tileFigurePairs) {
+            if(key->xCord() == kingFigure->xCord() && key->yCord() == i - 1) {
+                if(value == nullptr) {
+                } else if((value->type() == FigureBack::Queen || value->type() == FigureBack::Rook) && value->color() == kingColor) {
+                    figuresChecking.push_back(value);
+                    exitLoop = true;
+                } else {
+                    exitLoop = true;
+                }
+                break;
+            }
+        }
+        if(exitLoop) {
+            break;
+        }
+    }
+
+    exitLoop = false;
+    for(int i {kingFigure->xCord()};i < 9;i++) {
+        for(auto& [key, value] : tileFigurePairs) {
+            if(key->xCord() == i + 1 && key->yCord() == kingFigure->yCord()) {
+                if(value == nullptr) {
+                } else if((value->type() == FigureBack::Queen || value->type() == FigureBack::Rook) && value->color() == kingColor) {
+                    figuresChecking.push_back(value);
+                    exitLoop = true;
+                } else {
+                    exitLoop = true;
+                }
+                break;
+            }
+        }
+        if(exitLoop) {
+            break;
+        }
+    }
+
+    exitLoop = false;
+    for(int i {kingFigure->xCord()};i > 0;i--) {
+        for(auto& [key, value] : tileFigurePairs) {
+            if(key->xCord() == i - 1 && key->yCord() == kingFigure->yCord()) {
+                if(value == nullptr) {
+                } else if((value->type() == FigureBack::Queen || value->type() == FigureBack::Rook) && value->color() == kingColor) {
+                    figuresChecking.push_back(value);
+                    exitLoop = true;
+                } else {
+                    exitLoop = true;
+                }
+                break;
+            }
+        }
+        if(exitLoop) {
+            break;
+        }
+    }
+
+    // Bishop movement checking
+    exitLoop = false;
+    for(int x {kingFigure->xCord()}, y {kingFigure->yCord()};x < 9 && y < 9;x++, y++) {
+        for(auto& [key, value] : tileFigurePairs) {
+            if(key->xCord() == x + 1 && key->yCord() == y + 1) {
+                if(value == nullptr) {
+                } else if((value->type() == FigureBack::Queen || value->type() == FigureBack::Bishop) && value->color() == kingColor) {
+                    figuresChecking.push_back(value);
+                    exitLoop = true;
+                } else {
+                    exitLoop = true;
+                }
+                break;
+            }
+        }
+        if(exitLoop) {
+            break;
+        }
+    }
+
+    exitLoop = false;
+    for(int x {kingFigure->xCord()}, y {kingFigure->yCord()};x > 0 && y > 0;x--, y--) {
+        for(auto& [key, value] : tileFigurePairs) {
+            if(key->xCord() == x - 1 && key->yCord() == y - 1) {
+                if(value == nullptr) {
+                } else if((value->type() == FigureBack::Queen || value->type() == FigureBack::Bishop) && value->color() == kingColor) {
+                    figuresChecking.push_back(value);
+                    exitLoop = true;
+                } else {
+                    exitLoop = true;
+                }
+                break;
+            }
+        }
+        if(exitLoop) {
+            break;
+        }
+    }
+
+    exitLoop = false;
+    for(int x {kingFigure->xCord()}, y {kingFigure->yCord()};x < 9 && y > 0;x++, y--) {
+        for(auto& [key, value] : tileFigurePairs) {
+            if(key->xCord() == x + 1 && key->yCord() == y - 1) {
+                if(value == nullptr) {
+                } else if((value->type() == FigureBack::Queen || value->type() == FigureBack::Bishop) && value->color() == kingColor) {
+                    figuresChecking.push_back(value);
+                    exitLoop = true;
+                } else {
+                    exitLoop = true;
+                }
+                break;
+            }
+        }
+        if(exitLoop) {
+            break;
+        }
+    }
+
+    exitLoop = false;
+    for(int x {kingFigure->xCord()}, y {kingFigure->yCord()};x > 0 && y < 9;x--, y++) {
+        for(auto& [key, value] : tileFigurePairs) {
+            if(key->xCord() == x - 1 && key->yCord() == y + 1) {
+                if(value == nullptr) {
+                } else if((value->type() == FigureBack::Queen || value->type() == FigureBack::Bishop) && value->color() == kingColor) {
+                    figuresChecking.push_back(value);
+                    exitLoop = true;
+                } else {
+                    exitLoop = true;
+                }
+                break;
+            }
+        }
+        if(exitLoop) {
+            break;
+        }
+    }
+
+    // Knight movement checking
+    std::vector<std::pair<int, int>> possibleCords;
+    possibleCords.push_back(std::pair<int,int> {kingFigure->xCord() - 2, kingFigure->yCord() + 1});
+    possibleCords.push_back(std::pair<int,int> {kingFigure->xCord() - 2, kingFigure->yCord() - 1});
+    possibleCords.push_back(std::pair<int,int> {kingFigure->xCord() - 1, kingFigure->yCord() + 2});
+    possibleCords.push_back(std::pair<int,int> {kingFigure->xCord() - 1, kingFigure->yCord() - 2});
+    possibleCords.push_back(std::pair<int,int> {kingFigure->xCord() + 1, kingFigure->yCord() + 2});
+    possibleCords.push_back(std::pair<int,int> {kingFigure->xCord() + 1, kingFigure->yCord() - 2});
+    possibleCords.push_back(std::pair<int,int> {kingFigure->xCord() + 2, kingFigure->yCord() + 1});
+    possibleCords.push_back(std::pair<int,int> {kingFigure->xCord() + 2, kingFigure->yCord() - 1});
+
+    for(auto& [key, value] : tileFigurePairs) {
+        for(auto &pair : possibleCords) {
+            if(key->xCord() == pair.first && key->yCord() == pair.second) {
+                if(value != nullptr) {
+                    if(value->type() == FigureBack::Knight && value->color() == kingColor) {
+                        figuresChecking.push_back(value);
+                    }
+                }
+                break;
+            }
+        }
+    }
+
     if(getCurrentColorMove() == "white") {
 
     } else {
-
+        // add function that takes as parameter current move and make upper functions depend on current move to not repeat them for other color
+        // also make the functions in findFigureTiles repeatable for functions looking for check to not repeat so much code
+        // name the functions for example: lookingVerticalUp(), lookingVerticalDown(), lookingHorseMove() and others...
     }
+
+    if(!figuresChecking.empty()) {
+
+        for(auto& [key, value] : tileFigurePairs) {
+            if(value == kingFigure) {
+                key->setIsChecked(true);
+            }
+        }
+
+        qInfo() << "there is check for " << kingColor;
+        std::for_each(figuresChecking.begin(), figuresChecking.end(), [](FigureBack* pointer){qInfo() << pointer->type();});
+    }
+
+    figuresChecking.clear();
+    figuresChecking.resize(0);
 }
 
 
-void TilesFiguresHandler::findPawnTiles(int xCord, int yCord, QColor color) {
+void TilesFiguresHandler::findPawnTiles(int xCord, int yCord, QColor color, FigureBack* SourceFigure) {
     if(color == "black") {
         // maybe lambda can be used
         for(auto& [key, value] : tileFigurePairs) {
             // Fix when figure is on last line
-            if(key->xCord() == xCord && key->yCord() == yCord - 1 && !key->containsFigure()) {
+            if(key->xCord() == xCord && (key->yCord() == yCord - 1 || (key->yCord() == yCord - 2 && !SourceFigure->wasMoved())) && !key->containsFigure()) {
+                findCheckBeforeMove(key, SourceFigure);
                 key->setPossible(true);
                 key->setKey(QString::number(xCord) + QString::number(yCord));
             } else if((key->xCord() == xCord - 1 || key->xCord() == xCord + 1) && key->yCord() == yCord - 1) {
@@ -214,7 +377,7 @@ void TilesFiguresHandler::findPawnTiles(int xCord, int yCord, QColor color) {
     } else {
         for(auto& [key, value] : tileFigurePairs) {
             // Fix when figure is on last line
-            if(key->xCord() == xCord && key->yCord() == yCord + 1 && !key->containsFigure()) {
+            if(key->xCord() == xCord && (key->yCord() == yCord + 1 || (key->yCord() == yCord + 2 && !SourceFigure->wasMoved())) && !key->containsFigure()) {
                 key->setPossible(true);
                 key->setKey(QString::number(xCord) + QString::number(yCord));
             } else if((key->xCord() == xCord - 1 || key->xCord() == xCord + 1) && key->yCord() == yCord + 1) {

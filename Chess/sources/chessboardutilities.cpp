@@ -1,4 +1,4 @@
-#include "chessboardutilities.h"
+#include "headers/chessboardutilities.h"
 
 ChessBoardUtilities::ChessBoardUtilities(QObject *parent)
     : QObject{parent}, colorValue{"#ffcc99"}, counterColor {0}, xCounter{0}, yCounter{63} {}

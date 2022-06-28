@@ -1,7 +1,8 @@
-#include "tileback.h"
+#include "headers/tileback.h"
 
 TileBack::TileBack(QObject *parent)
-    : QObject(parent), xCordValue{0}, yCordValue{0}, containsFigureValue{false}, possibleValue{false}, keyValue{""} {}
+    : QObject(parent), xCordValue{0}, yCordValue{0}, containsFigureValue{false},
+      possibleValue{false}, keyValue{""}, isCheckedValue{false} {}
 
 void TileBack::setXCord(const int &xCordGiven) {
     if(xCordGiven != xCordValue) {
@@ -45,6 +46,13 @@ void TileBack::setKey(QString keyGiven) {
     }
 }
 
+void TileBack::setIsChecked(const bool &isCheckedGiven) {
+    if(isCheckedGiven != isCheckedValue) {
+        isCheckedValue = isCheckedGiven;
+        emit isCheckedChanged();
+    }
+}
+
 int TileBack::xCord() const {
     return xCordValue;
 }
@@ -67,4 +75,8 @@ bool TileBack::possible() const {
 
 QString TileBack::key() const {
     return keyValue;
+}
+
+bool TileBack::isChecked() const {
+    return isCheckedValue;
 }

@@ -7,11 +7,12 @@ Item {
 
     property int minimalScreenSide: (Screen.desktopAvailableWidth > Screen.desktopAvailableHeight) ? Screen.desktopAvailableHeight : Screen.desktopAvailableWidth
 
+    // Default parameters
     property string figureSource: "qrc:/Images/Images/pawn.png"
     property color figureColor: "transparent"
     property int figureType: FigureBack.Pawn
 
-    // Coordinates where figures at at the begining
+    // Default coordinates where figures at at the begining
     property int xCordStart: 0
     property int yCordStart: 0
 
@@ -25,6 +26,7 @@ Item {
         anchors.centerIn: parent
         hoverEnabled: true
 
+        // Determines which color is to move at the beginning
         drag.target: tilesFiguresHandler.getCurrentColorMove() === figureBackend.color ? figure : null
 
         onEntered: {
@@ -32,16 +34,20 @@ Item {
             drag.target = tilesFiguresHandler.getCurrentColorMove() === figureBackend.color ? figure : null
         }
 
+        // In this step possible moves with pressed figure are being found, also possible check should be found
         onPressed: {
             if(mouseArea.drag.target != null) {
                 tilesFiguresHandler.findValidTiles(figureBackend)
+                tilesFiguresHandler.findCheckBeforeMove(figureBackend)
             }
         }
 
+        // In this step the chessboard is cleared and new state is updated, also checks are detected
         onReleased: {
             if(figure.Drag.target !== null) {
                 tilesFiguresHandler.changeFigureCoords(figure.Drag.target.tileBackPointer, figureBackend)
                 tilesFiguresHandler.clearPossibleTiles()
+                tilesFiguresHandler.findCheckAfterMove()
                 tilesFiguresHandler.setCurrentColorMove()
                 parent = figure.Drag.target
             }

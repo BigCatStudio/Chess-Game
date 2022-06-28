@@ -35,6 +35,12 @@ Rectangle {
     }*/
 
     Rectangle {
+        id: checkRect
+        anchors.fill: parent;
+        color: tileBackend.isChecked ? "red" : "transparent"
+    }
+
+    Rectangle {
         id: possibleMark
         width: parent.width / 3
         height: parent.height / 3

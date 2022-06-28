@@ -2,10 +2,10 @@
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
 
-#include "chessboardutilities.h"
-#include "tilesfigureshandler.h"
-#include "tileback.h"
-#include "figureback.h"
+#include "headers/chessboardutilities.h"
+#include "headers/tilesfigureshandler.h"
+#include "headers/tileback.h"
+#include "headers/figureback.h"
 
 int main(int argc, char *argv[])
 {

@@ -13,9 +13,9 @@ ApplicationWindow {
     height: Math.floor((minimalScreenSide - 100) / 9) * 9
 
     // Sizes must be set that way because of divided sizes of tiles etc. (Otherwise there would be some small white pixels at the edges)
-    minimumHeight: Math.floor((minimalScreenSide - 100) / 9) * 8
+    minimumHeight: Math.floor((minimalScreenSide - 100) / 9) * 9
     maximumHeight: Math.floor((minimalScreenSide - 100) / 9) * 9
-    minimumWidth: Math.floor((minimalScreenSide - 100) / 9) * 8
+    minimumWidth: Math.floor((minimalScreenSide - 100) / 9) * 9
     maximumWidth: Math.floor((minimalScreenSide - 100) / 9) * 9
 
     visible: true
