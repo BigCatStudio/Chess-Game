@@ -31,6 +31,8 @@ Item {
 
         onEntered: {
             // Not so good because the parameter changes only when enetered - but there is no need for more computations
+
+            //add functionality if current color is checked then you have to stop check
             drag.target = tilesFiguresHandler.getCurrentColorMove() === figureBackend.color ? figure : null
         }
 
@@ -38,7 +40,7 @@ Item {
         onPressed: {
             if(mouseArea.drag.target != null) {
                 tilesFiguresHandler.findValidTiles(figureBackend)
-                tilesFiguresHandler.findCheckBeforeMove(figureBackend)
+                // tilesFiguresHandler.findCheckBeforeMove(figureBackend)  //looking for check to king of currently moving color
             }
         }
 
@@ -47,8 +49,9 @@ Item {
             if(figure.Drag.target !== null) {
                 tilesFiguresHandler.changeFigureCoords(figure.Drag.target.tileBackPointer, figureBackend)
                 tilesFiguresHandler.clearPossibleTiles()
-                tilesFiguresHandler.findCheckAfterMove()
+                tilesFiguresHandler.findCheckAfterMove()    //looking for  check to king of opposite color
                 tilesFiguresHandler.setCurrentColorMove()
+                tilesFiguresHandler.findCheckMate()
                 parent = figure.Drag.target
             }
         }

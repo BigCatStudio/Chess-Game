@@ -41,16 +41,17 @@ public:
     Q_INVOKABLE bool getPossible(TileBack* SourceTile);
     Q_INVOKABLE QColor getCurrentColorMove();
     Q_INVOKABLE void setCurrentColorMove();
-    Q_INVOKABLE void findValidTiles(FigureBack* SourceFigure);      //used
-    Q_INVOKABLE void findCheckBeforeMove(TileBack * SourceTile, FigureBack* SourceFigure);
+    Q_INVOKABLE int findValidTiles(FigureBack* SourceFigure);      //used
+    Q_INVOKABLE bool findCheckBeforeMove(int xCord, int yCord, QColor color, TileBack * SourceTile, FigureBack* SourceFigure);
     Q_INVOKABLE void findCheckAfterMove();
+    Q_INVOKABLE void findCheckMate();
 
-    void findPawnTiles(int xCord, int yCord, QColor color, FigureBack* SourceFigure);
-    void findBishopTiles(int xCord, int yCord, QColor color);
-    void findKnightiles(int xCord, int yCord, QColor color);
-    void findRookTiles(int xCord, int yCord, QColor color);
-    void findQueenTiles(int xCord, int yCord, QColor color);
-    void findKingTiles(int xCord, int yCord, QColor color);
+    int findPawnTiles(int xCord, int yCord, QColor color, FigureBack* SourceFigure);
+    int findBishopTiles(int xCord, int yCord, QColor color, FigureBack* SourceFigure);
+    int findKnightiles(int xCord, int yCord, QColor color, FigureBack* SourceFigure);
+    int findRookTiles(int xCord, int yCord, QColor color, FigureBack* SourceFigure);
+    int findQueenTiles(int xCord, int yCord, QColor color, FigureBack* SourceFigure);
+    int findKingTiles(int xCord, int yCord, QColor color, FigureBack* SourceFigure);
 
 signals:
 
