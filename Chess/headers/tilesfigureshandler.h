@@ -9,6 +9,7 @@
 
 #include "headers/tileback.h"
 #include "headers/figureback.h"
+#include "headers/writer.h"
 
 // This class contains hash map with pairs: key [TileBack*] - value [FigureBack*]
 // It provides possibility to:
@@ -19,16 +20,22 @@
 class TilesFiguresHandler : public QObject
 {
     Q_OBJECT
+    Q_PROPERTY(bool selectFigure READ selectFigure WRITE setSelectFigure NOTIFY selectFigureChanged)
 private:
+    bool selectFigureValue;
     std::unordered_map<TileBack*, FigureBack*> tileFigurePairs;
     QColor currentColorMove;
     FigureBack* currentFigure;
     FigureBack* blackKing;
     FigureBack* whiteKing;
     std::vector<FigureBack*> figuresChecking;
+    Writer movesWriter;
 
 public:
     explicit TilesFiguresHandler(QObject *parent = nullptr);
+
+    bool selectFigure();
+    void setSelectFigure(const bool &selectFigureGiven);
 
     Q_INVOKABLE void addTile(TileBack* SourceTile);                         //used
     Q_INVOKABLE void addFigure(FigureBack* SourceFigure);                   //used
@@ -54,7 +61,7 @@ public:
     int findKingTiles(int xCord, int yCord, QColor color, FigureBack* SourceFigure);
 
 signals:
-
+    void selectFigureChanged();
 };
 
 #endif // TILESFIGURESHANDLER_H

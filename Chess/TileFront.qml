@@ -16,24 +16,6 @@ Rectangle {
         color: "black"
     }
 
-    /*Text {
-        id: hasFigure
-        anchors.bottom: parent.bottom
-        text: tileBackend.containsFigure
-    }
-
-    Text {
-        id: childrenCount
-        anchors.top: parent.top
-        text: dropArea.children.length
-    }
-
-    Text {
-        id: keyValue
-        anchors.right: parent.right
-        text: dropArea.keys[0]
-    }*/
-
     Rectangle {
         id: checkRect
         anchors.fill: parent;

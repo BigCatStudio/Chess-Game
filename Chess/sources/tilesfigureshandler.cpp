@@ -1,7 +1,18 @@
 #include "headers/tilesfigureshandler.h"
 
 TilesFiguresHandler::TilesFiguresHandler(QObject *parent)
-    : QObject(parent), currentFigure{nullptr}, currentColorMove{"white"}, blackKing{nullptr}, whiteKing{nullptr} {}
+    : QObject(parent), currentFigure{nullptr}, currentColorMove{"white"}, blackKing{nullptr}, whiteKing{nullptr}, selectFigureValue{false} {}
+
+bool TilesFiguresHandler::selectFigure() {
+    return selectFigureValue;
+}
+
+void TilesFiguresHandler::setSelectFigure(const bool &selectFigureGiven) {
+    if(selectFigureGiven != selectFigureValue) {
+        selectFigureValue = selectFigureGiven;
+        emit selectFigureChanged();
+    }
+}
 
 // If tile has one of staring point figures it can contain also figure address
 // if not set to nullptr
@@ -31,7 +42,6 @@ void TilesFiguresHandler::changeFigureCoords(TileBack *SourceTile, FigureBack *S
     TileBack* previousTile = getTile(SourceFigure);
     previousTile->setContainsFigure(false);
     tileFigurePairs[previousTile] = nullptr;
-
 
     if(SourceTile->containsFigure()) {
         // When handler determines possible tiles it should only choose good tiles so this if condition might not be necessary
@@ -606,6 +616,7 @@ void TilesFiguresHandler::findCheckMate() {
 
         if(moves == 0) {
             qInfo() << "******** Check Mate ********";
+
         }
     } else {
         return;

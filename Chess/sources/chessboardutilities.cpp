@@ -3,7 +3,7 @@
 ChessBoardUtilities::ChessBoardUtilities(QObject *parent)
     : QObject{parent}, colorValue{"#ffcc99"}, counterColor {0}, xCounter{0}, yCounter{63} {}
 
-QColor ChessBoardUtilities::color(){
+QColor ChessBoardUtilities::color() {
     counterColor++;
     QColor additionalColor = colorValue;
 

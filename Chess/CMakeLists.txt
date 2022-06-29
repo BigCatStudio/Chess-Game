@@ -32,6 +32,7 @@ set(PROJECT_SOURCES
     headers/tileback.h              sources/tileback.cpp
     headers/figureback.h            sources/figureback.cpp
     headers/tilesfigureshandler.h   sources/tilesfigureshandler.cpp
+    headers/writer.h                sources/writer.cpp
     sources/main.cpp
     qml.qrc
 )

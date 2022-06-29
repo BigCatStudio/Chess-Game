@@ -31,8 +31,6 @@ Item {
 
         onEntered: {
             // Not so good because the parameter changes only when enetered - but there is no need for more computations
-
-            //add functionality if current color is checked then you have to stop check
             drag.target = tilesFiguresHandler.getCurrentColorMove() === figureBackend.color ? figure : null
         }
 
@@ -40,7 +38,6 @@ Item {
         onPressed: {
             if(mouseArea.drag.target != null) {
                 tilesFiguresHandler.findValidTiles(figureBackend)
-                // tilesFiguresHandler.findCheckBeforeMove(figureBackend)  //looking for check to king of currently moving color
             }
         }
 
@@ -57,7 +54,6 @@ Item {
         }
 
         onParentChanged: {
-            //tilesFiguresHandler.changeFigureCoords(mouseArea.parent.tileBackPointer, figureBackend)
             console.log("Figure changed position " + figureBackend + ":" + figureBackend.xCord + "x" + figureBackend.yCord)
         }
 
@@ -108,13 +104,6 @@ Item {
                 source: figureBackend.imageSource
                 anchors.fill: parent
                 fillMode: Image.PreserveAspectFit
-
-                /*Text {
-                    id: dragTargetValue
-                    text: mouseArea.drag.target == null ? "null" : "active"
-                    anchors.centerIn: parent
-                    color: "orange"
-                }*/
             }
         }
     }
