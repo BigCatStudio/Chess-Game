@@ -1,7 +1,8 @@
 #include "headers/tilesfigureshandler.h"
 
 TilesFiguresHandler::TilesFiguresHandler(QObject *parent)
-    : QObject(parent), currentFigure{nullptr}, currentColorMove{"white"}, blackKing{nullptr}, whiteKing{nullptr}, selectFigureValue{false} {}
+    : QObject(parent), currentFigure{nullptr}, currentColorMove{"white"}, blackKing{nullptr},
+      whiteKing{nullptr}, selectFigureValue{false}, isCheckMateValue{false} {}
 
 bool TilesFiguresHandler::selectFigure() {
     return selectFigureValue;
@@ -11,6 +12,17 @@ void TilesFiguresHandler::setSelectFigure(const bool &selectFigureGiven) {
     if(selectFigureGiven != selectFigureValue) {
         selectFigureValue = selectFigureGiven;
         emit selectFigureChanged();
+    }
+}
+
+bool TilesFiguresHandler::isCheckMate() const {
+    return isCheckMateValue;
+}
+
+void TilesFiguresHandler::setIsCheckMate(const bool &isCheckMateGiven) {
+    if(isCheckMateGiven != isCheckMateValue) {
+        isCheckMateValue = isCheckMateGiven;
+        emit isCheckMateChanged();
     }
 }
 
@@ -615,11 +627,17 @@ void TilesFiguresHandler::findCheckMate() {
         }
 
         if(moves == 0) {
+            setIsCheckMate(true);
             qInfo() << "******** Check Mate ********";
-
         }
+    }
+}
+
+QString TilesFiguresHandler::winnerColor() const {
+    if(whiteKing->isChecked()) {
+        return "Black";
     } else {
-        return;
+        return "White";
     }
 }
 

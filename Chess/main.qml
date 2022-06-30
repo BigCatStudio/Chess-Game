@@ -191,4 +191,30 @@ ApplicationWindow {
             displayObjects()
         }
     }
+
+    Popup {
+        id:checkMatePopup
+        anchors.centerIn: parent
+        width: Math.floor((minimalScreenSide - 100) / 9) * 3.5
+        height: Math.floor((minimalScreenSide - 100) / 9) * 3
+        modal: true
+        focus: true
+        closePolicy: "NoAutoClose"
+        property bool checkMate: tilesFiguresHandler.isCheckMate
+
+        onCheckMateChanged: {
+            if(tilesFiguresHandler.isCheckMate === true) {
+                winnerText.winner = tilesFiguresHandler.winnerColor()
+                checkMatePopup.open()
+            }
+        }
+
+        Text {
+            id: winnerText
+            anchors.centerIn: parent
+            property string winner: ""
+            text: "The game has ended\nWinner is " + winner
+            font.pointSize: 20
+        }
+    }
 }
