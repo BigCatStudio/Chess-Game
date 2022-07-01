@@ -67,6 +67,10 @@ void TilesFiguresHandler::changeFigureCoords(TileBack *SourceTile, FigureBack *S
     SourceFigure->setYCord(SourceTile->yCord());
     SourceFigure->setWasMoved(true);
     SourceTile->setContainsFigure(true);
+
+//    if((SourceTile->yCord() == 1 || SourceTile->yCord() == 8) && SourceFigure->type() == FigureBack::Pawn) {
+//        setSelectFigure(true);
+//    }
 }
 
 TileBack *TilesFiguresHandler::getTile(const FigureBack* SourceFigure) const {
@@ -400,6 +404,15 @@ void TilesFiguresHandler::findCheckAfterMove() {
     FigureBack* kingFigure = getCurrentColorMove() == "white" ? blackKing : whiteKing;
     QColor kingColor = getCurrentColorMove();
 
+    // This part resets tiles that are checked and kings attributes
+    for(auto &[key, value] : tileFigurePairs) {
+        if(key->isChecked()) {
+            key->setIsChecked(false);
+        }
+    }
+    whiteKing->setIsChecked(false);
+    blackKing->setIsChecked(false);
+
     qInfo() << "Looking for check for " << kingColor;
 
     // Rook/Queen movement checking
@@ -580,14 +593,6 @@ void TilesFiguresHandler::findCheckAfterMove() {
         }
     }
 
-    if(getCurrentColorMove() == "white") {
-
-    } else {
-        // add function that takes as parameter current move and make upper functions depend on current move to not repeat them for other color
-        // also make the functions in findFigureTiles repeatable for functions looking for check to not repeat so much code
-        // name the functions for example: lookingVerticalUp(), lookingVerticalDown(), lookingHorseMove() and others...
-    }
-
     if(!figuresChecking.empty()) {
         for(auto& [key, value] : tileFigurePairs) {
             if(value == kingFigure) {
@@ -599,8 +604,6 @@ void TilesFiguresHandler::findCheckAfterMove() {
                 }
             }
         }
-
-        // Add logic to look if it is not check mate
 
         qInfo() << "there is check for " << kingColor;
         std::for_each(figuresChecking.begin(), figuresChecking.end(), [](FigureBack* pointer){qInfo() << pointer->type();});
@@ -638,6 +641,21 @@ QString TilesFiguresHandler::winnerColor() const {
         return "Black";
     } else {
         return "White";
+    }
+}
+
+void TilesFiguresHandler::setSelectedFigure(int typeGiven, QString sourceGiven) {
+    qInfo() << "---- In setSelectedFigure ----";
+    for(auto &[key, value] : tileFigurePairs) {
+        if(value != nullptr) {
+            if(value->type() == FigureBack::Pawn && (value->yCord() == 1 || value->yCord() == 8)) {
+                qInfo() << typeGiven;
+                qInfo() << sourceGiven;
+                value->setType(typeGiven);
+                value->setImageSource(sourceGiven);
+                setSelectFigure(false);
+            }
+        }
     }
 }
 

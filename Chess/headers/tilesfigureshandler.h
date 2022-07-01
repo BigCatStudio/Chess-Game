@@ -57,6 +57,7 @@ public:
     Q_INVOKABLE void findCheckAfterMove();
     Q_INVOKABLE void findCheckMate();
     Q_INVOKABLE QString winnerColor() const;
+    Q_INVOKABLE void setSelectedFigure(int typeGiven, QString sourceGiven);
 
     int findPawnTiles(int xCord, int yCord, QColor color, FigureBack* SourceFigure);
     int findBishopTiles(int xCord, int yCord, QColor color, FigureBack* SourceFigure);

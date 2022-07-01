@@ -193,7 +193,131 @@ ApplicationWindow {
     }
 
     Popup {
-        id:checkMatePopup
+        id: selectFigurePopup
+        anchors.centerIn: parent
+        width: Math.floor((minimalScreenSide - 100) / 9) * 4.5
+        height: Math.floor((minimalScreenSide - 100) / 9) * 1.5
+        modal: true
+        focus: true
+
+        property int minimalScreenSide: (Screen.desktopAvailableWidth > Screen.desktopAvailableHeight) ? Screen.desktopAvailableHeight : Screen.desktopAvailableWidth
+        property bool displayPopup: tilesFiguresHandler.selectFigure;
+        property color color: tilesFiguresHandler.getCurrentColorMove()
+
+        onDisplayPopupChanged: {
+            if(displayPopup === true) {
+                if(tilesFiguresHandler.getCurrentColorMove() === "white") {
+                    queenFigure.figureSource = "qrc:/Images/Images/queenWhite.png"
+                    queenFigure.figureColor = "transparent"
+                    queenFigure.figureType = FigureBack.Queen
+                    queenFigure.backgroundColor = "white"
+
+                    rookFigure.figureSource = "qrc:/Images/Images/rookWhite.png"
+                    rookFigure.figureColor = "transparent"
+                    rookFigure.figureType = FigureBack.Rook
+                    rookFigure.backgroundColor = "white"
+
+                    bishopFigure.figureSource = "qrc:/Images/Images/bishopWhite.png"
+                    bishopFigure.figureColor = "transparent"
+                    bishopFigure.figureType = FigureBack.Bishop
+                    bishopFigure.backgroundColor = "white"
+
+                    knightFigure.figureSource = "qrc:/Images/Images/knightWhite.png"
+                    knightFigure.figureColor = "transparent"
+                    knightFigure.figureType = FigureBack.Knight
+                    knightFigure.backgroundColor = "white"
+                } else {
+                    queenFigure.figureSource = "qrc:/Images/Images/queenBlack.png"
+                    queenFigure.figureColor = "transparent"
+                    queenFigure.figureType = FigureBack.Queen
+                    queenFigure.backgroundColor = "black"
+
+                    rookFigure.figureSource = "qrc:/Images/Images/rookBlack.png"
+                    rookFigure.figureColor = "transparent"
+                    rookFigure.figureType = FigureBack.Rook
+                    rookFigure.backgroundColor = "black"
+
+                    bishopFigure.figureSource = "qrc:/Images/Images/bishopBlack.png"
+                    bishopFigure.figureColor = "transparent"
+                    bishopFigure.figureType = FigureBack.Bishop
+                    bishopFigure.backgroundColor = "black"
+
+                    knightFigure.figureSource = "qrc:/Images/Images/knightBlack.png"
+                    knightFigure.figureColor = "transparent"
+                    knightFigure.figureType = FigureBack.Knight
+                    knightFigure.backgroundColor = "black"
+                }
+
+                queenFigure.figureSource = tilesFiguresHandler.getCurrentColorMove() == "white" ? "qrc:/Images/Images/queenWhite.png" : "qrc:/Images/Images/queenBlack.png"
+                queenFigure.figureColor = "transparent"
+                queenFigure.figureType = FigureBack.Queen
+                queenFigure.backgroundColor = tilesFiguresHandler.getCurrentColorMove()
+
+                rookFigure.figureSource = tilesFiguresHandler.getCurrentColorMove() == "white" ? "qrc:/Images/Images/rookWhite.png" : "qrc:/Images/Images/rookBlack.png"
+                rookFigure.figureColor = "transparent"
+                rookFigure.figureType = FigureBack.Rook
+                rookFigure.backgroundColor = tilesFiguresHandler.getCurrentColorMove()
+
+                bishopFigure.figureSource = tilesFiguresHandler.getCurrentColorMove() == "white" ? "qrc:/Images/Images/bishopWhite.png" : "qrc:/Images/Images/bishopBlack.png"
+                bishopFigure.figureColor = "transparent"
+                bishopFigure.figureType = FigureBack.Bishop
+                bishopFigure.backgroundColor = tilesFiguresHandler.getCurrentColorMove()
+
+                knightFigure.figureSource = tilesFiguresHandler.getCurrentColorMove() == "white" ? "qrc:/Images/Images/knightWhite.png" : "qrc:/Images/Images/knightBlack.png"
+                knightFigure.figureColor = "transparent"
+                knightFigure.figureType = FigureBack.Knight
+                knightFigure.backgroundColor = tilesFiguresHandler.getCurrentColorMove()
+
+                selectFigurePopup.open()
+            } else {
+                selectFigurePopup.close()
+            }
+        }
+
+        RowLayout {
+            id: figuresToSelect
+            anchors.centerIn: parent
+
+            Rectangle {
+                width: Math.floor((minimalScreenSide - 100) / 9)
+                height: Math.floor((minimalScreenSide - 100) / 9)
+
+                FigureSelect {
+                    id: queenFigure
+                }
+            }
+
+            Rectangle {
+                width: Math.floor((minimalScreenSide - 100) / 9)
+                height: Math.floor((minimalScreenSide - 100) / 9)
+
+                FigureSelect {
+                    id: rookFigure
+                }
+            }
+
+            Rectangle {
+                width: Math.floor((minimalScreenSide - 100) / 9)
+                height: Math.floor((minimalScreenSide - 100) / 9)
+
+                FigureSelect {
+                    id: bishopFigure
+                }
+            }
+
+            Rectangle {
+                width: Math.floor((minimalScreenSide - 100) / 9)
+                height: Math.floor((minimalScreenSide - 100) / 9)
+
+                FigureSelect {
+                    id: knightFigure
+                }
+            }
+        }
+    }
+
+    Popup {
+        id: checkMatePopup
         anchors.centerIn: parent
         width: Math.floor((minimalScreenSide - 100) / 9) * 3.5
         height: Math.floor((minimalScreenSide - 100) / 9) * 3
