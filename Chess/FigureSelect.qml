@@ -6,8 +6,7 @@ Item {
     property int minimalScreenSide: (Screen.desktopAvailableWidth > Screen.desktopAvailableHeight) ? Screen.desktopAvailableHeight : Screen.desktopAvailableWidth
 
     // Default parameters
-    property string figureSource: "qrc:/Images/Images/pawn.png"
-    property color figureColor: "transparent"
+    property string figureSource: "qrc:/Images/Images/pawnBlack.png"
     property int figureType: FigureBack.Pawn
     property color backgroundColor: "white"
 
@@ -15,6 +14,7 @@ Item {
     height: Math.floor((minimalScreenSide - 100) / 9)
 
     Rectangle {
+        id: figureBackground
         anchors.fill: parent
         color: backgroundColor
 
@@ -27,8 +27,6 @@ Item {
             MouseArea {
                 anchors.fill: parent
                 onClicked: {
-                    console.log("------- Call before setSelectedFigure ---------")
-                    console.log(tilesFiguresHandler.winnerColor())
                     tilesFiguresHandler.setSelectedFigure(figureType, figureSource)
                 }
             }

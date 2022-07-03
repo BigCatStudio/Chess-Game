@@ -8,7 +8,7 @@ Item {
     property int minimalScreenSide: (Screen.desktopAvailableWidth > Screen.desktopAvailableHeight) ? Screen.desktopAvailableHeight : Screen.desktopAvailableWidth
 
     // Default parameters
-    property string figureSource: "qrc:/Images/Images/pawn.png"
+    property string figureSource: "qrc:/Images/Images/pawnWhite.png"
     property color figureColor: "transparent"
     property int figureType: FigureBack.Pawn
 

@@ -68,9 +68,9 @@ void TilesFiguresHandler::changeFigureCoords(TileBack *SourceTile, FigureBack *S
     SourceFigure->setWasMoved(true);
     SourceTile->setContainsFigure(true);
 
-//    if((SourceTile->yCord() == 1 || SourceTile->yCord() == 8) && SourceFigure->type() == FigureBack::Pawn) {
-//        setSelectFigure(true);
-//    }
+    if((SourceTile->yCord() == 1 || SourceTile->yCord() == 8) && SourceFigure->type() == FigureBack::Pawn) {
+        setSelectFigure(true);
+    }
 }
 
 TileBack *TilesFiguresHandler::getTile(const FigureBack* SourceFigure) const {

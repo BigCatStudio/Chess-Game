@@ -192,6 +192,7 @@ ApplicationWindow {
         }
     }
 
+    // This is Popup that shows up when pawn reaches last line and can be changed to other piece
     Popup {
         id: selectFigurePopup
         anchors.centerIn: parent
@@ -203,77 +204,52 @@ ApplicationWindow {
         property int minimalScreenSide: (Screen.desktopAvailableWidth > Screen.desktopAvailableHeight) ? Screen.desktopAvailableHeight : Screen.desktopAvailableWidth
         property bool displayPopup: tilesFiguresHandler.selectFigure;
         property color color: tilesFiguresHandler.getCurrentColorMove()
+        property color whiteColor: "white"  // TODO Had to use this not good looking variables because of strange error, might be fixed
+        property color blackColor: "black"
 
         onDisplayPopupChanged: {
             if(displayPopup === true) {
-                if(tilesFiguresHandler.getCurrentColorMove() === "white") {
+                if(tilesFiguresHandler.getCurrentColorMove() === whiteColor) {
                     queenFigure.figureSource = "qrc:/Images/Images/queenWhite.png"
-                    queenFigure.figureColor = "transparent"
-                    queenFigure.figureType = FigureBack.Queen
-                    queenFigure.backgroundColor = "white"
-
-                    rookFigure.figureSource = "qrc:/Images/Images/rookWhite.png"
-                    rookFigure.figureColor = "transparent"
-                    rookFigure.figureType = FigureBack.Rook
-                    rookFigure.backgroundColor = "white"
-
-                    bishopFigure.figureSource = "qrc:/Images/Images/bishopWhite.png"
-                    bishopFigure.figureColor = "transparent"
-                    bishopFigure.figureType = FigureBack.Bishop
-                    bishopFigure.backgroundColor = "white"
-
-                    knightFigure.figureSource = "qrc:/Images/Images/knightWhite.png"
-                    knightFigure.figureColor = "transparent"
-                    knightFigure.figureType = FigureBack.Knight
-                    knightFigure.backgroundColor = "white"
-                } else {
-                    queenFigure.figureSource = "qrc:/Images/Images/queenBlack.png"
-                    queenFigure.figureColor = "transparent"
                     queenFigure.figureType = FigureBack.Queen
                     queenFigure.backgroundColor = "black"
 
-                    rookFigure.figureSource = "qrc:/Images/Images/rookBlack.png"
-                    rookFigure.figureColor = "transparent"
+                    rookFigure.figureSource = "qrc:/Images/Images/rookWhite.png"
                     rookFigure.figureType = FigureBack.Rook
                     rookFigure.backgroundColor = "black"
 
-                    bishopFigure.figureSource = "qrc:/Images/Images/bishopBlack.png"
-                    bishopFigure.figureColor = "transparent"
+                    bishopFigure.figureSource = "qrc:/Images/Images/bishopWhite.png"
                     bishopFigure.figureType = FigureBack.Bishop
                     bishopFigure.backgroundColor = "black"
 
-                    knightFigure.figureSource = "qrc:/Images/Images/knightBlack.png"
-                    knightFigure.figureColor = "transparent"
+                    knightFigure.figureSource = "qrc:/Images/Images/knightWhite.png"
                     knightFigure.figureType = FigureBack.Knight
                     knightFigure.backgroundColor = "black"
+                } else {
+                    console.log("================= Select Figure is black ==================")
+                    queenFigure.figureSource = "qrc:/Images/Images/queenBlack.png"
+                    queenFigure.figureType = FigureBack.Queen
+                    queenFigure.backgroundColor = "white"
+
+                    rookFigure.figureSource = "qrc:/Images/Images/rookBlack.png"
+                    rookFigure.figureType = FigureBack.Rook
+                    rookFigure.backgroundColor = "white"
+
+                    bishopFigure.figureSource = "qrc:/Images/Images/bishopBlack.png"
+                    bishopFigure.figureType = FigureBack.Bishop
+                    bishopFigure.backgroundColor = "white"
+
+                    knightFigure.figureSource = "qrc:/Images/Images/knightBlack.png"
+                    knightFigure.figureType = FigureBack.Knight
+                    knightFigure.backgroundColor = "white"
                 }
-
-                queenFigure.figureSource = tilesFiguresHandler.getCurrentColorMove() == "white" ? "qrc:/Images/Images/queenWhite.png" : "qrc:/Images/Images/queenBlack.png"
-                queenFigure.figureColor = "transparent"
-                queenFigure.figureType = FigureBack.Queen
-                queenFigure.backgroundColor = tilesFiguresHandler.getCurrentColorMove()
-
-                rookFigure.figureSource = tilesFiguresHandler.getCurrentColorMove() == "white" ? "qrc:/Images/Images/rookWhite.png" : "qrc:/Images/Images/rookBlack.png"
-                rookFigure.figureColor = "transparent"
-                rookFigure.figureType = FigureBack.Rook
-                rookFigure.backgroundColor = tilesFiguresHandler.getCurrentColorMove()
-
-                bishopFigure.figureSource = tilesFiguresHandler.getCurrentColorMove() == "white" ? "qrc:/Images/Images/bishopWhite.png" : "qrc:/Images/Images/bishopBlack.png"
-                bishopFigure.figureColor = "transparent"
-                bishopFigure.figureType = FigureBack.Bishop
-                bishopFigure.backgroundColor = tilesFiguresHandler.getCurrentColorMove()
-
-                knightFigure.figureSource = tilesFiguresHandler.getCurrentColorMove() == "white" ? "qrc:/Images/Images/knightWhite.png" : "qrc:/Images/Images/knightBlack.png"
-                knightFigure.figureColor = "transparent"
-                knightFigure.figureType = FigureBack.Knight
-                knightFigure.backgroundColor = tilesFiguresHandler.getCurrentColorMove()
-
                 selectFigurePopup.open()
             } else {
                 selectFigurePopup.close()
             }
         }
 
+        // Pawn can change to rook, queen, knight and bishop
         RowLayout {
             id: figuresToSelect
             anchors.centerIn: parent
@@ -316,6 +292,7 @@ ApplicationWindow {
         }
     }
 
+    // This is Popup that shows up when is checkMate
     Popup {
         id: checkMatePopup
         anchors.centerIn: parent
