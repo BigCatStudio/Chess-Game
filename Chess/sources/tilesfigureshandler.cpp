@@ -2,7 +2,7 @@
 
 TilesFiguresHandler::TilesFiguresHandler(QObject *parent)
     : QObject(parent), currentFigure{nullptr}, currentColorMove{"white"}, blackKing{nullptr},
-      whiteKing{nullptr}, selectFigureValue{false}, isCheckMateValue{false} {}
+      whiteKing{nullptr}, selectFigureValue{false}, isCheckMateValue{false}, isDrawValue{false} {}
 
 bool TilesFiguresHandler::selectFigure() {
     return selectFigureValue;
@@ -23,6 +23,17 @@ void TilesFiguresHandler::setIsCheckMate(const bool &isCheckMateGiven) {
     if(isCheckMateGiven != isCheckMateValue) {
         isCheckMateValue = isCheckMateGiven;
         emit isCheckMateChanged();
+    }
+}
+
+bool TilesFiguresHandler::isDraw() const {
+    return isDrawValue;
+}
+
+void TilesFiguresHandler::setIsDraw(const bool &isDrawGiven) {
+    if(isDrawGiven != isDrawValue) {
+        isDrawValue = isDrawGiven;
+        emit isDrawChanged();
     }
 }
 
@@ -165,7 +176,7 @@ int TilesFiguresHandler::findValidTiles(FigureBack *SourceFigure) {
 // Function checks which figures can be moved and there won't be a check
 // Rethink these two functions - maybe it can be written smarter much more smarter
 // for example set two variables i and j and check both directions left and right etc
-bool TilesFiguresHandler::findCheckBeforeMove(int xCord, int yCord, QColor color, TileBack * SourceTile, FigureBack* SourceFigure) {
+bool TilesFiguresHandler::findCheckBeforeMove(int xCord, int yCord, QColor color, TileBack* SourceTile, FigureBack* SourceFigure) {
     // Setting figure in new postition just to calculate possible checks and at the end it is returned to original tile
     FigureBack* figureReplacement = nullptr;
     for(auto& [key, value] : tileFigurePairs) {
@@ -179,6 +190,13 @@ bool TilesFiguresHandler::findCheckBeforeMove(int xCord, int yCord, QColor color
             break;
         }
     }
+
+//    if(SourceFigure->type() == FigureBack::King) {
+//        if(getCurrentColorMove() == "white") {
+//            whiteKing->setXCord(SourceTile->xCord());
+//            whiteKing->setYCord(SourceTile->yCord());
+//        }
+//    }
 
     FigureBack* kingFigure = getCurrentColorMove() == "white" ? whiteKing : blackKing;
     int kingXCord = kingFigure->xCord();
@@ -375,12 +393,51 @@ bool TilesFiguresHandler::findCheckBeforeMove(int xCord, int yCord, QColor color
         }
     }
 
+    // Pawn movement checking
+    if(kingColor == "black") {
+        // maybe lambda can be used
+        for(auto& [key, value] : tileFigurePairs) {
+            if((key->xCord() == kingFigure->xCord() - 1 || key->xCord() == kingFigure->xCord() + 1) && key->yCord() == kingFigure->yCord() + 1) {
+                if(value != nullptr) {
+                    if(value->type() == FigureBack::Pawn && value->color() == kingColor){
+                        figuresChecking.push_back(value);
+                    }
+                }
+            }
+        }
+    } else {
+        for(auto& [key, value] : tileFigurePairs) {
+            if((key->xCord() == kingFigure->xCord() - 1 || key->xCord() == kingFigure->xCord() + 1) && key->yCord() == kingFigure->yCord() - 1) {
+                if(value != nullptr) {
+                    if(value->type() == FigureBack::Pawn && value->color() == kingColor){
+                        figuresChecking.push_back(value);
+                    }
+                }
+            }
+        }
+    }
+
+    // King movement checking
+    for(auto& [key, value] : tileFigurePairs) {
+        if(value != nullptr) {
+            if((key->xCord() == kingFigure->xCord() || key->xCord() == kingFigure->xCord() + 1 || key->xCord() == kingFigure->xCord() - 1) && (key->yCord() == kingFigure->yCord() || key->yCord() == kingFigure->yCord() + 1 || key->yCord() == kingFigure->yCord() - 1)) {
+                if(key->xCord() != kingFigure->xCord() || key->yCord() != kingFigure->yCord()) {
+                    if(value->type() == FigureBack::King) {
+                        figuresChecking.push_back(value);
+                    }
+                }
+            }
+        }
+
+    }
+
+    /********************************************/
+
     if(!figuresChecking.empty()) {
         tilePossible = false;
         qInfo() << "there is check for " << kingColor;
         std::for_each(figuresChecking.begin(), figuresChecking.end(), [](FigureBack* pointer){qInfo() << pointer->type();});
     }
-    /********************************************/
 
     // Reversing figures position
     for(auto& [key, value] : tileFigurePairs) {
@@ -593,6 +650,46 @@ void TilesFiguresHandler::findCheckAfterMove() {
         }
     }
 
+    // Pawn movement checking
+    if(kingColor == "black") {
+        // maybe lambda can be used
+        for(auto& [key, value] : tileFigurePairs) {
+            if((key->xCord() == kingFigure->xCord() - 1 || key->xCord() == kingFigure->xCord() + 1) && key->yCord() == kingFigure->yCord() + 1) {
+                if(value != nullptr) {
+                    if(value->type() == FigureBack::Pawn && value->color() == kingColor){
+                        figuresChecking.push_back(value);
+                    }
+                }
+            }
+        }
+    } else {
+        for(auto& [key, value] : tileFigurePairs) {
+            if((key->xCord() == kingFigure->xCord() - 1 || key->xCord() == kingFigure->xCord() + 1) && key->yCord() == kingFigure->yCord() - 1) {
+                if(value != nullptr) {
+                    if(value->type() == FigureBack::Pawn && value->color() == kingColor){
+                        figuresChecking.push_back(value);
+                    }
+                }
+            }
+        }
+    }
+
+    // King movement checking
+    for(auto& [key, value] : tileFigurePairs) {
+        if(value != nullptr) {
+            if((key->xCord() == kingFigure->xCord() || key->xCord() == kingFigure->xCord() + 1 || key->xCord() == kingFigure->xCord() - 1) && (key->yCord() == kingFigure->yCord() || key->yCord() == kingFigure->yCord() + 1 || key->yCord() == kingFigure->yCord() - 1)) {
+                if(key->xCord() != kingFigure->xCord() || key->yCord() != kingFigure->yCord()) {
+                    if(value->type() == FigureBack::King) {
+                        figuresChecking.push_back(value);
+                    }
+                }
+            }
+        }
+
+    }
+
+    //*****************************************************************
+
     if(!figuresChecking.empty()) {
         for(auto& [key, value] : tileFigurePairs) {
             if(value == kingFigure) {
@@ -614,10 +711,12 @@ void TilesFiguresHandler::findCheckAfterMove() {
 }
 
 void TilesFiguresHandler::findCheckMate() {
-
+    QString currentColor = getCurrentColorMove() == "white" ? "white" : "black";
     FigureBack* currentKing = getCurrentColorMove() == "white" ? whiteKing : blackKing;
-    qInfo() << "white king:" << whiteKing->isChecked() << " blackKing:" << blackKing->isChecked();
+
     if(currentKing->isChecked()) {
+        qInfo() << "Current color move in look for checkmate:" << getCurrentColorMove();
+        qInfo() << "white king:" << whiteKing->isChecked() << " blackKing:" << blackKing->isChecked();
         qInfo() << "******** Looking for Check Mate ********";
         int moves {0};
         for(auto& [key, value] : tileFigurePairs) {
@@ -632,6 +731,22 @@ void TilesFiguresHandler::findCheckMate() {
         if(moves == 0) {
             setIsCheckMate(true);
             qInfo() << "******** Check Mate ********";
+        }
+    } else {
+        qInfo() << "Looking for draw";
+        int moves {0};
+        for(auto& [key, value] : tileFigurePairs) {
+            if(value != nullptr) {
+                if(value->color() == getCurrentColorMove()) {
+                    moves += findValidTiles(value);
+                    clearPossibleTiles();
+                }
+            }
+        }
+        qInfo() << "Amount of moves for " << currentColor << " :" << moves;
+        if(moves == 0) {
+            setIsDraw(true);
+            qInfo() << "******** Draw *********";
         }
     }
 }
@@ -986,11 +1101,13 @@ int TilesFiguresHandler::findKingTiles(int xCord, int yCord, QColor color, Figur
     int moves {0};
     for(auto& [key, value] : tileFigurePairs) {
         if((key->xCord() == xCord || key->xCord() == xCord + 1 || key->xCord() == xCord - 1) && (key->yCord() == yCord || key->yCord() == yCord + 1 || key->yCord() == yCord - 1)) {
-            if(value == nullptr || value->color() != color) {
-                if(findCheckBeforeMove(xCord, yCord, color, key, SourceFigure)) {
-                    key->setPossible(true);
-                    key->setKey(QString::number(xCord) + QString::number(yCord));
-                    moves++;
+            if(key->xCord() != xCord || key->yCord() != yCord) {
+                if(value == nullptr || value->color() != color) {
+                    if(findCheckBeforeMove(xCord, yCord, color, key, SourceFigure)) {
+                        key->setPossible(true);
+                        key->setKey(QString::number(xCord) + QString::number(yCord));
+                        moves++;
+                    }
                 }
             }
         }

@@ -22,9 +22,11 @@ class TilesFiguresHandler : public QObject
     Q_OBJECT
     Q_PROPERTY(bool selectFigure READ selectFigure WRITE setSelectFigure NOTIFY selectFigureChanged)
     Q_PROPERTY(bool isCheckMate READ isCheckMate WRITE setIsCheckMate NOTIFY isCheckMateChanged)
+    Q_PROPERTY(bool isDraw READ isDraw WRITE setIsDraw NOTIFY isDrawChanged)
 private:
     bool selectFigureValue;
     bool isCheckMateValue;
+    bool isDrawValue;
     std::unordered_map<TileBack*, FigureBack*> tileFigurePairs;
     QColor currentColorMove;
     FigureBack* currentFigure;
@@ -40,6 +42,8 @@ public:
     void setSelectFigure(const bool &selectFigureGiven);
     bool isCheckMate() const;
     void setIsCheckMate(const bool &isCheckMateGiven);
+    bool isDraw() const;
+    void setIsDraw(const bool &isDrawGiven);
 
     Q_INVOKABLE void addTile(TileBack* SourceTile);                         //used
     Q_INVOKABLE void addFigure(FigureBack* SourceFigure);                   //used
@@ -69,6 +73,7 @@ public:
 signals:
     void selectFigureChanged();
     void isCheckMateChanged();
+    void isDrawChanged();
 };
 
 #endif // TILESFIGURESHANDLER_H

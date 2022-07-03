@@ -294,7 +294,7 @@ ApplicationWindow {
 
     // This is Popup that shows up when is checkMate
     Popup {
-        id: checkMatePopup
+        id: endGamePopup
         anchors.centerIn: parent
         width: Math.floor((minimalScreenSide - 100) / 9) * 3.5
         height: Math.floor((minimalScreenSide - 100) / 9) * 3
@@ -302,19 +302,27 @@ ApplicationWindow {
         focus: true
         closePolicy: "NoAutoClose"
         property bool checkMate: tilesFiguresHandler.isCheckMate
+        property bool draw: tilesFiguresHandler.isDraw
 
         onCheckMateChanged: {
             if(tilesFiguresHandler.isCheckMate === true) {
-                winnerText.winner = tilesFiguresHandler.winnerColor()
-                checkMatePopup.open()
+                endText.textDisplay = "The game has ended\nThe winner is " + tilesFiguresHandler.winnerColor()
+                endGamePopup.open()
+            }
+        }
+
+        onDrawChanged: {
+            if(tilesFiguresHandler.isDraw === true) {
+                endText.textDisplay = "The game has ended\nThere is Draw"
+                endGamePopup.open()
             }
         }
 
         Text {
-            id: winnerText
+            id: endText
             anchors.centerIn: parent
-            property string winner: ""
-            text: "The game has ended\nWinner is " + winner
+            property string textDisplay: ""
+            text: textDisplay //"The game has ended\nWinner is " + winner
             font.pointSize: 20
         }
     }
