@@ -53,10 +53,6 @@ Item {
             }
         }
 
-        onParentChanged: {
-            console.log("Figure changed position " + figureBackend + ":" + figureBackend.xCord + "x" + figureBackend.yCord)
-        }
-
         FigureBack {
             id: figureBackend
             imageSource: root.figureSource

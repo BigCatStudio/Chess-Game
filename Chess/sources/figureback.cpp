@@ -3,7 +3,7 @@
 FigureBack::FigureBack(QObject *parent)
     : QObject(parent), deleteFigureValue{false}, xCordValue{0}, yCordValue{0},
       colorValue{""}, imageSourceValue{""}, wasMovedValue{false}, canMoveValue{false},
-        isCheckedValue{false} {}
+      isCheckedValue{false} {}
 
 void FigureBack::setXCord(const int &xCordGiven) {
     if(xCordGiven != xCordValue) {

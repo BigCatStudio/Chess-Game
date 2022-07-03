@@ -44,6 +44,12 @@ Rectangle {
         Component.onCompleted: {
             tilesFiguresHandler.addTile(tileBackend)
         }
+
+        // TODO castling key for rook
+//        property string rookKey: tileBackend.isRookCastled
+//        onRookKeyChanged: {
+//            dropArea.keys = [tileBackend.key, rookKey]
+//        }
     }
 
     DropArea {

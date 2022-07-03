@@ -8,7 +8,7 @@ QColor ChessBoardUtilities::color() {
     QColor additionalColor = colorValue;
 
     if(counterColor % 8) {
-        colorValue = (colorValue == "#ffcc99") ? "#b35900" : "#ffcc99";
+        colorValue = (colorValue == "#ffcc99") ? "#b35900" : "#ffcc99";     // Determines Tile color
     }
 
     return additionalColor;

@@ -1,8 +1,6 @@
 #include "headers/writer.h"
 
-Writer::Writer() {
-    std::cout << "Writer created" << std::endl;
-}
+Writer::Writer() {}
 
 void Writer::addNewMove(std::string newMoveCords) {
 

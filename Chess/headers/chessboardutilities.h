@@ -14,11 +14,11 @@ class ChessBoardUtilities : public QObject
     Q_PROPERTY(int yCordCalculated READ yCordCalculated NOTIFY yCordCalculatedChanged)
 
 private:
-    // setting tile color variables
+    // Setting tile color variables
     QColor colorValue;
     int counterColor;
 
-    //setting tile cords variables
+    // Setting tile cords variables
     int xCounter;
     int yCounter;
 

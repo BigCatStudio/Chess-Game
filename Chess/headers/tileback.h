@@ -16,6 +16,7 @@ class TileBack : public QObject
     Q_PROPERTY(QColor color READ color WRITE setColor NOTIFY colorChanged)
     Q_PROPERTY(QString key READ key WRITE setKey NOTIFY keyChanged)
     Q_PROPERTY(bool isChecked READ isChecked WRITE setIsChecked NOTIFY isCheckedChanged)
+    Q_PROPERTY(QString isRookCastled READ isRookCastled WRITE setIsRookCastled NOTIFY isRookCastledChanged)
     QML_ELEMENT
 
 private:
@@ -23,9 +24,11 @@ private:
     int yCordValue;
     bool containsFigureValue;
     QColor colorValue;
-    bool possibleValue;// determines whether it is valid tile for currently selected figure in play
-    QString keyValue;   // used in dropArea in TileFront to determine which figure can access the tile
-    bool isCheckedValue;
+    bool possibleValue;         // Determines whether it is valid tile for currently selected figure in play
+    QString keyValue;           // Used in dropArea in TileFront to determine which figure can access the tile
+    bool isCheckedValue;        // Determines if tile is currently under check
+    bool isCastledValue;        // Determines if tile is possible for king as castling
+    QString isRookCastledValue; // Determines if tile is possible for rook as castling
 
 public:
     explicit TileBack(QObject *parent = nullptr);
@@ -37,6 +40,8 @@ public:
     void setPossible(const bool &possibleGiven);
     void setKey(QString keyGiven);
     void setIsChecked(const bool &isCheckedGiven);
+    void setIsCastled(const bool &isCastledGiven);
+    void setIsRookCastled(const QString &isRookCastledGiven);
 
     int xCord() const;
     int yCord() const;
@@ -45,6 +50,8 @@ public:
     bool possible() const;
     QString key() const;
     bool isChecked() const;
+    bool isCastled() const;
+    QString isRookCastled() const;
 
 signals:
     void xCordChanged();
@@ -54,6 +61,7 @@ signals:
     void possibleChanged();
     void keyChanged();
     void isCheckedChanged();
+    void isRookCastledChanged();
 };
 
 #endif // TILEBACK_H

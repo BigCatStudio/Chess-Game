@@ -2,7 +2,7 @@
 
 TileBack::TileBack(QObject *parent)
     : QObject(parent), xCordValue{0}, yCordValue{0}, containsFigureValue{false},
-      possibleValue{false}, keyValue{""}, isCheckedValue{false} {}
+      possibleValue{false}, keyValue{""}, isCheckedValue{false}, isCastledValue{false}, isRookCastledValue{""} {}
 
 void TileBack::setXCord(const int &xCordGiven) {
     if(xCordGiven != xCordValue) {
@@ -53,6 +53,18 @@ void TileBack::setIsChecked(const bool &isCheckedGiven) {
     }
 }
 
+void TileBack::setIsRookCastled(const QString &isRookCastledGiven) {
+    if(isRookCastledGiven != isRookCastledValue) {
+        isRookCastledValue = isRookCastledGiven;
+        emit isRookCastledChanged();
+    }
+}
+
+void TileBack::setIsCastled(const bool &isCastledGiven) {
+    isCastledValue = isCastledGiven;
+    // It is not function used from QML so no need for emitting etc
+}
+
 int TileBack::xCord() const {
     return xCordValue;
 }
@@ -79,4 +91,12 @@ QString TileBack::key() const {
 
 bool TileBack::isChecked() const {
     return isCheckedValue;
+}
+
+bool TileBack::isCastled() const {
+    return isCastledValue;
+}
+
+QString TileBack::isRookCastled() const {
+    return isRookCastledValue;
 }

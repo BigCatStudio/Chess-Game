@@ -29,12 +29,6 @@ ApplicationWindow {
         root.objects.push(object)
     }
 
-    function displayObjects() {
-        for(var i = 0;i < root.objects.length;i++) {
-            console.log(root.objects[i])
-        }
-    }
-
     function deleteObject(object) {
         for(var i = 0;i < root.objects.length;i++) {
             if(root.objects[i] === object) {
@@ -186,9 +180,6 @@ ApplicationWindow {
 
             addObject(whiteQueenObject1)
             addObject(blackQueenObject1)
-
-            console.log("Array reference")
-            displayObjects()
         }
     }
 
@@ -226,7 +217,6 @@ ApplicationWindow {
                     knightFigure.figureType = FigureBack.Knight
                     knightFigure.backgroundColor = "black"
                 } else {
-                    console.log("================= Select Figure is black ==================")
                     queenFigure.figureSource = "qrc:/Images/Images/queenBlack.png"
                     queenFigure.figureType = FigureBack.Queen
                     queenFigure.backgroundColor = "white"
