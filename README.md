@@ -13,4 +13,4 @@ Currently I am working on adding castling and *en passant*
 There are planned several updates in the future:
 * Customizable chess board and pieces with different colors
 * Possibility to create player accounts on local machine
-* Auto generating text file with moves made in game
+* Auto generated text file with moves made in game
