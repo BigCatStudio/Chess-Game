@@ -1,5 +1,5 @@
 # Chess-Game
-This is simple chess game written fully in C++ and QML.
+This is simple chess game written fully in C++ and QML. To run this application you need at least Qt 6.0.0 or greater, however you can change that requirement in CMakeList.
 
 # Design 
 ![alt text](ScreenShoots/img1.png)
