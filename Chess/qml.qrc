@@ -1,11 +1,11 @@
 <RCC>
     <qresource prefix="/">
-        <file>main.qml</file>
-        <file>TileFront.qml</file>
-        <file>FigureFront.qml</file>
-        <file>VerticalCoordinates.qml</file>
-        <file>HorizontalCoordinates.qml</file>
-        <file>FigureSelect.qml</file>
+        <file>gui/main.qml</file>
+        <file>gui/TileFront.qml</file>
+        <file>gui/FigureFront.qml</file>
+        <file>gui/VerticalCoordinates.qml</file>
+        <file>gui/HorizontalCoordinates.qml</file>
+        <file>gui/FigureSelect.qml</file>
     </qresource>
     <qresource prefix="/Images">
         <file>Images/kingBlack.png</file>
